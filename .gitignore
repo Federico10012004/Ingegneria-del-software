@@ -1,0 +1,48 @@
+# ============================
+# IntelliJ IDEA / JetBrains IDEs
+# ============================
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# ============================
+# Build directories
+# ============================
+out/
+build/
+target/
+
+# ============================
+# Compiled class files
+# ============================
+*.class
+
+# ============================
+# Logs and temporary files
+# ============================
+*.log
+*.tmp
+*.bak
+*.swp
+
+# ============================
+# OS-specific files
+# ============================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ============================
+# Java crash logs
+# ============================
+hs_err_pid*
+replay_pid*
+
+# ============================
+# Local configuration
+# ============================
+*.local.properties
+*.env
+.env/
