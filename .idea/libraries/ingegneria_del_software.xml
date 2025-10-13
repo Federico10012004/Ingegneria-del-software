@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="ingegneria del software">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ISPW_project-master.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Travelbook-deliverable-main.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
