@@ -12,8 +12,7 @@ import java.util.Locale;
 public abstract class BaseFormerController implements Resettable {
 
     @FXML protected Group logoGroup;
-    @FXML protected Label sloganLabel;
-    @FXML protected Label welcomeLabel;
+    @FXML protected Label sloganLabel, welcomeLabel, successRegister;
     @FXML protected javafx.scene.layout.GridPane root;
 
     protected void showError(Label label, Label... allLabels) {
@@ -51,6 +50,11 @@ public abstract class BaseFormerController implements Resettable {
         if (welcomeLabel != null)
             welcomeLabel.styleProperty().bind(
                     root.widthProperty().divide(fontScaleWelcome).asString(Locale.US,
+                            "-fx-font-size: %.1fpx; -fx-font-family: 'Tahoma'; -fx-font-weight: bold;")
+            );
+        if (successRegister != null)
+            successRegister.styleProperty().bind(
+                    root.widthProperty().divide(30.0).asString(Locale.US,
                             "-fx-font-size: %.1fpx; -fx-font-family: 'Tahoma'; -fx-font-weight: bold;")
             );
     }

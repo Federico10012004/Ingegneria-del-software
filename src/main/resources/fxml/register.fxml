@@ -46,7 +46,7 @@
          </Label>
       </VBox>
    </StackPane>
-   <StackPane GridPane.columnIndex="1">
+   <StackPane fx:id="registerBox" GridPane.columnIndex="1">
       <Button alignment="CENTER" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="10.0" top="25.0" />
@@ -260,9 +260,29 @@
                   <font>
                      <Font name="Tahoma Bold" size="14.0" />
                   </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
                </Button>
             </VBox>
          </AnchorPane>
+      </VBox>
+   </StackPane>
+   <StackPane fx:id="successBox" style="-fx-background-color: white;" visible="false" GridPane.columnIndex="1">
+      <VBox alignment="CENTER" StackPane.alignment="CENTER">
+         <Label fx:id="successRegister" text="Registrazione completata">
+            <font>
+               <Font name="Tahoma Bold" size="30.0" />
+            </font>
+         </Label>
+         <Label onMouseClicked="#switchToLogin" styleClass="link-label" text="Vai al login" underline="true">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+         </Label>
       </VBox>
    </StackPane>
 </GridPane>

@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import it.uniroma2.dicii.CalcettoHub.core.Navigator;
 import it.uniroma2.dicii.CalcettoHub.dao.RegisterDao;
 import it.uniroma2.dicii.CalcettoHub.util.PasswordUtils;
+import javafx.scene.layout.StackPane;
 
 import java.time.LocalDate;
 
@@ -19,6 +20,7 @@ public class RegisterController extends BaseFormerController {
     @FXML private javafx.scene.control.TextField emailField, passwordTextField, confirmPasswordTextField, userField;
     @FXML private PasswordField passwordField, confirmPasswordField;
     @FXML private DatePicker dataNascita;
+    @FXML private StackPane registerBox, successBox;
 
     private boolean isVisible = false;
     private boolean isConfirmPasswordVisible = false;
@@ -66,8 +68,10 @@ public class RegisterController extends BaseFormerController {
             case -1 -> showError(passwordError, emptyFieldError, userError);
             case -2 -> showError(userError, emptyFieldError, passwordError);
             case 0 -> {
-                hideAllErrors(passwordError, emptyFieldError, userError);
-                System.out.println("✅ Registrazione riuscita!");
+                registerBox.setVisible(false);
+                registerBox.setManaged(false);
+                successBox.setVisible(true);
+                successBox.setManaged(true);
             }
             default -> System.err.println("Errore, caso inatteso durante la registrazione");
         }
@@ -93,6 +97,11 @@ public class RegisterController extends BaseFormerController {
         confirmPasswordTextField.setManaged(false);
         confirmPasswordField.setVisible(true);
         confirmPasswordField.setManaged(true);
+
+        registerBox.setVisible(true);
+        registerBox.setManaged(true);
+        successBox.setVisible(false);
+        successBox.setManaged(false);
         setEyeIcon();
     }
 
