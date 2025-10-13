@@ -1,4 +1,4 @@
-package main.java.it.uniroma2.dicii.CalcettoHub.controller;
+package it.uniroma2.dicii.CalcettoHub.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import main.java.it.uniroma2.dicii.CalcettoHub.core.Navigator;
+import it.uniroma2.dicii.CalcettoHub.core.Navigator;
 
 public class WelcomeController {
 
@@ -19,6 +19,9 @@ public class WelcomeController {
     @FXML private ImageView giocatoreIcon, proprietarioIcon, arbitroIcon;
     @FXML private Label giocatoreLabel, proprietarioLabel, arbitroLabel, sloganLabel, roleLabel;
     @FXML private Group logoGroup;
+
+    protected static final String FONT_STYLE_TEMPLATE =
+            "-fx-font-size: %.1fpx; -fx-font-family: 'Impact'; -fx-font-style: normal;";
 
     @FXML
     public void initialize() {
@@ -84,13 +87,13 @@ public class WelcomeController {
 
         // Binding per font size delle label (scala da 32 a 50)
         giocatoreLabel.styleProperty().bind(
-                root.widthProperty().divide(38).asString(java.util.Locale.US, "-fx-font-size: %.1fpx; -fx-font-family: 'Impact'; -fx-font-style: normal;")
+                root.widthProperty().divide(38).asString(java.util.Locale.US, FONT_STYLE_TEMPLATE)
         );
         proprietarioLabel.styleProperty().bind(
-                root.widthProperty().divide(38).asString(java.util.Locale.US, "-fx-font-size: %.1fpx; -fx-font-family: 'Impact'; -fx-font-style: normal;")
+                root.widthProperty().divide(38).asString(java.util.Locale.US, FONT_STYLE_TEMPLATE)
         );
         arbitroLabel.styleProperty().bind(
-                root.widthProperty().divide(38).asString(java.util.Locale.US, "-fx-font-size: %.1fpx; -fx-font-family: 'Impact'; -fx-font-style: normal;")
+                root.widthProperty().divide(38).asString(java.util.Locale.US, FONT_STYLE_TEMPLATE)
         );
     }
 

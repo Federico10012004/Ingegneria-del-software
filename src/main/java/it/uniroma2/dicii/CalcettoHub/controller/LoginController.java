@@ -1,11 +1,11 @@
-package main.java.it.uniroma2.dicii.CalcettoHub.controller;
+package it.uniroma2.dicii.CalcettoHub.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import main.java.it.uniroma2.dicii.CalcettoHub.core.Navigator;
-import main.java.it.uniroma2.dicii.CalcettoHub.dao.LoginDao;
-import main.java.it.uniroma2.dicii.CalcettoHub.util.PasswordUtils;
+import it.uniroma2.dicii.CalcettoHub.core.Navigator;
+import it.uniroma2.dicii.CalcettoHub.dao.LoginDao;
+import it.uniroma2.dicii.CalcettoHub.util.PasswordUtils;
 
 public class LoginController extends BaseFormerController {
 
@@ -48,6 +48,7 @@ public class LoginController extends BaseFormerController {
                 hideAllErrors(errorLabel, emptyFieldError);
                 System.out.println("✅ Login riuscito!");
             }
+            default -> System.err.println("Errore, caso inatteso nel login");
         }
     }
 

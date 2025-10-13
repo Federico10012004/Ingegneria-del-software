@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-image: url(&quot;../img/background.png&quot;);" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.it.uniroma2.dicii.CalcettoHub.controller.RegisterController">
+<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-image: url(&quot;../img/background.png&quot;);" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.uniroma2.dicii.CalcettoHub.controller.RegisterController">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" percentWidth="40.0" />
       <ColumnConstraints hgrow="ALWAYS" percentWidth="60.0" />
@@ -49,7 +49,7 @@
    <StackPane GridPane.columnIndex="1">
       <Button alignment="CENTER" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
-            <Insets left="10.0" top="35.0" />
+            <Insets left="10.0" top="25.0" />
          </StackPane.margin>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">

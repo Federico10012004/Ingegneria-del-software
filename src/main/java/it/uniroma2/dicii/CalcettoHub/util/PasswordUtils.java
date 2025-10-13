@@ -1,4 +1,4 @@
-package main.java.it.uniroma2.dicii.CalcettoHub.util;
+package it.uniroma2.dicii.CalcettoHub.util;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

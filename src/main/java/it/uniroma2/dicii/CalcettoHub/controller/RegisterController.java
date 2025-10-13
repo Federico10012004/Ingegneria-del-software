@@ -1,4 +1,4 @@
-package main.java.it.uniroma2.dicii.CalcettoHub.controller;
+package it.uniroma2.dicii.CalcettoHub.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,9 +7,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
-import main.java.it.uniroma2.dicii.CalcettoHub.core.Navigator;
-import main.java.it.uniroma2.dicii.CalcettoHub.dao.RegisterDao;
-import main.java.it.uniroma2.dicii.CalcettoHub.util.PasswordUtils;
+import it.uniroma2.dicii.CalcettoHub.core.Navigator;
+import it.uniroma2.dicii.CalcettoHub.dao.RegisterDao;
+import it.uniroma2.dicii.CalcettoHub.util.PasswordUtils;
 
 import java.time.LocalDate;
 
@@ -69,6 +69,7 @@ public class RegisterController extends BaseFormerController {
                 hideAllErrors(passwordError, emptyFieldError, userError);
                 System.out.println("✅ Registrazione riuscita!");
             }
+            default -> System.err.println("Errore, caso inatteso durante la registrazione");
         }
     }
 

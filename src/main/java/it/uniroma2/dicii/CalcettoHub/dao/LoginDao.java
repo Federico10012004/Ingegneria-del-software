@@ -1,4 +1,4 @@
-package main.java.it.uniroma2.dicii.CalcettoHub.dao;
+package it.uniroma2.dicii.CalcettoHub.dao;
 
 public class LoginDao {
     public String correctEmail = "admin@mail.com";

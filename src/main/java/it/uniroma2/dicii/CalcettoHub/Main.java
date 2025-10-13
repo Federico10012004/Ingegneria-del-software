@@ -1,8 +1,8 @@
-package main.java.it.uniroma2.dicii.CalcettoHub;
+package it.uniroma2.dicii.CalcettoHub;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import main.java.it.uniroma2.dicii.CalcettoHub.core.Navigator;
+import it.uniroma2.dicii.CalcettoHub.core.Navigator;
 
 public class Main extends Application {
 
