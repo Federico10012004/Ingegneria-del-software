@@ -11,6 +11,26 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>23</version>
+        </dependency>
+        <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>9.2.0</version>
@@ -18,6 +38,7 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- 🔹 Plugin per compilare con Java 23 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -26,10 +47,22 @@
                     <release>23</release>
                 </configuration>
             </plugin>
+
+            <!-- 🔹 Plugin per eseguire classi con il metodo main -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.1</version>
+                <configuration>
+                    <mainClass>it.uniroma2.dicii.CalcettoHub.Main</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- 🔹 Plugin JavaFX (fondamentale per i moduli javafx.*) -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
                 <configuration>
                     <mainClass>it.uniroma2.dicii.CalcettoHub.Main</mainClass>
                 </configuration>
