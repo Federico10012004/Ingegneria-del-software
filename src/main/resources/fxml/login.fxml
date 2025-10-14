@@ -160,7 +160,7 @@
                     </cursor>
                 </Button>
             </VBox>
-            <AnchorPane VBox.vgrow="ALWAYS">
+            <AnchorPane>
                 <VBox.margin>
                     <Insets />
                 </VBox.margin>
