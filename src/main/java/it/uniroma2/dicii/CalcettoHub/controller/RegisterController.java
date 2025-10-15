@@ -2,10 +2,7 @@ package it.uniroma2.dicii.CalcettoHub.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import it.uniroma2.dicii.CalcettoHub.core.Navigator;
 import it.uniroma2.dicii.CalcettoHub.dao.RegisterDao;
@@ -17,7 +14,7 @@ import java.time.LocalDate;
 public class RegisterController extends BaseFormerController {
     @FXML private ImageView eyeImageView, eyeConfirmImageView;
     @FXML private Label userError, emptyFieldError, passwordError;
-    @FXML private javafx.scene.control.TextField emailField, passwordTextField, confirmPasswordTextField, userField;
+    @FXML private TextField emailField, passwordTextField, confirmPasswordTextField, userField;
     @FXML private PasswordField passwordField, confirmPasswordField;
     @FXML private DatePicker dataNascita;
     @FXML private StackPane registerBox, successBox;
