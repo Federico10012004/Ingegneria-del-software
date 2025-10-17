@@ -13,8 +13,6 @@ import it.uniroma2.dicii.calcettohub.core.Navigator;
 
 public class WelcomeController {
 
-    public Label titleLabel;
-
     @FXML private StackPane root;
     @FXML private Button giocatoreButton;
     @FXML private Button gestoreButton;

@@ -15,7 +15,7 @@
 
             <!-- Header con logo -->
    <Group fx:id="logoGroup" StackPane.alignment="TOP_CENTER">
-      <Label fx:id="titleLabel" text="Calcett  Hub" textFill="WHITE">
+      <Label text="Calcett  Hub" textFill="WHITE">
          <font>
             <Font name="Tahoma Bold" size="65.0" />
          </font>
