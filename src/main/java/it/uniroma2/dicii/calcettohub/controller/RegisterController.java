@@ -1,12 +1,12 @@
-package it.uniroma2.dicii.CalcettoHub.controller;
+package it.uniroma2.dicii.calcettohub.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import it.uniroma2.dicii.CalcettoHub.core.Navigator;
-import it.uniroma2.dicii.CalcettoHub.dao.RegisterDao;
-import it.uniroma2.dicii.CalcettoHub.util.PasswordUtils;
+import it.uniroma2.dicii.calcettohub.core.Navigator;
+import it.uniroma2.dicii.calcettohub.dao.RegisterDao;
+import it.uniroma2.dicii.calcettohub.util.PasswordUtils;
 import javafx.scene.layout.StackPane;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package it.uniroma2.dicii.CalcettoHub.dao;
+package it.uniroma2.dicii.calcettohub.dao;
 
 public class LoginDao {
     public static final String CORRECT_EMAIL = "admin@mail.com";

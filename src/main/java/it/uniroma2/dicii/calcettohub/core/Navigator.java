@@ -1,10 +1,10 @@
-package it.uniroma2.dicii.CalcettoHub.core;
+package it.uniroma2.dicii.calcettohub.core;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import it.uniroma2.dicii.CalcettoHub.controller.Resettable;
+import it.uniroma2.dicii.calcettohub.controller.Resettable;
 
 import java.io.IOException;
 import java.util.HashMap;

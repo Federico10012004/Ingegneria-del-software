@@ -1,4 +1,4 @@
-package it.uniroma2.dicii.CalcettoHub.dao;
+package it.uniroma2.dicii.calcettohub.dao;
 
 import java.time.LocalDate;
 

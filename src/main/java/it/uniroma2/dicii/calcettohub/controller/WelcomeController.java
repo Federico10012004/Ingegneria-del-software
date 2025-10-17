@@ -1,4 +1,4 @@
-package it.uniroma2.dicii.CalcettoHub.controller;
+package it.uniroma2.dicii.calcettohub.controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import it.uniroma2.dicii.CalcettoHub.core.Navigator;
+import it.uniroma2.dicii.calcettohub.core.Navigator;
 
 public class WelcomeController {
 

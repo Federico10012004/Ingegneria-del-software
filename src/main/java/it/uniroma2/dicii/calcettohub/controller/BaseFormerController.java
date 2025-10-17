@@ -1,11 +1,11 @@
-package it.uniroma2.dicii.CalcettoHub.controller;
+package it.uniroma2.dicii.calcettohub.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import it.uniroma2.dicii.CalcettoHub.core.Navigator;
+import it.uniroma2.dicii.calcettohub.core.Navigator;
 
 import java.util.Locale;
 

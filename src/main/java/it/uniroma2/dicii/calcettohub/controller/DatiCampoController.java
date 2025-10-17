@@ -1,6 +1,6 @@
-package it.uniroma2.dicii.CalcettoHub.controller;
+package it.uniroma2.dicii.calcettohub.controller;
 
-import it.uniroma2.dicii.CalcettoHub.core.Navigator;
+import it.uniroma2.dicii.calcettohub.core.Navigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
