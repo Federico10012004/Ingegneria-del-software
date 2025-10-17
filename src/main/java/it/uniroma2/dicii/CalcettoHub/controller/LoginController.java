@@ -74,6 +74,8 @@ public class LoginController extends BaseFormerController {
 
     @FXML
     public void switchToRegister() {
+        Navigator.setUserType(Navigator.getUserType());
+        Navigator.setPreviousPage("Altro");
         Navigator.show("Register");
     }
 }

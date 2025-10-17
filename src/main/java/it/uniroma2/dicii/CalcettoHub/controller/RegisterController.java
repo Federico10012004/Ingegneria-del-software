@@ -13,23 +13,27 @@ import java.time.LocalDate;
 
 public class RegisterController extends BaseFormerController {
     @FXML private ImageView eyeImageView, eyeConfirmImageView;
-    @FXML private Label userError, emptyFieldError, passwordError;
+    @FXML private Label userError, emptyFieldError, passwordError, linkLabel;
     @FXML private TextField emailField, passwordTextField, confirmPasswordTextField, userField;
     @FXML private PasswordField passwordField, confirmPasswordField;
     @FXML private DatePicker dataNascita;
     @FXML private StackPane registerBox, successBox;
+    @FXML private Button goButton, registerButton;
 
     private boolean isVisible = false;
     private boolean isConfirmPasswordVisible = false;
     private final RegisterDao registerDao = new RegisterDao();
+    private String userType;
 
     @FXML
     public void initialize() {
+        userType = Navigator.getUserType();
         PasswordUtils.bindPasswordFields(passwordField, passwordTextField, isVisible);
         PasswordUtils.bindPasswordFields(confirmPasswordField, confirmPasswordTextField, isConfirmPasswordVisible);
         setEyeIcon();
         hideAllErrors(passwordError, emptyFieldError, userError);
         setupResponsiveLabel(40.0);
+        configureButtons();
     }
 
     @FXML
@@ -51,6 +55,25 @@ public class RegisterController extends BaseFormerController {
         PasswordUtils.updateEyeIcon(eyeConfirmImageView, isConfirmPasswordVisible);
     }
 
+
+    private void configureButtons() {
+        if ("gestore".equals(userType)) {
+            goButton.setVisible(true);
+            goButton.setManaged(true);
+            registerButton.setVisible(false);
+            registerButton.setManaged(false);
+            linkLabel.setVisible(false);
+            linkLabel.setManaged(false);
+        } else {
+            goButton.setVisible(false);
+            goButton.setManaged(false);
+            registerButton.setVisible(true);
+            registerButton.setManaged(true);
+            linkLabel.setVisible(true);
+            linkLabel.setManaged(true);
+        }
+    }
+
     @FXML
     private void handleRegister() {
         String user = userField.getText().trim();
@@ -70,12 +93,39 @@ public class RegisterController extends BaseFormerController {
                 successBox.setVisible(true);
                 successBox.setManaged(true);
             }
-            default -> System.err.println("Errore, caso inatteso durante la registrazione");
+            default -> System.err.println("Errore inatteso nella registrazione del giocatore");
         }
     }
 
+    @FXML
+    private void handleGoTo() {
+        String user = userField.getText().trim();
+        LocalDate date = dataNascita.getValue();
+        String email = emailField.getText().trim();
+        String password = isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim();
+        String confirmPassword = isConfirmPasswordVisible ? confirmPasswordTextField.getText().trim() : confirmPasswordField.getText().trim();
+
+        int result = registerDao.checkField(user, date, email, password, confirmPassword);
+        switch (result) {
+            case 1 -> showError(emptyFieldError, passwordError, userError);
+            case -1 -> showError(passwordError, emptyFieldError, userError);
+            case -2 -> showError(userError, emptyFieldError, passwordError);
+            case 0 -> Navigator.show("Dati Campo"); // vai alla schermata del campo
+            default -> System.err.println("Errore inatteso nella registrazione del gestore");
+        }
+    }
+
+
     @Override
     public void reset() {
+        userType = Navigator.getUserType();
+        configureButtons();
+
+        if ("Dati Campo".equals(Navigator.getPreviousPage())) {
+            hideAllErrors(passwordError, emptyFieldError, userError);
+            return;
+        }
+
         userField.clear();
         dataNascita.setValue(null);
         emailField.clear();
@@ -108,7 +158,8 @@ public class RegisterController extends BaseFormerController {
     }
 
     @FXML
-    public void switchToLogin() {
+    public void handleCancel() {
+        Navigator.setPreviousPage("Altro");
         Navigator.show("Login");
     }
 }

@@ -7,13 +7,8 @@ import it.uniroma2.dicii.CalcettoHub.core.Navigator;
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         Navigator.setStage(stage);
-
-        // Carica le schermate principali (una sola volta)
-        Navigator.loadScene("Login", "/fxml/login.fxml");
-        Navigator.loadScene("Welcome", "/fxml/SchermataIniziale.fxml");
-        Navigator.loadScene("Register", "/fxml/register.fxml");
 
         // Mostra la schermata iniziale
         Navigator.show("Welcome");

@@ -1,6 +1,7 @@
 package it.uniroma2.dicii.CalcettoHub.controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -15,8 +16,8 @@ public class WelcomeController {
     public Label titleLabel;
 
     @FXML private StackPane root;
-    @FXML private Button giocatoreButton, proprietarioButton, arbitroButton;
-    @FXML private ImageView giocatoreIcon, proprietarioIcon, arbitroIcon;
+    @FXML private Button giocatoreButton, gestoreButton, arbitroButton;
+    @FXML private ImageView giocatoreIcon, gestoreIcon, arbitroIcon;
     @FXML private Label giocatoreLabel, proprietarioLabel, arbitroLabel, sloganLabel, roleLabel;
     @FXML private Group logoGroup;
 
@@ -38,10 +39,10 @@ public class WelcomeController {
                 root.widthProperty().multiply(0.375).add(0)
         );
 
-        proprietarioButton.prefWidthProperty().bind(
+        gestoreButton.prefWidthProperty().bind(
                 root.widthProperty().multiply(0.100).add(0)
         );
-        proprietarioButton.minWidthProperty().bind(
+        gestoreButton.minWidthProperty().bind(
                 root.widthProperty().multiply(0.375).add(0)
         );
 
@@ -56,7 +57,7 @@ public class WelcomeController {
         giocatoreButton.prefHeightProperty().bind(
                 root.heightProperty().multiply(0.120).add(0)
         );
-        proprietarioButton.prefHeightProperty().bind(
+        gestoreButton.prefHeightProperty().bind(
                 root.heightProperty().multiply(0.120).add(0)
         );
         arbitroButton.prefHeightProperty().bind(
@@ -71,10 +72,10 @@ public class WelcomeController {
                 root.widthProperty().multiply(0.050).add(0)
         );
 
-        proprietarioIcon.fitWidthProperty().bind(
+        gestoreIcon.fitWidthProperty().bind(
                 root.widthProperty().multiply(0.050).add(0)
         );
-        proprietarioIcon.fitHeightProperty().bind(
+        gestoreIcon.fitHeightProperty().bind(
                 root.widthProperty().multiply(0.050).add(0)
         );
 
@@ -121,7 +122,10 @@ public class WelcomeController {
 
 
     @FXML
-    private void switchToLogin() {
+    private void switchToLogin(ActionEvent event) {
+        Button clicked = (Button) event.getSource();
+        String tipo = clicked.getAccessibleText();
+        Navigator.setUserType(tipo);
         Navigator.show("Login");
     }
 }

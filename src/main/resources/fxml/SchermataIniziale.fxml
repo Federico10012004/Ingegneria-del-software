@@ -51,7 +51,7 @@
          </VBox.margin>
 
                         <!-- Bottone Giocatore -->
-         <Button fx:id="giocatoreButton" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="200.0" onAction="#switchToLogin" prefHeight="100.0" prefWidth="200.0" styleClass="rounded-button">
+         <Button fx:id="giocatoreButton" accessibleText="giocatore" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="200.0" onAction="#switchToLogin" prefHeight="100.0" prefWidth="200.0" styleClass="rounded-button" userData="giocatore">
             <graphic>
                <HBox alignment="CENTER_LEFT" spacing="20.0">
                   <ImageView fx:id="giocatoreIcon" fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
@@ -67,10 +67,10 @@
          </Button>
 
                         <!-- Bottone Proprietario -->
-         <Button fx:id="proprietarioButton" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="200.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="100.0" prefWidth="200.0" styleClass="rounded-button">
+         <Button fx:id="gestoreButton" accessibleText="gestore" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="200.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="100.0" prefWidth="200.0" styleClass="rounded-button" userData="gestore">
             <graphic>
                <HBox alignment="CENTER_LEFT" spacing="20.0">
-                  <ImageView fx:id="proprietarioIcon" fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
+                  <ImageView fx:id="gestoreIcon" fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
                      <Image url="@../img/stadium.png" />
                   </ImageView>
                   <Label fx:id="proprietarioLabel" text="Gestore Campo">

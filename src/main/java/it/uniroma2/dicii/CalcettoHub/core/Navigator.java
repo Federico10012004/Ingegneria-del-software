@@ -12,55 +12,81 @@ import java.util.Map;
 
 /**
  * Navigator centralizzato per la gestione delle schermate dell'app CalcettoHub.
+ * Versione con caricamento lazy (on-demand).
  */
 public class Navigator {
 
     private static Stage mainStage;
     private static final Map<String, Scene> scenes = new HashMap<>();
 
-    // Imposta lo stage principale dell'app
+    private static String userType;
+    private static String previousPage;
+
     public static void setStage(Stage stage) {
         mainStage = stage;
     }
 
-    // Carica una scena FXML e memorizza sia la scena che il controller
-    public static void loadScene(String name, String fxmlPath) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(fxmlPath));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-
-        // 🔹 Salva anche il controller, così possiamo richiamarlo dopo
-        scene.setUserData(loader.getController());
-        scenes.put(name, scene);
-    }
-
-    // Mostra una scena già caricata
-    public static void show(String name) {
-        Scene scene = scenes.get(name);
-        if (scene == null) {
-            System.err.println("⚠️ Scena non trovata: " + name);
-            return;
-        }
-
-        Object controller = scene.getUserData();
-        if (controller instanceof Resettable resettable) {
-            resettable.reset();
-        }
-
-        boolean wasFullScreen = mainStage.isFullScreen();
-        double width = mainStage.getWidth();
-        double height = mainStage.getHeight();
-
-        mainStage.setScene(scene);
-        mainStage.setWidth(width);
-        mainStage.setHeight(height);
-        mainStage.setFullScreen(wasFullScreen);
-        mainStage.show();
-    }
-
-
-    // Ottieni lo Stage principale (es. per binding o modali)
     public static Stage getMainStage() {
         return mainStage;
+    }
+
+    // Tipo utente (gestore, giocatore, arbitro)
+    public static void setUserType(String type) {
+        userType = type;
+    }
+
+    public static String getUserType() {
+        return userType;
+    }
+
+    public static void setPreviousPage(String page) {
+        previousPage = page;
+    }
+
+    public static String getPreviousPage() {
+        return previousPage;
+    }
+
+    /**
+     * Mostra una scena. Se non è stata ancora caricata, la carica automaticamente (lazy loading).
+     */
+    public static void show(String name) {
+        try {
+            Scene scene = scenes.get(name);
+
+            // Lazy loading: se la scena non è ancora caricata, caricala ora
+            if (scene == null) {
+                FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(getFXMLPath(name)));
+                Parent root = loader.load();
+                scene = new Scene(root);
+                scene.setUserData(loader.getController());
+                scenes.put(name, scene);
+            }
+
+            Object controller = scene.getUserData();
+            if (controller instanceof Resettable resettable) {
+                resettable.reset(); // pulisci o reimposta la UI
+            }
+
+            mainStage.setScene(scene);
+            mainStage.show();
+
+        } catch (IOException e) {
+            System.err.println("Errore nel caricamento della scena: " + name);
+        }
+    }
+
+    /**
+     * Restituisce il percorso FXML in base al nome logico della scena.
+     * Questo metodo centralizza la gestione dei percorsi.
+     */
+    private static String getFXMLPath(String name) {
+        return switch (name) {
+            case "Login" -> "/fxml/login.fxml";
+            case "Welcome" -> "/fxml/SchermataIniziale.fxml";
+            case "Register" -> "/fxml/register.fxml";
+            case "Dati Campo" -> "/fxml/datiCampo.fxml";
+            default -> throw new IllegalArgumentException("Percorso FXML non definito per: " + name);
+        };
     }
 }
