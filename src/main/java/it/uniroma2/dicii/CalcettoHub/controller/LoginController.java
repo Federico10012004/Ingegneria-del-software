@@ -9,8 +9,10 @@ import it.uniroma2.dicii.CalcettoHub.util.PasswordUtils;
 
 public class LoginController extends BaseFormerController {
 
-    @FXML private Label errorLabel, emptyFieldError;
-    @FXML private TextField emailField, textField;
+    @FXML private Label errorLabel;
+    @FXML private Label emptyFieldError;
+    @FXML private TextField emailField;
+    @FXML private TextField textField;
     @FXML private PasswordField passwordField;
     @FXML private ImageView eyeImageView;
 

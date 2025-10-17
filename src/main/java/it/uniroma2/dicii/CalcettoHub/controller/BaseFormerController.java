@@ -12,7 +12,9 @@ import java.util.Locale;
 public abstract class BaseFormerController implements Resettable {
 
     @FXML protected Group logoGroup;
-    @FXML protected Label sloganLabel, welcomeLabel, successRegister;
+    @FXML protected Label sloganLabel;
+    @FXML protected Label welcomeLabel;
+    @FXML protected Label successRegister;
     @FXML protected javafx.scene.layout.GridPane root;
 
     protected void showError(Label label, Label... allLabels) {

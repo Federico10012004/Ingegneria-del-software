@@ -12,13 +12,23 @@ import javafx.scene.layout.StackPane;
 import java.time.LocalDate;
 
 public class RegisterController extends BaseFormerController {
-    @FXML private ImageView eyeImageView, eyeConfirmImageView;
-    @FXML private Label userError, emptyFieldError, passwordError, linkLabel;
-    @FXML private TextField emailField, passwordTextField, confirmPasswordTextField, userField;
-    @FXML private PasswordField passwordField, confirmPasswordField;
+    @FXML private ImageView eyeImageView;
+    @FXML private ImageView eyeConfirmImageView;
+    @FXML private Label userError;
+    @FXML private Label emptyFieldError;
+    @FXML private Label passwordError;
+    @FXML private Label linkLabel;
+    @FXML private TextField emailField;
+    @FXML private TextField passwordTextField;
+    @FXML private TextField confirmPasswordTextField;
+    @FXML private TextField userField;
+    @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
     @FXML private DatePicker dataNascita;
-    @FXML private StackPane registerBox, successBox;
-    @FXML private Button goButton, registerButton;
+    @FXML private StackPane registerBox;
+    @FXML private StackPane successBox;
+    @FXML private Button goButton;
+    @FXML private Button registerButton;
 
     private boolean isVisible = false;
     private boolean isConfirmPasswordVisible = false;

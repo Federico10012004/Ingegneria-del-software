@@ -16,9 +16,17 @@ public class WelcomeController {
     public Label titleLabel;
 
     @FXML private StackPane root;
-    @FXML private Button giocatoreButton, gestoreButton, arbitroButton;
-    @FXML private ImageView giocatoreIcon, gestoreIcon, arbitroIcon;
-    @FXML private Label giocatoreLabel, proprietarioLabel, arbitroLabel, sloganLabel, roleLabel;
+    @FXML private Button giocatoreButton;
+    @FXML private Button gestoreButton;
+    @FXML private Button arbitroButton;
+    @FXML private ImageView giocatoreIcon;
+    @FXML private ImageView arbitroIcon;
+    @FXML private ImageView gestoreIcon;
+    @FXML private Label giocatoreLabel;
+    @FXML private Label proprietarioLabel;
+    @FXML private Label arbitroLabel;
+    @FXML private Label sloganLabel;
+    @FXML private Label roleLabel;
     @FXML private Group logoGroup;
 
     protected static final String FONT_STYLE_TEMPLATE =

@@ -8,9 +8,20 @@ import javafx.scene.layout.VBox;
 
 public class DatiCampoController extends BaseFormerController {
 
-    @FXML private Label emptyFieldError1, emptyFieldError2;
-    @FXML private TextField ivaField, numField, addressField, cityField, capField, phoneField, supField, priceField, dayField, timeField;
-    @FXML private VBox datiCampo1, datiCampo2;
+    @FXML private Label emptyFieldError1;
+    @FXML private Label emptyFieldError2;
+    @FXML private TextField ivaField;
+    @FXML private TextField numField;
+    @FXML private TextField addressField;
+    @FXML private TextField cityField;
+    @FXML private TextField capField;
+    @FXML private TextField phoneField;
+    @FXML private TextField supField;
+    @FXML private TextField priceField;
+    @FXML private TextField dayField;
+    @FXML private TextField timeField;
+    @FXML private VBox datiCampo1;
+    @FXML private VBox datiCampo2;
 
     @FXML
     public void initialize() {

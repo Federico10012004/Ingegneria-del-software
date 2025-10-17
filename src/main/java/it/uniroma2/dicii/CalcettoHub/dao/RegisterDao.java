@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class RegisterDao {
 
-    public String correctEmail = "admin@mail.com";
+    public static final String correctEmail = "admin@mail.com";
 
     public int checkField(String user, LocalDate date, String email, String password, String checkPassword) {
 

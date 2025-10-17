@@ -1,8 +1,8 @@
 package it.uniroma2.dicii.CalcettoHub.dao;
 
 public class LoginDao {
-    public String correctEmail = "admin@mail.com";
-    public String correctPassword = "admin";
+    public static final String correctEmail = "admin@mail.com";
+    public static final String correctPassword = "admin";
 
     public int checkCredentials(String email, String password) {
 
