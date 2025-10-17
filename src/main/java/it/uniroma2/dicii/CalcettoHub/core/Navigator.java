@@ -89,4 +89,8 @@ public class Navigator {
             default -> throw new IllegalArgumentException("Percorso FXML non definito per: " + name);
         };
     }
+
+    private Navigator() {
+        throw new UnsupportedOperationException("Classe di utilità, non deve essere istanziata");
+    }
 }

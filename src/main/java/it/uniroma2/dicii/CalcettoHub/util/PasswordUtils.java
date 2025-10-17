@@ -44,4 +44,7 @@ public class PasswordUtils {
         });
     }
 
+    private PasswordUtils() {
+        throw new UnsupportedOperationException("Classe di utilità, non deve essere istanziata");
+    }
 }
