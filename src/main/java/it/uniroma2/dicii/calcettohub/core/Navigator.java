@@ -71,7 +71,7 @@ public class Navigator {
             mainStage.setScene(scene);
             mainStage.show();
 
-        } catch (IOException e) {
+        } catch (IOException _) {
             System.err.println("Errore nel caricamento della scena: " + name);
         }
     }

@@ -60,8 +60,4 @@ public abstract class BaseFormerController implements Resettable {
                             "-fx-font-size: %.1fpx; -fx-font-family: 'Tahoma'; -fx-font-weight: bold;")
             );
     }
-
-
-    @Override
-    public abstract void reset();
 }
