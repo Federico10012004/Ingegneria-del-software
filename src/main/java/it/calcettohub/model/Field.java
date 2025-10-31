@@ -1,23 +1,21 @@
 package it.calcettohub.model;
 
+import java.time.LocalTime;
+
 public class Field {
     private SurfaceType type;
     private boolean indoor;
     private double hourlyPrice;
-    private String address;
-    private String city;
-    private String postalCode;
+    private boolean isActive; // per gestire ristrutturazioni
     private FieldManager manager;
 
     public Field() {}
 
-    public Field (SurfaceType type, boolean indoor, double hourlyPrice, String address, String city, String postalCode, FieldManager manager) {
+    public Field (SurfaceType type, boolean indoor, double hourlyPrice, FieldManager manager) {
         this.type = type;
         this.indoor = indoor;
         this.hourlyPrice = hourlyPrice;
-        this.address = address;
-        this.city = city;
-        this.postalCode = postalCode;
+        this.isActive = true;
         this.manager = manager;
     }
 
@@ -45,29 +43,9 @@ public class Field {
         this.hourlyPrice = hourlyPrice;
     }
 
-    public String getAddress() {
-        return address;
-    }
+    public boolean isActive() { return isActive; }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
+    public void setActive(boolean active) { isActive = active; }
 
     public FieldManager getManager() {
         return manager;
@@ -75,5 +53,25 @@ public class Field {
 
     public void setManager(FieldManager manager) {
         this.manager = manager;
+    }
+
+    public String getAddress() {
+        return manager != null ? manager.getAddress() : null;
+    }
+
+    public String getCity() {
+        return manager != null ? manager.getCity() : null;
+    }
+
+    public String gePostalCode() {
+        return manager != null ? manager.getPostalCode() : null;
+    }
+
+    public LocalTime getOpeningTime() {
+        return (manager != null) ? manager.getOpeningTime() : null;
+    }
+
+    public LocalTime getClosingTime() {
+        return (manager != null) ? manager.getClosingTime() : null;
     }
 }

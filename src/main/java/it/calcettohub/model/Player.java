@@ -9,8 +9,8 @@ public class Player extends User {
         // costruttore vuoto JavaBean
     }
 
-    public Player (String email, String password, String name, String surname, LocalDate dateOfBirth, LocalDate registrationDate, PlayerPosition preferredPosition) {
-        super(email, password, Role.PLAYER, name, surname, dateOfBirth, registrationDate);
+    public Player (String email, String password, String name, String surname, LocalDate dateOfBirth, PlayerPosition preferredPosition) {
+        super(email, password, Role.PLAYER, name, surname, dateOfBirth);
         this.preferredPosition = preferredPosition;
     }
 

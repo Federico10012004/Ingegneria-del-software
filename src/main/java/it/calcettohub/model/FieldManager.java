@@ -2,6 +2,7 @@ package it.calcettohub.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FieldManager extends User {
@@ -10,26 +11,28 @@ public class FieldManager extends User {
     private String address;
     private String postalCode;
     private String city;
-    private List <Field> fields;
-    private List <Days> workingDays;
+    private int numFields;
+    private List<Field> fields;
+    private List<Days> workingDays;
     private LocalTime openingTime;
     private LocalTime closingTime;
     private String phoneNumber;
 
     public FieldManager() {}
 
-    public FieldManager (String email, String password, String name, String surname, LocalDate dateOfBirth, LocalDate registrationDate, String vatNumber, String structureName, String address, String postalCode, String city, List <Field> fields, List <Days> workingDays, LocalTime openingTime, LocalTime closingTime, String phoneNumber) {
-        super(email, password, Role.FIELDMANAGER, name, surname, dateOfBirth, registrationDate);
+    public FieldManager (String email, String password, String name, String surname, LocalDate dateOfBirth, String vatNumber, String structureName, String address, String postalCode, String city, int numFields, List<Days> workingDays, LocalTime openingTime, LocalTime closingTime, String phoneNumber) {
+        super(email, password, Role.FIELDMANAGER, name, surname, dateOfBirth);
         this.vatNumber = vatNumber;
         this.structureName = structureName;
         this.address = address;
         this.postalCode = postalCode;
         this.city = city;
-        this.fields = fields;
+        this.numFields = numFields;
         this.workingDays = workingDays;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
         this.phoneNumber = phoneNumber;
+        this.fields = new ArrayList<>();
     }
 
     public String getVatNumber() {
@@ -72,6 +75,14 @@ public class FieldManager extends User {
         this.city = city;
     }
 
+    public int getNumFields() {
+        return numFields;
+    }
+
+    public void setNumFields(int numFields) {
+        this.numFields = numFields;
+    }
+
     public List<Field> getFields() {
         return fields;
     }
@@ -110,5 +121,19 @@ public class FieldManager extends User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public void addField(Field field) {
+        if (field != null && !fields.contains(field)) {
+            fields.add(field);
+            field.setManager(this);
+        }
+    }
+
+    public void removeField(Field field) {
+        if (field != null && fields.contains(field)) {
+            fields.remove(field);
+            field.setManager(null);
+        }
     }
 }

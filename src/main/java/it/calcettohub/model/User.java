@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public abstract class User {
     private String email;
     private String password;
-    protected Role role;
+    private Role role;
     private String name;
     private String surname;
     private LocalDate dateOfBirth;
@@ -13,14 +13,14 @@ public abstract class User {
 
     public User() {}
 
-    public User (String email, String password, Role role, String name, String surname, LocalDate dateOfBirth, LocalDate registrationDate) {
+    public User (String email, String password, Role role, String name, String surname, LocalDate dateOfBirth) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
-        this.registrationDate = registrationDate;
+        this.registrationDate = LocalDate.now();
     }
 
     public Role getRole() {
@@ -73,9 +73,5 @@ public abstract class User {
 
     public LocalDate getRegistrationDate() {
         return registrationDate;
-    }
-
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
     }
 }
