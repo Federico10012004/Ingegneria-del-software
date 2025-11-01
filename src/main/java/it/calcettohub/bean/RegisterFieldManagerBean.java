@@ -1,7 +1,6 @@
 package it.calcettohub.bean;
 
 import it.calcettohub.model.Days;
-import it.calcettohub.model.Field;
 import it.calcettohub.util.ValidationUtils;
 
 import java.time.LocalTime;
@@ -147,6 +146,6 @@ public class RegisterFieldManagerBean extends RegistrationBean {
                 && isValidPhone()
                 && isValidNumFields()
                 && isValidWorkingDays()
-                && isValidWorkingDays();
+                && isValidWorkingHours();
     }
 }
