@@ -11,7 +11,7 @@ public abstract class User {
     private LocalDate dateOfBirth;
     private LocalDate registrationDate;
 
-    public User() {}
+    protected User() {}
 
     public User (String email, String password, Role role, String name, String surname, LocalDate dateOfBirth) {
         this.email = email;

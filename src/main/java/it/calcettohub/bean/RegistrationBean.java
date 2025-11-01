@@ -12,7 +12,7 @@ public abstract class RegistrationBean {
     private String surname;
     private LocalDate dateOfBirth;
 
-    public RegistrationBean() {}
+    protected RegistrationBean() {}
 
     public String getEmail() {
         return email;

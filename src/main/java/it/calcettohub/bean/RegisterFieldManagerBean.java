@@ -24,7 +24,9 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\+39)?\\s?[0-9]{9,10}$");
     private static final Pattern ADDRESS_PATTERN = Pattern.compile("^[A-Za-zÀ-ÖØ-öø-ÿ'’.\\-\\s]+\\s+\\d+[A-Za-z]?(?:/[A-Za-z0-9])?$");
 
-    public RegisterFieldManagerBean() {}
+    public RegisterFieldManagerBean() {
+        //empty
+    }
 
     public String getVatNumber() {
         return vatNumber;
@@ -127,7 +129,7 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     }
 
     private boolean isValidWorkingDays() {
-        return ValidationUtils.isNotNull(workingDays) && workingDays.isEmpty();
+        return ValidationUtils.isNotNull(workingDays) && !workingDays.isEmpty();
     }
 
     private boolean isValidWorkingHours() {

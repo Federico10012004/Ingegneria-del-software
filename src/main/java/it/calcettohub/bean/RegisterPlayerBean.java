@@ -6,7 +6,9 @@ import it.calcettohub.util.ValidationUtils;
 public class RegisterPlayerBean extends  RegistrationBean {
     private PlayerPosition preferredPosition;
 
-    public RegisterPlayerBean() {}
+    public RegisterPlayerBean() {
+        //empty
+    }
 
     public PlayerPosition getPreferredPosition() {
         return preferredPosition;
