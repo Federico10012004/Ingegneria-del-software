@@ -7,7 +7,7 @@ public class ValidationUtils {
     private ValidationUtils() {}
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$");
     private static final Pattern NAME_SURNAME_PATTERN = Pattern.compile("^[A-Za-zÀ-ÖØ-öø-ÿ'\\-\\s]+$");
 
     public static boolean isValidEmail(String email) {

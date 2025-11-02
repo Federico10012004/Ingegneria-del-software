@@ -9,8 +9,8 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     private int numFields;
     private String phoneNumber;
 
-    private static final Pattern VAT_PATTERN = Pattern.compile("^[0-9]{11}$");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\+39)?\\s?[0-9]{9,10}$");
+    private static final Pattern VAT_PATTERN = Pattern.compile("^\\d{11}$");
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\+39)?\\s?\\d{9,10}$");
 
     public RegisterFieldManagerBean() {
         //empty
