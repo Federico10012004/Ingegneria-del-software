@@ -1,5 +1,6 @@
 package it.calcettohub.model;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,13 +17,13 @@ public class Field {
     private Map<DayOfWeek, LocalTime[]> openingHours;
     private List<Booking> bookings;
     private boolean indoor;
-    private double hourlyPrice;
+    private BigDecimal hourlyPrice;
     private boolean isActive; // per gestire ristrutturazioni
     private FieldManager manager;
 
     public Field() {}
 
-    public Field (String fieldName, SurfaceType surface, String address, String city, boolean indoor, double hourlyPrice, FieldManager manager) {
+    public Field (String fieldName, SurfaceType surface, String address, String city, boolean indoor, BigDecimal hourlyPrice, FieldManager manager) {
         this.fieldName = fieldName;
         this.surface = surface;
         this.address = address;
@@ -133,11 +134,11 @@ public class Field {
         this.indoor = indoor;
     }
 
-    public double getHourlyPrice() {
+    public BigDecimal getHourlyPrice() {
         return hourlyPrice;
     }
 
-    public void setHourlyPrice(double hourlyPrice) {
+    public void setHourlyPrice(BigDecimal hourlyPrice) {
         this.hourlyPrice = hourlyPrice;
     }
 

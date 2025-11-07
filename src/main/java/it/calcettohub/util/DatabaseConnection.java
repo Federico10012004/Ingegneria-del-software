@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConnection {
+
+    private static DatabaseConnection instance;
     Properties p = new Properties();
     private Connection connection;
     String url;
@@ -20,22 +22,20 @@ public class DatabaseConnection {
             this.url = p.getProperty("db_url");
             this.user = p.getProperty("db_user");
             this.password = p.getProperty("db_password");
-            Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException | IOException | ClassNotFoundException _) {
+        } catch (SQLException | IOException _) {
             System.err.println("Connection failed.");
         }
     }
 
-    private static class LazyHolder {
-        private static final DatabaseConnection instance = new DatabaseConnection();
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
     }
 
-    public static DatabaseConnection getInstance() {
-        return LazyHolder.instance;
-    }
-
-    public Connection getConnection() {
+    public synchronized Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(url, user, password);
