@@ -12,6 +12,11 @@ public class Player extends User {
         this.preferredPosition = preferredPosition;
     }
 
+    public Player (String email, String name, String surname, LocalDate dateOfBirth, PlayerPosition preferredPosition) {
+        super(email, name, surname, dateOfBirth);
+        this.preferredPosition = preferredPosition;
+    }
+
     public PlayerPosition getPreferredPosition() {
         return preferredPosition;
     }

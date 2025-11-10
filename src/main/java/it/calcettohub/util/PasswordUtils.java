@@ -5,6 +5,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Objects;
 
@@ -46,5 +47,15 @@ public class PasswordUtils {
 
     private PasswordUtils() {
         throw new UnsupportedOperationException("Classe di utilità, non deve essere istanziata");
+    }
+
+    // Crea hash della password
+    public static String hashPassword(String plainPassword) {
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt(12)); // 12 = "cost factor"
+    }
+
+    // Verifica se la password è corretta
+    public static boolean checkPassword(String plainPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }

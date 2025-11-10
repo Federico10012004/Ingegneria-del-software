@@ -23,8 +23,9 @@ public class DatabaseConnection {
             this.user = p.getProperty("db_user");
             this.password = p.getProperty("db_password");
             this.connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException | IOException _) {
-            System.err.println("Connection failed.");
+        } catch (SQLException | IOException e) {
+            System.err.println("Connection failed:");
+            e.printStackTrace();
         }
     }
 

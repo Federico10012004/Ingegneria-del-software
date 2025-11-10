@@ -9,7 +9,6 @@ public abstract class User {
     private String name;
     private String surname;
     private LocalDate dateOfBirth;
-    private LocalDate registrationDate;
 
     protected User() {}
 
@@ -20,7 +19,13 @@ public abstract class User {
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
-        this.registrationDate = LocalDate.now();
+    }
+
+    protected User (String email, String name, String surname, LocalDate dateOfBirth) {
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Role getRole() {
@@ -69,9 +74,5 @@ public abstract class User {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
     }
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FieldManager extends User {
-    private String vatNumber; // partita IVA
+    private String vatNumber;
     private List<Field> fields;
     private String phoneNumber;
 
@@ -16,6 +16,12 @@ public class FieldManager extends User {
         this.vatNumber = vatNumber;
         this.phoneNumber = phoneNumber;
         this.fields = new ArrayList<>();
+    }
+
+    public FieldManager (String email, String name, String surname, LocalDate dateOfBirth, String vatNumber, String phoneNumber) {
+        super(email, name, surname, dateOfBirth);
+        this.vatNumber = vatNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getVatNumber() {

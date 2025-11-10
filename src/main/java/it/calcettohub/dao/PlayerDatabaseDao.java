@@ -6,15 +6,15 @@ import it.calcettohub.util.DatabaseConnection;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 
 public class PlayerDatabaseDao implements PlayerDao {
     private static PlayerDatabaseDao instance;
-    private static final String ADD_PLAYER = "{call add_player(?, ?, ?, ?, ?, ?, ?)}";
+    private static final String ADD_PLAYER = "{call add_player(?, ?, ?, ?, ?, ?)}";
     private static final String DELETE_PLAYER = "{call delete_player(?)}";
-    private static final String ALL_PLAYER = "{call find_all_player()}";
+    private static final String VIEW_PLAYER = "{call find_player(?)}";
 
     public static synchronized PlayerDatabaseDao getInstance() {
         if (instance == null) {
@@ -31,7 +31,6 @@ public class PlayerDatabaseDao implements PlayerDao {
         String surname = player.getSurname();
         LocalDate dateOfBirth = player.getDateOfBirth();
         PlayerPosition position = player.getPreferredPosition();
-        LocalDate registrationDate = player.getRegistrationDate();
 
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (CallableStatement stmt = conn.prepareCall(ADD_PLAYER)) {
@@ -41,7 +40,6 @@ public class PlayerDatabaseDao implements PlayerDao {
             stmt.setString(4, surname);
             stmt.setDate(5, java.sql.Date.valueOf(dateOfBirth));
             stmt.setString(6, position.name());
-            stmt.setDate(7, java.sql.Date.valueOf(registrationDate));
 
             stmt.execute();
         } catch (SQLException _) {
@@ -63,16 +61,25 @@ public class PlayerDatabaseDao implements PlayerDao {
     }
 
     @Override
-    public List<Player> findAll() {
+    public Player findByEmail(String player_email) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
 
-        try (CallableStatement stmt = conn.prepareCall()){
+        try (CallableStatement stmt = conn.prepareCall(VIEW_PLAYER)) {
+            stmt.setString(1, player_email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String email = rs.getString("email");
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                LocalDate dateOfBirth = LocalDate.parse(rs.getString("dateOfBirth"));
+                PlayerPosition position = PlayerPosition.valueOf(rs.getString("preferredPosition"));
+
+                return new Player(email, name, surname, dateOfBirth, position);
+            }
+        } catch (SQLException _) {
 
         }
-    }
-
-    @Override
-    public Player findByEmail(String email) {
-
+        return null;
     }
 }

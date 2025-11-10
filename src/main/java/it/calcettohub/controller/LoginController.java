@@ -1,10 +1,9 @@
-package it.calcettohub.controller;
+/*package it.calcettohub.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import it.calcettohub.core.Navigator;
-import it.calcettohub.dao.LoginDao;
 import it.calcettohub.util.PasswordUtils;
 
 public class LoginController extends BaseFormerController {
@@ -81,3 +80,4 @@ public class LoginController extends BaseFormerController {
         Navigator.show("Register");
     }
 }
+*/
