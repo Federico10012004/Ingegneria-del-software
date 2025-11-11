@@ -39,6 +39,9 @@ public abstract class DaoFactory {
                 case "demo":
                     instance = new DemoFactory();
                     break;
+                default:
+                    instance = new DemoFactory();
+                    break;
             }
         }
         return instance;
