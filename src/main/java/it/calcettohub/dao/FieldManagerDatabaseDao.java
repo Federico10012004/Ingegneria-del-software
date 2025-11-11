@@ -45,7 +45,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
 
             stmt.execute();
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
     }
 
@@ -58,16 +58,16 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
 
             stmt.execute();
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
     }
 
     @Override
-    public Optional<FieldManager> findByEmail(String manager_email) {
+    public Optional<FieldManager> findByEmail(String managerEmail) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
 
         try (CallableStatement stmt = conn.prepareCall(VIEW_MANAGER)) {
-            stmt.setString(1, manager_email);
+            stmt.setString(1, managerEmail);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -82,7 +82,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
                 return Optional.of(manager);
             }
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
         return Optional.empty();
     }

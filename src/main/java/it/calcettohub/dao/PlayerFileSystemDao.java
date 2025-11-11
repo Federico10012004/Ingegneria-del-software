@@ -26,6 +26,6 @@ public class PlayerFileSystemDao implements PlayerDao {
 
     @Override
     public Optional<Player> findByEmail(String email) {
-        return null;
+        return Optional.empty();
     }
 }

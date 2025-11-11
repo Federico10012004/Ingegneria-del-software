@@ -26,6 +26,6 @@ public class FieldManagerFileSystemDao implements FieldManagerDao {
 
     @Override
     public Optional<FieldManager> findByEmail(String email) {
-        return null;
+        return Optional.empty();
     }
 }

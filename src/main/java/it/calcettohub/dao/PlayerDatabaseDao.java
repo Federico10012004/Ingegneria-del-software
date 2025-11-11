@@ -44,7 +44,7 @@ public class PlayerDatabaseDao implements PlayerDao {
 
             stmt.execute();
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
     }
 
@@ -57,16 +57,16 @@ public class PlayerDatabaseDao implements PlayerDao {
 
             stmt.execute();
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
     }
 
     @Override
-    public Optional<Player> findByEmail(String player_email) {
+    public Optional<Player> findByEmail(String playerEmail) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
 
         try (CallableStatement stmt = conn.prepareCall(VIEW_PLAYER)) {
-            stmt.setString(1, player_email);
+            stmt.setString(1, playerEmail);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -80,7 +80,7 @@ public class PlayerDatabaseDao implements PlayerDao {
                 return Optional.of(player);
             }
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
         return Optional.empty();
     }
