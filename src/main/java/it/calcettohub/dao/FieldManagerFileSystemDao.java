@@ -2,6 +2,8 @@ package it.calcettohub.dao;
 
 import it.calcettohub.model.FieldManager;
 
+import java.util.Optional;
+
 public class FieldManagerFileSystemDao implements FieldManagerDao {
     private static FieldManagerFileSystemDao instance;
 
@@ -23,7 +25,7 @@ public class FieldManagerFileSystemDao implements FieldManagerDao {
     }
 
     @Override
-    public FieldManager findByEmail(String email) {
+    public Optional<FieldManager> findByEmail(String email) {
         return null;
     }
 }

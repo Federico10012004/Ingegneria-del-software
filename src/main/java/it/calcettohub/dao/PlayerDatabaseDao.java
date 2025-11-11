@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class PlayerDatabaseDao implements PlayerDao {
     private static PlayerDatabaseDao instance;
@@ -61,7 +62,7 @@ public class PlayerDatabaseDao implements PlayerDao {
     }
 
     @Override
-    public Player findByEmail(String player_email) {
+    public Optional<Player> findByEmail(String player_email) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
 
         try (CallableStatement stmt = conn.prepareCall(VIEW_PLAYER)) {
@@ -75,11 +76,12 @@ public class PlayerDatabaseDao implements PlayerDao {
                 LocalDate dateOfBirth = LocalDate.parse(rs.getString("dateOfBirth"));
                 PlayerPosition position = PlayerPosition.valueOf(rs.getString("preferredPosition"));
 
-                return new Player(email, name, surname, dateOfBirth, position);
+                Player player = new Player(email, name, surname, dateOfBirth, position);
+                return Optional.of(player);
             }
         } catch (SQLException _) {
 
         }
-        return null;
+        return Optional.empty();
     }
 }

@@ -2,6 +2,8 @@ package it.calcettohub.dao;
 
 import it.calcettohub.model.Player;
 
+import java.util.Optional;
+
 public class PlayerFileSystemDao implements PlayerDao {
     private static PlayerFileSystemDao instance;
 
@@ -23,7 +25,7 @@ public class PlayerFileSystemDao implements PlayerDao {
     }
 
     @Override
-    public Player findByEmail(String email) {
+    public Optional<Player> findByEmail(String email) {
         return null;
     }
 }

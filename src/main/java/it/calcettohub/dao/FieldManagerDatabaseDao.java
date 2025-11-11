@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class FieldManagerDatabaseDao implements FieldManagerDao {
     private static FieldManagerDatabaseDao instance;
@@ -43,9 +44,8 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.setString(7, phoneNumber);
 
             stmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore durante l'inserimento del manager", e);
+        } catch (SQLException _) {
+
         }
     }
 
@@ -63,7 +63,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
     }
 
     @Override
-    public FieldManager findByEmail(String manager_email) {
+    public Optional<FieldManager> findByEmail(String manager_email) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
 
         try (CallableStatement stmt = conn.prepareCall(VIEW_MANAGER)) {
@@ -78,11 +78,12 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
                 String vatNumber = rs.getString("vatNumber");
                 String phoneNumber = rs.getString("phoneNumber");
 
-                return new FieldManager(email, name, surname, dateOfBirth, vatNumber, phoneNumber);
+                FieldManager manager = new FieldManager(email, name, surname, dateOfBirth, vatNumber, phoneNumber);
+                return Optional.of(manager);
             }
         } catch (SQLException _) {
 
         }
-        return null;
+        return Optional.empty();
     }
 }

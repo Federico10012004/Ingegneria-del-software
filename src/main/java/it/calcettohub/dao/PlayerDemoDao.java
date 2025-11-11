@@ -1,9 +1,18 @@
 package it.calcettohub.dao;
 
 import it.calcettohub.model.Player;
+import it.calcettohub.util.DemoRepository;
+
+import java.util.Map;
+import java.util.Optional;
 
 public class PlayerDemoDao implements PlayerDao {
     private static PlayerDemoDao instance;
+    private final Map<String, Player> players;
+
+    public PlayerDemoDao() {
+        this.players = DemoRepository.getInstance().getPlayers();
+    }
 
     public static synchronized PlayerDemoDao getInstance() {
         if (instance == null) {
@@ -13,17 +22,26 @@ public class PlayerDemoDao implements PlayerDao {
     }
 
     @Override
-    public void add(Player manager) {
+    public void add(Player player) {
+        String email = player.getEmail();
+        if (players.containsKey(email)) {
+            return;
+        }
 
+        players.put(email,player);
     }
 
     @Override
     public void delete(String email) {
+        if (!players.containsKey(email)) {
+            return;
+        }
 
+        players.remove(email);
     }
 
     @Override
-    public Player findByEmail(String email) {
-        return null;
+    public Optional<Player> findByEmail(String email) {
+        return Optional.ofNullable(players.get(email));
     }
 }
