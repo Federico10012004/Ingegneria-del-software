@@ -5,8 +5,6 @@ import java.time.LocalDate;
 public class Player extends User {
     private PlayerPosition preferredPosition;
 
-    public Player() {}
-
     public Player (String email, String password, String name, String surname, LocalDate dateOfBirth, PlayerPosition preferredPosition) {
         super(email, password, Role.PLAYER, name, surname, dateOfBirth);
         this.preferredPosition = preferredPosition;

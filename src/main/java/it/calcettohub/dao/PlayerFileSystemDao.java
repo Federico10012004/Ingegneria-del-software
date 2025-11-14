@@ -20,6 +20,16 @@ public class PlayerFileSystemDao implements PlayerDao {
     }
 
     @Override
+    public void update(Player player) {
+
+    }
+
+    @Override
+    public void updatePassword(String email, String newPassword) {
+
+    }
+
+    @Override
     public void delete(String email) {
 
     }

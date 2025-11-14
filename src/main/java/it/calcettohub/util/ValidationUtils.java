@@ -11,11 +11,11 @@ public class ValidationUtils {
     private static final Pattern NAME_SURNAME_PATTERN = Pattern.compile("^[A-Za-zÀ-ÖØ-öø-ÿ'\\-\\s]+$");
 
     public static boolean isValidEmail(String email) {
-        return isNotEmpty(email) && EMAIL_PATTERN.matcher(email).matches();
+        return isNotNull(email) && EMAIL_PATTERN.matcher(email).matches();
     }
 
     public static boolean isValidPassword(String password) {
-        return isNotEmpty(password) && PASSWORD_PATTERN.matcher(password).matches();
+        return isNotNull(password) && PASSWORD_PATTERN.matcher(password).matches();
     }
 
     public static boolean passwordMatch(String password, String confirmPassword) {

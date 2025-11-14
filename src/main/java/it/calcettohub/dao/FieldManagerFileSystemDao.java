@@ -20,6 +20,16 @@ public class FieldManagerFileSystemDao implements FieldManagerDao {
     }
 
     @Override
+    public void update(FieldManager manager) {
+
+    }
+
+    @Override
+    public void updatePassword(String email, String newPassword) {
+
+    }
+
+    @Override
     public void delete(String email) {
 
     }

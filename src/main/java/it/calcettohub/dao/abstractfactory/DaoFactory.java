@@ -8,9 +8,9 @@ import java.util.Properties;
 
 public abstract class DaoFactory {
 
-    public abstract FieldDao createCampoDao();
-    public abstract PlayerDao createPlayerDao();
-    public abstract FieldManagerDao createFieldManagerDao();
+    public abstract FieldDao getFieldDao();
+    public abstract PlayerDao getPlayerDao();
+    public abstract FieldManagerDao getFieldManagerDao();
 
     private static DaoFactory instance;
     private static final String CONFIG_PROPERTIES = "config.properties";

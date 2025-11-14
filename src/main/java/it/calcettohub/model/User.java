@@ -1,6 +1,7 @@
 package it.calcettohub.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public abstract class User {
     private String email;
@@ -9,8 +10,6 @@ public abstract class User {
     private String name;
     private String surname;
     private LocalDate dateOfBirth;
-
-    protected User() {}
 
     protected User (String email, String password, Role role, String name, String surname, LocalDate dateOfBirth) {
         this.email = email;

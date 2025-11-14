@@ -9,8 +9,6 @@ public class FieldManager extends User {
     private List<Field> fields;
     private String phoneNumber;
 
-    public FieldManager() {}
-
     public FieldManager (String email, String password, String name, String surname, LocalDate dateOfBirth, String vatNumber, String phoneNumber) {
         super(email, password, Role.FIELDMANAGER, name, surname, dateOfBirth);
         this.vatNumber = vatNumber;

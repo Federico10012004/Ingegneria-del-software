@@ -19,7 +19,11 @@ public abstract class RegistrationBean {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (ValidationUtils.isValidEmail(email)) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Email non valida.");
+        }
     }
 
     public String getPassword() {
@@ -27,7 +31,11 @@ public abstract class RegistrationBean {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (ValidationUtils.isValidPassword(password)) {
+            this.password = password;
+        } else {
+            throw new IllegalArgumentException("Password non valida.");
+        }
     }
 
     public String getConfirmPassword() {
@@ -35,7 +43,11 @@ public abstract class RegistrationBean {
     }
 
     public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+        if (ValidationUtils.passwordMatch(password, confirmPassword)) {
+            this.confirmPassword = confirmPassword;
+        } else {
+            throw new IllegalArgumentException("Le password inserite sono differenti.");
+        }
     }
 
     public String getName() {
@@ -43,7 +55,11 @@ public abstract class RegistrationBean {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (ValidationUtils.isValidName(name)) {
+            this.name = name;
+        } else {
+            throw new IllegalArgumentException("Nome non valido.");
+        }
     }
 
     public String getSurname() {
@@ -51,7 +67,11 @@ public abstract class RegistrationBean {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        if (ValidationUtils.isValidName(surname)) {
+            this.surname = surname;
+        } else {
+            throw new IllegalArgumentException("Cognome non valido.");
+        }
     }
 
     public LocalDate getDateOfBirth() {
@@ -59,21 +79,10 @@ public abstract class RegistrationBean {
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    protected final boolean validateCommonFields() {
-        return ValidationUtils.isValidEmail(email)
-                && ValidationUtils.isValidPassword(password)
-                && ValidationUtils.passwordMatch(password, confirmPassword)
-                && ValidationUtils.isValidName(name)
-                && ValidationUtils.isValidName(surname)
-                && ValidationUtils.isValidAge(dateOfBirth);
-    }
-
-    public abstract boolean validateSpecificFields();
-
-    public final boolean isValid() {
-        return validateCommonFields() && validateSpecificFields();
+        if (ValidationUtils.isValidAge(dateOfBirth)) {
+            this.dateOfBirth = dateOfBirth;
+        } else {
+            throw new IllegalArgumentException("Età non consentita.");
+        }
     }
 }

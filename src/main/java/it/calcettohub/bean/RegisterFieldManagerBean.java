@@ -21,7 +21,11 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     }
 
     public void setVatNumber(String vatNumber) {
-        this.vatNumber = vatNumber;
+        if (ValidationUtils.isNotNull(vatNumber) && VAT_PATTERN.matcher(vatNumber).matches()) {
+            this.vatNumber = vatNumber;
+        } else {
+            throw new IllegalArgumentException("Partita IVA non valida.");
+        }
     }
 
     public int getNumFields() {
@@ -29,7 +33,11 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     }
 
     public void setNumFields(int numFields) {
-        this.numFields = numFields;
+        if (numFields > 0) {
+            this.numFields = numFields;
+        } else {
+            throw new IllegalArgumentException("Numero campi non valido.");
+        }
     }
 
     public String getPhoneNumber() {
@@ -37,25 +45,10 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    private boolean isValidVatNumber() {
-        return ValidationUtils.isNotEmpty(vatNumber) && VAT_PATTERN.matcher(vatNumber).matches();
-    }
-
-    private boolean isValidPhone() {
-        return ValidationUtils.isNotEmpty(phoneNumber) && PHONE_PATTERN.matcher(phoneNumber).matches();
-    }
-
-    private boolean isValidNumFields() {
-        return numFields > 0;
-    }
-
-    @Override
-    public boolean validateSpecificFields() {
-        return isValidVatNumber()
-                && isValidPhone()
-                && isValidNumFields();
+        if (ValidationUtils.isNotNull(phoneNumber) && PHONE_PATTERN.matcher(phoneNumber).matches()) {
+            this.phoneNumber = phoneNumber;
+        } else {
+            throw new IllegalArgumentException("Numero di telefono non valido.");
+        }
     }
 }

@@ -2,6 +2,7 @@ package it.calcettohub.dao;
 
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.util.DatabaseConnection;
+import it.calcettohub.util.PasswordUtils;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -15,6 +16,8 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
     private static final String ADD_MANAGER = "{call add_manager(?, ?, ?, ?, ?, ?, ?)}";
     private static final String DELETE_MANAGER = "{call delete_manager(?)}";
     private static final String VIEW_MANAGER = "{call find_manager(?)}";
+    private static final String UPDATE_MANAGER = "{call update_manager(?, ?, ?, ?, ?)}";
+    private static final String UPDATE_PASSWORD_MANAGER = "{call update_password_manager(?, ?)}";
 
     public static synchronized FieldManagerDatabaseDao getInstance() {
         if (instance == null) {
@@ -26,7 +29,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
     @Override
     public void add(FieldManager manager) {
         String email = manager.getEmail();
-        String password = manager.getPassword();
+        String password = PasswordUtils.hashPassword(manager.getPassword());
         String name = manager.getName();
         String surname = manager.getSurname();
         LocalDate dateOfBirth = manager.getDateOfBirth();
@@ -46,6 +49,43 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.execute();
         } catch (SQLException _) {
             // Eccezione da gestire
+        }
+    }
+
+    @Override
+    public void update(FieldManager manager) {
+        String email = manager.getEmail();
+        String name = manager.getName();
+        String surname = manager.getSurname();
+        LocalDate dateOfBirth = manager.getDateOfBirth();
+        String phone = manager.getPhoneNumber();
+
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (CallableStatement stmt = conn.prepareCall(UPDATE_MANAGER)) {
+            stmt.setString(1, email);
+            stmt.setString(2, name);
+            stmt.setString(3, surname);
+            stmt.setDate(4, java.sql.Date.valueOf(dateOfBirth));
+            stmt.setString(5, phone);
+
+            stmt.executeUpdate();
+        } catch (SQLException _) {
+            // Eccezione da gestire
+        }
+    }
+
+    @Override
+    public void updatePassword(String email, String newPassword) {
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        String hashedPassword = PasswordUtils.hashPassword(newPassword);
+
+        try (CallableStatement stmt = conn.prepareCall(UPDATE_PASSWORD_MANAGER)) {
+            stmt.setString(1, email);
+            stmt.setString(2, hashedPassword);
+
+            stmt.executeUpdate();
+        } catch (SQLException _) {
+
         }
     }
 
@@ -72,13 +112,14 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
 
             if (rs.next()) {
                 String email = rs.getString("email");
+                String password = rs.getString("password");
                 String name = rs.getString("name");
                 String surname = rs.getString("surname");
                 LocalDate dateOfBirth = LocalDate.parse(rs.getString("dateOfBirth"));
                 String vatNumber = rs.getString("vatNumber");
                 String phoneNumber = rs.getString("phoneNumber");
 
-                FieldManager manager = new FieldManager(email, name, surname, dateOfBirth, vatNumber, phoneNumber);
+                FieldManager manager = new FieldManager(email, password, name, surname, dateOfBirth, vatNumber, phoneNumber);
                 return Optional.of(manager);
             }
         } catch (SQLException _) {

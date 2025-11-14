@@ -1,83 +1,70 @@
-/*package it.calcettohub.controller;
+package it.calcettohub.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import it.calcettohub.core.Navigator;
+import it.calcettohub.bean.LoginBean;
+import it.calcettohub.dao.FieldManagerDao;
+import it.calcettohub.dao.PlayerDao;
+import it.calcettohub.dao.abstractfactory.DaoFactory;
+import it.calcettohub.exceptions.EmailNotFoundException;
+import it.calcettohub.exceptions.InvalidPasswordException;
+import it.calcettohub.model.FieldManager;
+import it.calcettohub.model.Player;
+import it.calcettohub.model.Role;
+import it.calcettohub.model.User;
+import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PasswordUtils;
+import it.calcettohub.util.SessionManager;
 
-public class LoginController extends BaseFormerController {
+import java.util.Optional;
 
-    @FXML private Label errorLabel;
-    @FXML private Label emptyFieldError;
-    @FXML private TextField emailField;
-    @FXML private TextField textField;
-    @FXML private PasswordField passwordField;
-    @FXML private ImageView eyeImageView;
+public class LoginController {
 
-    private boolean isVisible = false;
-    private final LoginDao loginDao = new LoginDao();
+    public User login(LoginBean bean) throws EmailNotFoundException, InvalidPasswordException {
+        Role role = AppContext.getSelectedRole();
+        String email = bean.getEmail();
+        String password = bean.getPassword();
 
-    @FXML
-    public void initialize() {
-        PasswordUtils.bindPasswordFields(passwordField, textField, isVisible);
-        setEyeIcon();
-        hideAllErrors(errorLabel, emptyFieldError);
-        setupResponsiveLabel(30.0);
-    }
+        switch (role) {
+            case PLAYER -> {
+                PlayerDao dao = DaoFactory.getInstance().getPlayerDao();
+                Optional<Player> opt = dao.findByEmail(email);
 
-    private void setEyeIcon() {
-        PasswordUtils.updateEyeIcon(eyeImageView, isVisible);
-    }
+                if (opt.isEmpty()) {
+                    throw new EmailNotFoundException();
+                } else {
+                    Player player = opt.get();
+                    boolean validation = PasswordUtils.checkPassword(password, player.getPassword());
 
-    @FXML
-    private void togglePasswordVisibility() {
-        isVisible = PasswordUtils.togglePasswordVisibility(passwordField, textField, isVisible);
-        setEyeIcon();
-    }
-
-    @FXML
-    private void handleLogin() {
-        String email = emailField.getText().trim();
-        String password = isVisible ? textField.getText().trim() : passwordField.getText().trim();
-
-        int result = loginDao.checkCredentials(email, password);
-        switch (result) {
-            case 1 -> showError(errorLabel, emptyFieldError);
-            case -1 -> showError(emptyFieldError, errorLabel);
-            case 0 -> {
-                hideAllErrors(errorLabel, emptyFieldError);
-                System.out.println("✅ Login riuscito!");
+                    if (validation) {
+                        SessionManager.getInstance().createSession(email);
+                        return player;
+                    } else {
+                        throw new InvalidPasswordException();
+                    }
+                }
             }
-            default -> System.err.println("Errore, caso inatteso nel login");
+
+            case FIELDMANAGER -> {
+                FieldManagerDao dao = DaoFactory.getInstance().getFieldManagerDao();
+                Optional<FieldManager> opt = dao.findByEmail(email);
+
+                if (opt.isEmpty()) {
+                    throw new EmailNotFoundException();
+                } else {
+                    FieldManager fieldManager = opt.get();
+                    boolean validation = PasswordUtils.checkPassword(password, fieldManager.getPassword());
+
+                    if (validation) {
+                        SessionManager.getInstance().createSession(email);
+                        return fieldManager;
+                    } else {
+                        throw new InvalidPasswordException();
+                    }
+                }
+            }
+
+            default -> {
+                return null;
+            }
         }
     }
-
-    @Override
-    public void reset() {
-        emailField.clear();
-        passwordField.clear();
-        textField.clear();
-        hideAllErrors(errorLabel, emptyFieldError);
-
-        isVisible = false;
-        textField.setVisible(false);
-        textField.setManaged(false);
-        passwordField.setVisible(true);
-        passwordField.setManaged(true);
-        setEyeIcon();
-    }
-
-    @FXML
-    public void switchToHome() {
-        Navigator.show("Welcome");
-    }
-
-    @FXML
-    public void switchToRegister() {
-        Navigator.setUserType(Navigator.getUserType());
-        Navigator.setPreviousPage("Altro");
-        Navigator.show("Register");
-    }
 }
-*/

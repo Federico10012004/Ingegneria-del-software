@@ -15,11 +15,10 @@ public class RegisterPlayerBean extends  RegistrationBean {
     }
 
     public void setPreferredPosition(PlayerPosition preferredPosition) {
-        this.preferredPosition = preferredPosition;
-    }
-
-    @Override
-    public boolean validateSpecificFields() {
-        return ValidationUtils.isNotNull(preferredPosition);
+        if (ValidationUtils.isNotNull(preferredPosition)) {
+            this.preferredPosition = preferredPosition;
+        } else {
+            throw new IllegalArgumentException("Posizione non valida.");
+        }
     }
 }

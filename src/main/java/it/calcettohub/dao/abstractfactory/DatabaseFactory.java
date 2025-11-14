@@ -4,15 +4,15 @@ import it.calcettohub.dao.*;
 
 public class DatabaseFactory extends DaoFactory {
 
-    public FieldDao createCampoDao() {
+    public FieldDao getFieldDao() {
         return FieldDatabaseDao.getInstance();
     }
 
-    public PlayerDao createPlayerDao() {
+    public PlayerDao getPlayerDao() {
         return PlayerDatabaseDao.getInstance();
     }
 
-    public FieldManagerDao createFieldManagerDao() {
+    public FieldManagerDao getFieldManagerDao() {
         return FieldManagerDatabaseDao.getInstance();
     }
 }
