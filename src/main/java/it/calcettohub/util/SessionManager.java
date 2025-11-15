@@ -13,11 +13,15 @@ public class SessionManager {
         return instance;
     }
 
-    public void createSession(String userEmail) {
+    public synchronized void createSession(String userEmail) {
+        if (currentSession != null && !currentSession.isExpired()) {
+            currentSession.resetExpiryTime();
+            return;
+        }
         currentSession = new Session(userEmail);
     }
 
-    public Session getCurrentSession() {
+    public synchronized Session getCurrentSession() {
         if (currentSession == null) {
             return null;
         }
@@ -29,13 +33,13 @@ public class SessionManager {
         return currentSession;
     }
 
-    public void refreshSession() {
+    public synchronized void refreshSession() {
         if (currentSession != null && !currentSession.isExpired()) {
             currentSession.resetExpiryTime();
         }
     }
 
-    public void closeSession() {
+    public synchronized void closeSession() {
         currentSession = null;
     }
 }

@@ -1,4 +1,4 @@
-package it.calcettohub.core;
+package it.calcettohub.util;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

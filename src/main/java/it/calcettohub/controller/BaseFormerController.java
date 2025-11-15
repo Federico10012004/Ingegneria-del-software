@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import it.calcettohub.core.Navigator;
+import it.calcettohub.util.Navigator;
 
 import java.util.Locale;
 

@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import it.calcettohub.core.Navigator;
+import it.calcettohub.util.Navigator;
 
 public class WelcomeController {
 

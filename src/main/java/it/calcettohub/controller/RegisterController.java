@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import it.calcettohub.core.Navigator;
+import it.calcettohub.util.Navigator;
 import it.calcettohub.util.PasswordUtils;
 import javafx.scene.layout.StackPane;
 

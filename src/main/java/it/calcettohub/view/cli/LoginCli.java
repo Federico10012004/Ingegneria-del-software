@@ -3,45 +3,59 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.LoginBean;
 import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.InvalidPasswordException;
 import it.calcettohub.model.User;
 import it.calcettohub.util.AppContext;
+import it.calcettohub.util.PageManager;
 import it.calcettohub.util.Session;
 import it.calcettohub.util.SessionManager;
-
-import java.io.IOException;
 
 public class LoginCli extends CliContext {
     private final LoginController controller = new LoginController();
 
     public void login() {
 
-        try {
-            System.out.println("=== Login " + AppContext.getSelectedRole() + " ===");
-            String email = requestString("Email: ");
-            String password = requestString("Password: ");
+        // ESC → torna alla schermata precedente
+        CliContext.setEscHandler(() -> {
+            print("Torno alla pagina precedente...");
+            PageManager.pop();
+        });
 
-            LoginBean bean = new LoginBean();
-            bean.setEmail(email);
-            bean.setPassword(password);
+        while (true) {
+            try {
+                printTitle("Login " + AppContext.getSelectedRole());
+                String email = requestString("Email: ");
+                if (email == null) return;
+                String password = requestString("Password: ");
+                if (password == null) return;
+                printEscInfo();
 
-            User user = controller.login(bean);
+                LoginBean bean = new LoginBean();
+                bean.setEmail(email);
+                bean.setPassword(password);
 
-            Session session = SessionManager.getInstance().getCurrentSession();
+                User user = controller.login(bean);
 
-            if (session == null) {
-                System.err.println("Errore: impossibile creare la sessione.");
+                Session session = SessionManager.getInstance().getCurrentSession();
+
+                if (session == null) {
+                    System.err.println("Errore: impossibile creare la sessione.");
+                    return;
+                }
+
+                print("Login effettuato con successo!");
+                switch (user.getRole()) {
+                    case PLAYER -> new HomePagePlayerCli().start();
+                    case FIELDMANAGER -> new HomePageFieldManagerCli().start();
+                }
+                break;
+            } catch (EscPressedException e) {
+                // Return to the previous page
                 return;
+            } catch (EmailNotFoundException | InvalidPasswordException e) {
+                showErrorMessage(e);
             }
-
-            System.out.println("Login effettuato con successo!");
-            switch (user.getRole()) {
-                case PLAYER -> new HomePagePlayerCli().start();
-                case FIELDMANAGER -> new HomePageFieldManagerCli().start();
-            }
-
-        } catch (EmailNotFoundException | InvalidPasswordException | IOException e) {
-            showErrorMessage(e);
         }
     }
 }

@@ -2,7 +2,7 @@ package it.calcettohub;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import it.calcettohub.core.Navigator;
+import it.calcettohub.util.Navigator;
 
 public class Main extends Application {
 

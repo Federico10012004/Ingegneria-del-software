@@ -2,30 +2,31 @@ package it.calcettohub.view.cli;
 
 import it.calcettohub.model.Role;
 import it.calcettohub.util.AppContext;
-
-import java.io.IOException;
+import it.calcettohub.util.PageManager;
 
 public class RoleSelectionCli extends CliContext {
 
     public void start() {
 
-        System.out.println("Benvenuto in CalcettoHub");
-        System.out.println("Scegli il tuo ruolo");
-        System.out.println("1) Giocatore");
-        System.out.println("2) Gestore campo");
+        setEscHandler(()-> {
+            print("Uscita dall'app ...");
+            System.exit(0);
+        });
 
-        try {
-            int role = Integer.parseInt(requestString());
+        print("Benvenuto in CalcettoHub");
+        print("Scegli il tuo ruolo");
+        print("1) Giocatore");
+        print("2) Gestore campo");
+        print("Digita esc per uscire");
 
-            if (role == 1) {
-                AppContext.setSelectedRole(Role.PLAYER);
-            } else {
-                AppContext.setSelectedRole(Role.FIELDMANAGER);
-            }
 
-            new LoginCli().login();
-        } catch (IOException _) {
+        int role = requestInt();
 
+        if (role == 1) {
+            AppContext.setSelectedRole(Role.PLAYER);
+        } else {
+            AppContext.setSelectedRole(Role.FIELDMANAGER);
         }
+        PageManager.push(()->new LoginCli().login());
     }
 }

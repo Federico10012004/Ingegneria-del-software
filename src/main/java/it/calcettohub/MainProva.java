@@ -1,5 +1,6 @@
 package it.calcettohub;
 
+import it.calcettohub.util.PageManager;
 import it.calcettohub.view.cli.RoleSelectionCli;
 
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ public class MainProva {
             int scelta = Integer.parseInt(reader.readLine());
 
             if (scelta == 1) {
-                new RoleSelectionCli().start();
+                PageManager.push(()->new RoleSelectionCli().start());
             } else {
                 System.out.println("Gui da implmentare");
             }
