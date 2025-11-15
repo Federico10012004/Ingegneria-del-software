@@ -48,6 +48,9 @@ public class LoginCli extends CliContext {
                 switch (user.getRole()) {
                     case PLAYER -> new HomePagePlayerCli().start();
                     case FIELDMANAGER -> new HomePageFieldManagerCli().start();
+                    default -> {
+                        return;
+                    }
                 }
                 break;
             } catch (EscPressedException e) {
