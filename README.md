@@ -1,0 +1,1 @@
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Federico10012004_Ingegneria-del-software)](https://sonarcloud.io/summary/new_code?id=Federico10012004_Ingegneria-del-software)
