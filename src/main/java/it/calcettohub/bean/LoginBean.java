@@ -18,7 +18,7 @@ public class LoginBean {
         if (ValidationUtils.isValidEmail(email)) {
             this.email = email;
         } else {
-            throw new IllegalArgumentException("Email non valida.");
+            throw new IllegalArgumentException("Formato email non valido.");
         }
     }
 
@@ -30,7 +30,7 @@ public class LoginBean {
         if (ValidationUtils.isValidPassword(password)) {
             this.password = password;
         } else {
-            throw new IllegalArgumentException("Password non valida.");
+            throw new IllegalArgumentException("Formato password non valido.");
         }
     }
 }

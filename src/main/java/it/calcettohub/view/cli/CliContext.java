@@ -43,7 +43,7 @@ public abstract class CliContext {
             return input;
 
         } catch (IOException e) {
-            throw new RuntimeException("Errore nella lettura dell'input: ", e);
+            throw new IllegalArgumentException("Errore nella lettura dell'input: ", e);
         }
     }
 
@@ -77,5 +77,6 @@ public abstract class CliContext {
 
     protected void showErrorMessage(Exception e) {
         System.err.println(e.getMessage());
+        System.err.flush();
     }
 }
