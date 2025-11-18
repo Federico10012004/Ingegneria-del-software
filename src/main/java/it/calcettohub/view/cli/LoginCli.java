@@ -22,26 +22,35 @@ public class LoginCli extends CliContext {
             PageManager.pop();
         });
 
-        Exception lastError = null;
+        LoginBean bean = new LoginBean();
 
         while (true) {
 
-            if (lastError != null) {
-                showErrorMessage(lastError);
-                System.out.println();
-            }
             printTitle("Login " + AppContext.getSelectedRole());
             printEscInfo();
             System.out.println();
 
+            while (true) {
+                try {
+                    String email = requestString("Email: ");
+                    bean.setEmail(email);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    showExceptionMessage(e);
+                }
+            }
+
+            while (true) {
+                try {
+                    String password = requestString("Password: ");
+                    bean.setPassword(password);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    showExceptionMessage(e);
+                }
+            }
+
             try {
-                String email = requestString("Email: ");
-                String password = requestString("Password: ");
-
-                LoginBean bean = new LoginBean();
-                bean.setEmail(email);
-                bean.setPassword(password);
-
                 User user = controller.login(bean);
 
                 Session session = SessionManager.getInstance().getCurrentSession();
@@ -64,7 +73,7 @@ public class LoginCli extends CliContext {
                 // Return to the previous page
                 return;
             } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
-                lastError = e;
+                showExceptionMessage(e);
             }
         }
     }

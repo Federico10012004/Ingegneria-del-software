@@ -19,14 +19,31 @@ public class RoleSelectionCli extends CliContext {
         print("2) Gestore campo");
         print("Digita esc per uscire");
 
+        while (true) {
+            try {
+                int role = requestIntInRange("Scelta: ", 1, 2);
 
-        int role = requestInt();
+                boolean account = requestBoolean("Hai già un account(s/n): ");
+                if (role == 1) {
+                    AppContext.setSelectedRole(Role.PLAYER);
+                    if (!account) {
+                        clearScreen();
+                        PageManager.push(()->new RegistrationPlayerCli().playerRegistration());
+                    }
+                } else {
+                    AppContext.setSelectedRole(Role.FIELDMANAGER);
+                    if (!account) {
+                        clearScreen();
+                        PageManager.push(()->new RegistrationFieldManagerCli().fieldManagerRegistration());
+                    }
+                }
 
-        if (role == 1) {
-            AppContext.setSelectedRole(Role.PLAYER);
-        } else {
-            AppContext.setSelectedRole(Role.FIELDMANAGER);
+                clearScreen();
+                PageManager.push(()->new LoginCli().login());
+                break;
+            } catch (IllegalArgumentException e) {
+                showExceptionMessage(e);
+            }
         }
-        PageManager.push(()->new LoginCli().login());
     }
 }

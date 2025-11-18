@@ -19,10 +19,10 @@ public abstract class RegistrationBean {
     }
 
     public void setEmail(String email) {
-        if (ValidationUtils.isValidEmail(email)) {
+        if (ValidationUtils.isValidEmail(email.trim().toLowerCase())) {
             this.email = email;
         } else {
-            throw new IllegalArgumentException("Email non valida.");
+            throw new IllegalArgumentException("Formato email non valido.");
         }
     }
 
@@ -34,7 +34,7 @@ public abstract class RegistrationBean {
         if (ValidationUtils.isValidPassword(password)) {
             this.password = password;
         } else {
-            throw new IllegalArgumentException("Password non valida.");
+            throw new IllegalArgumentException("Formato password non valido.");
         }
     }
 
@@ -55,10 +55,10 @@ public abstract class RegistrationBean {
     }
 
     public void setName(String name) {
-        if (ValidationUtils.isValidName(name)) {
+        if (ValidationUtils.isNotEmpty(name)) {
             this.name = name;
         } else {
-            throw new IllegalArgumentException("Nome non valido.");
+            throw new IllegalArgumentException("Nome non inserito.");
         }
     }
 
@@ -67,10 +67,10 @@ public abstract class RegistrationBean {
     }
 
     public void setSurname(String surname) {
-        if (ValidationUtils.isValidName(surname)) {
+        if (ValidationUtils.isNotEmpty(surname)) {
             this.surname = surname;
         } else {
-            throw new IllegalArgumentException("Cognome non valido.");
+            throw new IllegalArgumentException("Cognome non inserito.");
         }
     }
 
@@ -79,10 +79,10 @@ public abstract class RegistrationBean {
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
-        if (ValidationUtils.isValidAge(dateOfBirth)) {
+        if (ValidationUtils.isValidDate(dateOfBirth)) {
             this.dateOfBirth = dateOfBirth;
         } else {
-            throw new IllegalArgumentException("Età non consentita.");
+            throw new IllegalArgumentException("La data di nascita non può essere successiva ad oggi.");
         }
     }
 }

@@ -15,7 +15,7 @@ public class LoginBean {
     }
 
     public void setEmail(String email) {
-        if (ValidationUtils.isValidEmail(email)) {
+        if (ValidationUtils.isValidEmail(email.trim().toLowerCase())) {
             this.email = email;
         } else {
             throw new IllegalArgumentException("Formato email non valido.");

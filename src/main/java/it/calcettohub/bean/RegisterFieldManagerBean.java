@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 public class RegisterFieldManagerBean extends RegistrationBean {
     private String vatNumber;
-    private int numFields;
     private String phoneNumber;
 
     private static final Pattern VAT_PATTERN = Pattern.compile("^\\d{11}$");
@@ -25,18 +24,6 @@ public class RegisterFieldManagerBean extends RegistrationBean {
             this.vatNumber = vatNumber;
         } else {
             throw new IllegalArgumentException("Partita IVA non valida.");
-        }
-    }
-
-    public int getNumFields() {
-        return numFields;
-    }
-
-    public void setNumFields(int numFields) {
-        if (numFields > 0) {
-            this.numFields = numFields;
-        } else {
-            throw new IllegalArgumentException("Numero campi non valido.");
         }
     }
 
