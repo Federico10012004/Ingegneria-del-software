@@ -12,6 +12,7 @@ import it.calcettohub.util.PasswordUtils;
 import javafx.scene.layout.StackPane;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class FieldManagerRegistrationGui extends BaseFormerGui {
     @FXML private ImageView eyeImageView;
@@ -98,7 +99,7 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
             registerBox.setManaged(false);
             successBox.setVisible(true);
             successBox.setManaged(true);
-        } catch (EmailAlreadyExistsException | IllegalArgumentException e) {
+        } catch (EmailAlreadyExistsException | IllegalArgumentException | DateTimeParseException e) {
             errorLabel.setText(e.getMessage());
             showError(errorLabel);
         }

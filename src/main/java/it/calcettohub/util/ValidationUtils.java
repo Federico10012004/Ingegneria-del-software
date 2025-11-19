@@ -30,6 +30,7 @@ public class ValidationUtils {
     }
 
     public static boolean isValidDate(LocalDate dateOfBirth) {
+        if (dateOfBirth == null) throw new IllegalArgumentException("La data di nascita è obbligatoria.");
         return dateOfBirth.isBefore(LocalDate.now());
     }
 }
