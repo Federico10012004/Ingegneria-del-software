@@ -28,13 +28,15 @@ public class RoleSelectionCli extends CliContext {
                     AppContext.setSelectedRole(Role.PLAYER);
                     if (!account) {
                         clearScreen();
-                        PageManager.push(()->new RegistrationPlayerCli().playerRegistration());
+                        PageManager.push(()->new PlayerRegistrationCli().playerRegistration());
+                        PageManager.pop();
                     }
                 } else {
                     AppContext.setSelectedRole(Role.FIELDMANAGER);
                     if (!account) {
                         clearScreen();
-                        PageManager.push(()->new RegistrationFieldManagerCli().fieldManagerRegistration());
+                        PageManager.push(()->new FieldManagerRegistrationCli().fieldManagerRegistration());
+                        PageManager.pop();
                     }
                 }
 

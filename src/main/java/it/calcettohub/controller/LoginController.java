@@ -9,8 +9,6 @@ import it.calcettohub.exceptions.InvalidPasswordException;
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.Role;
-import it.calcettohub.model.User;
-import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PasswordUtils;
 import it.calcettohub.util.SessionManager;
 
@@ -18,8 +16,8 @@ import java.util.Optional;
 
 public class LoginController {
 
-    public User login(LoginBean bean) throws EmailNotFoundException, InvalidPasswordException {
-        Role role = AppContext.getSelectedRole();
+    public void login(LoginBean bean) throws EmailNotFoundException, InvalidPasswordException {
+        Role role = bean.getRole();
         String email = bean.getEmail();
         String password = bean.getPassword();
 
@@ -36,7 +34,6 @@ public class LoginController {
 
                     if (validation) {
                         SessionManager.getInstance().createSession(email);
-                        return player;
                     } else {
                         throw new InvalidPasswordException();
                     }
@@ -55,16 +52,13 @@ public class LoginController {
 
                     if (validation) {
                         SessionManager.getInstance().createSession(email);
-                        return fieldManager;
                     } else {
                         throw new InvalidPasswordException();
                     }
                 }
             }
 
-            default -> {
-                return null;
-            }
+            default -> throw new RuntimeException("Errore inatteso durante il login.");
         }
     }
 }

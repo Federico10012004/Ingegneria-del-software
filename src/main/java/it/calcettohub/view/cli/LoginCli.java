@@ -5,7 +5,6 @@ import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.InvalidPasswordException;
-import it.calcettohub.model.User;
 import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
 import it.calcettohub.util.Session;
@@ -23,6 +22,7 @@ public class LoginCli extends CliContext {
         });
 
         LoginBean bean = new LoginBean();
+        bean.setRole(AppContext.getSelectedRole());
 
         while (true) {
 
@@ -51,7 +51,7 @@ public class LoginCli extends CliContext {
             }
 
             try {
-                User user = controller.login(bean);
+                controller.login(bean);
 
                 Session session = SessionManager.getInstance().getCurrentSession();
 
@@ -61,19 +61,20 @@ public class LoginCli extends CliContext {
                 }
 
                 print("Login effettuato con successo!");
-                switch (user.getRole()) {
+                switch (AppContext.getSelectedRole()) {
                     case PLAYER -> new HomePagePlayerCli().start();
                     case FIELDMANAGER -> new HomePageFieldManagerCli().start();
-                    default -> {
-                        return;
-                    }
+                    default -> throw new RuntimeException();
                 }
                 break;
             } catch (EscPressedException e) {
                 // Return to the previous page
                 return;
-            } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
+            } catch (EmailNotFoundException | InvalidPasswordException e) {
                 showExceptionMessage(e);
+            } catch (RuntimeException e) {
+                System.err.println("Errore inattesso nello switch della pagina.");
+                System.exit(1);
             }
         }
     }

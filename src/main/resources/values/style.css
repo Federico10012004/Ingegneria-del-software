@@ -111,10 +111,13 @@
     -fx-background-color: transparent;
 }
 
-.link-label {
+.hyperlink {
     -fx-text-fill: #016326;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-color: transparent;
 }
-.link-label:hover {
+.hyperlink:hover {
     -fx-text-fill: #F59E0B;
 }
 

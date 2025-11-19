@@ -1,10 +1,11 @@
 package it.calcettohub.util;
 
+import it.calcettohub.model.Role;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import it.calcettohub.controller.Resettable;
+import it.calcettohub.view.gui.Resettable;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,10 +17,16 @@ import java.util.Map;
  */
 public class Navigator {
 
+    private Navigator() {}
+
+    // Qui memorizzi lo stage passato dal Main, così ogni scena può essere mostrata da qui
     private static Stage mainStage;
+
+    // Questa mappa conserva le scene già caricate
     private static final Map<String, Scene> scenes = new HashMap<>();
 
-    private static String userType;
+    // Mantiene il tipo di utentee la pagina precedente
+    private static Role userType;
     private static String previousPage;
 
     public static void setStage(Stage stage) {
@@ -31,11 +38,11 @@ public class Navigator {
     }
 
     // Tipo utente (gestore, giocatore, arbitro)
-    public static void setUserType(String type) {
+    public static void setUserType(Role type) {
         userType = type;
     }
 
-    public static String getUserType() {
+    public static Role getUserType() {
         return userType;
     }
 
@@ -82,15 +89,11 @@ public class Navigator {
      */
     private static String getFXMLPath(String name) {
         return switch (name) {
-            case "Login" -> "/fxml/login.fxml";
-            case "Welcome" -> "/fxml/SchermataIniziale.fxml";
-            case "Register" -> "/fxml/register.fxml";
-            case "Dati Campo" -> "/fxml/datiCampo.fxml";
+            case "Login" -> "/fxml/Login.fxml";
+            case "Role Selection" -> "/fxml/RoleSelection.fxml";
+            case "Field Manager Registration" -> "/fxml/FieldManagerRegistration.fxml";
+            case "Player Registration" -> "/fxml/PlayerRegistration.fxml";
             default -> throw new IllegalArgumentException("Percorso FXML non definito per: " + name);
         };
-    }
-
-    private Navigator() {
-        throw new UnsupportedOperationException("Classe di utilità, non deve essere istanziata");
     }
 }

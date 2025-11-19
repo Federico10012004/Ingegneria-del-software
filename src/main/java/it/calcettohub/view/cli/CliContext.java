@@ -65,7 +65,6 @@ public abstract class CliContext {
 
     protected void clearScreen() {
         System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 
     protected int requestIntInRange(String message, Integer min, Integer max) {
@@ -123,7 +122,6 @@ public abstract class CliContext {
 
     protected void showExceptionMessage(Exception e) {
         System.err.println(e.getMessage());
-        System.err.flush();
         System.out.println();
     }
 }

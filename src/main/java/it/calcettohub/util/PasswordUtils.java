@@ -10,6 +10,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.util.Objects;
 
 public class PasswordUtils {
+
+    private PasswordUtils() {}
+
     @FXML
     public static boolean togglePasswordVisibility(PasswordField passwordField, TextField textField, boolean isVisible) {
         if (isVisible) {
@@ -43,10 +46,6 @@ public class PasswordUtils {
         textField.textProperty().addListener((_, _, newV) -> {
             if (isVisible) passwordField.setText(newV);
         });
-    }
-
-    private PasswordUtils() {
-        throw new UnsupportedOperationException("Classe di utilità, non deve essere istanziata");
     }
 
     // Crea hash della password

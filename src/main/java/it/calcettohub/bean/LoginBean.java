@@ -1,10 +1,12 @@
 package it.calcettohub.bean;
 
+import it.calcettohub.model.Role;
 import it.calcettohub.util.ValidationUtils;
 
 public class LoginBean {
     private String email;
     private String password;
+    private Role role;
 
     public LoginBean() {
         //empty
@@ -30,7 +32,15 @@ public class LoginBean {
         if (ValidationUtils.isValidPassword(password)) {
             this.password = password;
         } else {
-            throw new IllegalArgumentException("Formato password non valido.");
+            throw new IllegalArgumentException("La password deve contenere almeno 8 caratteri di cui 1 lettera maiuscola, 1 numero, 1 carattere speciale.");
         }
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
