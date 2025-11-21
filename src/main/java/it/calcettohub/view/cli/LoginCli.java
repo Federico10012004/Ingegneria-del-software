@@ -31,11 +31,7 @@ public class LoginCli extends CliContext {
             System.out.println();
 
             try {
-                String email = requestString("Email: ");
-                bean.setEmail(email);
-
-                String password = requestString("Password: ");
-                bean.setPassword(password);
+                validateCredentials(bean);
 
                 controller.login(bean);
 
@@ -61,6 +57,28 @@ public class LoginCli extends CliContext {
             } catch (RuntimeException e) {
                 System.err.println("Errore inattesso nello switch della pagina.");
                 System.exit(1);
+            }
+        }
+    }
+
+    private void validateCredentials(LoginBean bean) {
+        while (true) {
+            try {
+                String email = requestString("Email: ");
+                bean.setEmail(email);
+                break;
+            } catch (IllegalArgumentException e) {
+                showExceptionMessage(e);
+            }
+        }
+
+        while (true) {
+            try {
+                String password = requestString("Password: ");
+                bean.setPassword(password);
+                break;
+            } catch (IllegalArgumentException e) {
+                showExceptionMessage(e);
             }
         }
     }

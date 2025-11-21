@@ -30,7 +30,7 @@ public abstract class CliContext {
     }
 
     protected void printEscInfo() {
-        System.out.println("(Premi ESC per tornare indietro)");
+        System.out.println("(Digita esc per tornare indietro)");
     }
 
     protected void print(String message) {
