@@ -22,21 +22,20 @@ public class RoleSelectionCli extends CliContext {
         while (true) {
             try {
                 int role = requestIntInRange("Scelta: ", 1, 2);
-
                 boolean account = requestBoolean("Hai già un account(s/n): ");
+
                 if (role == 1) {
                     AppContext.setSelectedRole(Role.PLAYER);
-                    if (!account) {
-                        clearScreen();
-                        PageManager.push(()->new PlayerRegistrationCli().playerRegistration());
-                        PageManager.pop();
-                    }
                 } else {
                     AppContext.setSelectedRole(Role.FIELDMANAGER);
-                    if (!account) {
-                        clearScreen();
+                }
+
+                clearScreen();
+                if (!account) {
+                    if (role == 1) {
+                        PageManager.push(()->new PlayerRegistrationCli().playerRegistration());
+                    } else {
                         PageManager.push(()->new FieldManagerRegistrationCli().fieldManagerRegistration());
-                        PageManager.pop();
                     }
                 }
 

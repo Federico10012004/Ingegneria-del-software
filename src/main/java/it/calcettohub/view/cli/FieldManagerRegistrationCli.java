@@ -3,9 +3,8 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.RegisterFieldManagerBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.util.PageManager;
-
-import java.time.LocalDate;
 
 public class FieldManagerRegistrationCli extends CliContext {
     private final RegistrationController registration = new RegistrationController();
@@ -19,89 +18,19 @@ public class FieldManagerRegistrationCli extends CliContext {
 
         RegisterFieldManagerBean bean = new RegisterFieldManagerBean();
         while (true) {
-            while (true) {
-                try {
-                    String name = requestString("Nome: ");
-                    bean.setName(name);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    String surname = requestString("Cognome: ");
-                    bean.setSurname(surname);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    LocalDate dateOfBirth = requestDate("Data di nascita (gg-mm-aaaa): ");
-                    bean.setDateOfBirth(dateOfBirth);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    String email = requestString("Email: ");
-                    bean.setEmail(email);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    String password = requestString("Password: ");
-                    bean.setPassword(password);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    String confirmPassword = requestString("Conferma password: ");
-                    bean.setConfirmPassword(confirmPassword);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    String vatNumber = requestString("Partita IVA: ");
-                    bean.setVatNumber(vatNumber);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    String phoneNumber = requestString("Numero di telefono: ");
-                    bean.setPhoneNumber(phoneNumber);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
             try {
+                validateBeanField(() -> bean.setName(requestString("Nome: ")));
+                validateBeanField(() -> bean.setSurname(requestString("Cognome: ")));
+                validateBeanField(() -> bean.setDateOfBirth(requestDate("Data di nascita (gg-mm-aaaa): ")));
+                validateBeanField(() -> bean.setEmail(requestString("Email: ")));
+                validateBeanField(() -> bean.setPassword(requestString("Password: ")));
+                validateBeanField(() -> bean.setConfirmPassword(requestString("Conferma password: ")));
+                validateBeanField(() -> bean.setVatNumber(requestString("Partita iva: ")));
+                validateBeanField(() -> bean.setPhoneNumber(requestString("Numero di telefono: ")));
+
                 registration.registerFieldManager(bean);
                 print("Registrazione completata con successo.");
+                PageManager.pop();
                 break;
             } catch (EmailAlreadyExistsException e) {
                 showExceptionMessage(e);

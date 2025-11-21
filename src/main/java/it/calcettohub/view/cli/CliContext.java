@@ -59,6 +59,18 @@ public abstract class CliContext {
         }
     }
 
+    protected void validateBeanField(Runnable setter) {
+        while (true) {
+            try {
+                setter.run();
+                break;
+            } catch (IllegalArgumentException e) {
+                showExceptionMessage(e);
+            }
+        }
+    }
+
+
     protected int requestInt(String message) {
         return requestIntInRange(message, null, null);
     }

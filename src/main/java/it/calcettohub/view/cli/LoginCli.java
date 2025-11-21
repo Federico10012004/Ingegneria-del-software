@@ -31,7 +31,8 @@ public class LoginCli extends CliContext {
             System.out.println();
 
             try {
-                validateCredentials(bean);
+                validateBeanField(()-> bean.setEmail(requestString("Email: ")));
+                validateBeanField(()-> bean.setPassword(requestString("Password: ")));
 
                 controller.login(bean);
 
@@ -44,8 +45,8 @@ public class LoginCli extends CliContext {
 
                 print("Login effettuato con successo!");
                 switch (AppContext.getSelectedRole()) {
-                    case PLAYER -> new HomePagePlayerCli().start();
-                    case FIELDMANAGER -> new HomePageFieldManagerCli().start();
+                    case PLAYER -> System.out.println("Benvenuto player");
+                    case FIELDMANAGER -> System.out.println("Benvenuto Field Manger");
                     default -> throw new RuntimeException();
                 }
                 break;
@@ -57,28 +58,6 @@ public class LoginCli extends CliContext {
             } catch (RuntimeException e) {
                 System.err.println("Errore inattesso nello switch della pagina.");
                 System.exit(1);
-            }
-        }
-    }
-
-    private void validateCredentials(LoginBean bean) {
-        while (true) {
-            try {
-                String email = requestString("Email: ");
-                bean.setEmail(email);
-                break;
-            } catch (IllegalArgumentException e) {
-                showExceptionMessage(e);
-            }
-        }
-
-        while (true) {
-            try {
-                String password = requestString("Password: ");
-                bean.setPassword(password);
-                break;
-            } catch (IllegalArgumentException e) {
-                showExceptionMessage(e);
             }
         }
     }
