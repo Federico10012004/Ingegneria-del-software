@@ -47,7 +47,7 @@ public class LoginCli extends CliContext {
                 switch (AppContext.getSelectedRole()) {
                     case PLAYER -> System.out.println("Benvenuto player");
                     case FIELDMANAGER -> System.out.println("Benvenuto Field Manger");
-                    default -> throw new RuntimeException();
+                    default -> throw new IllegalStateException();
                 }
                 break;
             } catch (EscPressedException e) {
@@ -55,8 +55,8 @@ public class LoginCli extends CliContext {
                 return;
             } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
                 showExceptionMessage(e);
-            } catch (RuntimeException e) {
-                System.err.println("Errore inattesso nello switch della pagina.");
+            } catch (IllegalStateException e) {
+                System.err.println("Ruolo inatteso: " + AppContext.getSelectedRole());
                 System.exit(1);
             }
         }

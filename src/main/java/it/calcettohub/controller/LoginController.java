@@ -58,7 +58,7 @@ public class LoginController {
                 }
             }
 
-            default -> throw new RuntimeException("Errore inatteso durante il login.");
+            default -> throw new IllegalStateException("Ruolo inatteso durante il login: " + role);
         }
     }
 }
