@@ -5,6 +5,8 @@ import it.calcettohub.model.Role;
 public class AppContext {
     private static Role selectedRole;
 
+    private AppContext() {}
+
     public static Role getSelectedRole() {
         return selectedRole;
     }

@@ -5,6 +5,7 @@ import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.InvalidPasswordException;
+import it.calcettohub.exceptions.UnexpectedRoleException;
 import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
 import it.calcettohub.util.Session;
@@ -47,7 +48,7 @@ public class LoginCli extends CliContext {
                 switch (AppContext.getSelectedRole()) {
                     case PLAYER -> System.out.println("Benvenuto player");
                     case FIELDMANAGER -> System.out.println("Benvenuto Field Manger");
-                    default -> throw new IllegalStateException();
+                    default -> throw new UnexpectedRoleException("Ruolo inatteso: " + AppContext.getSelectedRole());
                 }
                 break;
             } catch (EscPressedException e) {
@@ -55,8 +56,7 @@ public class LoginCli extends CliContext {
                 return;
             } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
                 showExceptionMessage(e);
-            } catch (IllegalStateException e) {
-                System.err.println("Ruolo inatteso: " + AppContext.getSelectedRole());
+            } catch (UnexpectedRoleException e) {
                 System.exit(1);
             }
         }

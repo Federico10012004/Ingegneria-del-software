@@ -6,6 +6,7 @@ import it.calcettohub.dao.PlayerDao;
 import it.calcettohub.dao.abstractfactory.DaoFactory;
 import it.calcettohub.exceptions.EmailNotFoundException;
 import it.calcettohub.exceptions.InvalidPasswordException;
+import it.calcettohub.exceptions.UnexpectedRoleException;
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.Role;
@@ -58,7 +59,7 @@ public class LoginController {
                 }
             }
 
-            default -> throw new IllegalStateException("Ruolo inatteso durante il login: " + role);
+            default -> throw new UnexpectedRoleException("Ruolo inatteso durante il login: " + role);
         }
     }
 }

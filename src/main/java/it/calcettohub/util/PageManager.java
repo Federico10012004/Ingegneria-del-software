@@ -6,6 +6,8 @@ public class PageManager {
 
     private static final Stack<Runnable> pageStack = new Stack<>();
 
+    private PageManager() {}
+
     public static void push(Runnable page) {
         pageStack.push(page);
         page.run();

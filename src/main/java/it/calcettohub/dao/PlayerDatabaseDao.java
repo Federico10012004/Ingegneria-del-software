@@ -84,7 +84,7 @@ public class PlayerDatabaseDao implements PlayerDao {
 
             stmt.executeUpdate();
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
     }
 

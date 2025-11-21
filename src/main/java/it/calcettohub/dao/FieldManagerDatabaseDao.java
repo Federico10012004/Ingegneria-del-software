@@ -85,7 +85,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
 
             stmt.executeUpdate();
         } catch (SQLException _) {
-
+            // Eccezione da gestire
         }
     }
 
