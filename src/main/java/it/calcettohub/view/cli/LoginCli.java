@@ -30,27 +30,13 @@ public class LoginCli extends CliContext {
             printEscInfo();
             System.out.println();
 
-            while (true) {
-                try {
-                    String email = requestString("Email: ");
-                    bean.setEmail(email);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
-            while (true) {
-                try {
-                    String password = requestString("Password: ");
-                    bean.setPassword(password);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    showExceptionMessage(e);
-                }
-            }
-
             try {
+                String email = requestString("Email: ");
+                bean.setEmail(email);
+
+                String password = requestString("Password: ");
+                bean.setPassword(password);
+
                 controller.login(bean);
 
                 Session session = SessionManager.getInstance().getCurrentSession();
@@ -70,7 +56,7 @@ public class LoginCli extends CliContext {
             } catch (EscPressedException e) {
                 // Return to the previous page
                 return;
-            } catch (EmailNotFoundException | InvalidPasswordException e) {
+            } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
                 showExceptionMessage(e);
             } catch (RuntimeException e) {
                 System.err.println("Errore inattesso nello switch della pagina.");

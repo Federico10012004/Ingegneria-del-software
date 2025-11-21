@@ -14,6 +14,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int select;
         System.out.println("Benvenuto su CalcettoHub!");
         while (true) {
             System.out.println("Seleziona interfaccia: ");
@@ -22,24 +23,26 @@ public class Main extends Application {
 
             try {
                 System.out.print("Selezione: ");
-                int select = Integer.parseInt(reader.readLine());
+                select = Integer.parseInt(reader.readLine());
 
-                if (select == 1) {
-                    PageManager.push(()->new RoleSelectionCli().start());
-                    break;
-                } else if (select == 2) {
-                    launch();
-                    break;
-                } else {
+                if (select != 1 && select != 2) {
                     throw new IllegalArgumentException();
                 }
+                break;
             } catch (NumberFormatException e) {
                 System.err.println("Input non valido, inserire un numero.");
             } catch (IOException e) {
                 System.err.println("Errore nella lettura dell'input.");
+                System.exit(1);
             } catch (IllegalArgumentException e) {
                 System.err.println("Inserire 1 o 2.");
             }
+        }
+
+        if (select == 1) {
+            PageManager.push(()->new RoleSelectionCli().start());
+        } else {
+            launch();
         }
     }
 
