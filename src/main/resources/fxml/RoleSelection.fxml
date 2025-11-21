@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.RoleSelectionGui">
+<StackPane fx:id="root" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.RoleSelectionGui">
 
             <!-- Header con logo -->
    <Group fx:id="logoGroup" StackPane.alignment="TOP_CENTER">
