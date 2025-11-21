@@ -15,6 +15,7 @@ public class PageManager {
         if (!pageStack.isEmpty()) {
             pageStack.pop();
         }
+        // Se lo stack non è vuoto esegui la pagina subito sotto la pop appena fatta
         if (!pageStack.isEmpty()) {
             pageStack.peek().run();
         }
