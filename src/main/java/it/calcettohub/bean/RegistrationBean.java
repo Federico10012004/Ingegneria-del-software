@@ -4,9 +4,7 @@ import it.calcettohub.util.ValidationUtils;
 
 import java.time.LocalDate;
 
-public abstract class RegistrationBean {
-    private String email;
-    private String password;
+public abstract class RegistrationBean extends UserCredentialsBean {
     private String confirmPassword;
     private String name;
     private String surname;
@@ -14,36 +12,12 @@ public abstract class RegistrationBean {
 
     protected RegistrationBean() {}
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        if (ValidationUtils.isValidEmail(email.trim().toLowerCase())) {
-            this.email = email;
-        } else {
-            throw new IllegalArgumentException("Formato email non valido.");
-        }
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        if (ValidationUtils.isValidPassword(password)) {
-            this.password = password;
-        } else {
-            throw new IllegalArgumentException("Formato password non valido.");
-        }
-    }
-
     public String getConfirmPassword() {
         return confirmPassword;
     }
 
     public void setConfirmPassword(String confirmPassword) {
-        if (ValidationUtils.passwordMatch(password, confirmPassword)) {
+        if (ValidationUtils.passwordMatch(getPassword(), confirmPassword)) {
             this.confirmPassword = confirmPassword;
         } else {
             throw new IllegalArgumentException("Le password inserite sono differenti.");

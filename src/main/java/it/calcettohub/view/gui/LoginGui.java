@@ -69,8 +69,7 @@ public class LoginGui extends BaseFormerGui {
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             errorLabel.setText(e.getMessage());
             showError(errorLabel);
-        } catch (RuntimeException e) {
-            System.err.println("Errore inatteso nel caricamento della nuova schermata.");
+        } catch (UnexpectedRoleException _) {
             System.exit(1);
         }
     }
