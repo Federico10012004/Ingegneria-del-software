@@ -3,6 +3,7 @@ package it.calcettohub.view.gui;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import it.calcettohub.util.Navigator;
@@ -17,6 +18,14 @@ public abstract class BaseFormerGui implements Resettable {
     @FXML protected Label successRegister;
     @FXML protected javafx.scene.layout.GridPane root;
 
+    protected void validateField(Runnable setter) {
+        setter.run();
+    }
+
+    protected void setErrorMessage(Label label, String message) {
+        label.setText(message);
+    }
+
     protected void showError(Label label) {
         label.setVisible(true);
         label.setManaged(true);
@@ -25,6 +34,11 @@ public abstract class BaseFormerGui implements Resettable {
     protected void hideError(Label label) {
         label.setVisible(false);
         label.setManaged(false);
+    }
+
+    protected void setNodeVisibility(Node node, boolean visible) {
+        node.setVisible(visible);
+        node.setManaged(visible);
     }
 
     protected void setupResponsiveLabel(double fontScaleWelcome) {
@@ -56,5 +70,10 @@ public abstract class BaseFormerGui implements Resettable {
                     root.widthProperty().divide(30.0).asString(Locale.US,
                             "-fx-font-size: %.1fpx; -fx-font-family: 'Tahoma'; -fx-font-weight: bold;")
             );
+    }
+
+    protected void switchTo(String screen, String previous) {
+        Navigator.setPreviousPage(previous);
+        Navigator.show(screen);
     }
 }

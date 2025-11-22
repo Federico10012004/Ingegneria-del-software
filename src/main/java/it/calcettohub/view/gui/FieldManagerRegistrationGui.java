@@ -7,11 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import it.calcettohub.util.Navigator;
 import it.calcettohub.util.PasswordUtils;
 import javafx.scene.layout.StackPane;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class FieldManagerRegistrationGui extends BaseFormerGui {
@@ -40,7 +38,7 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
         PasswordUtils.bindPasswordFields(passwordField, passwordTextField, isVisible);
         PasswordUtils.bindPasswordFields(confirmPasswordField, confirmPasswordTextField, isConfirmPasswordVisible);
         setEyeIcon();
-        hideError(errorLabel);
+        setNodeVisibility(errorLabel, false);
         setupResponsiveLabel(40.0);
     }
 
@@ -68,38 +66,21 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
         RegisterFieldManagerBean bean = new RegisterFieldManagerBean();
 
         try {
-            String name = nameField.getText().trim();
-            bean.setName(name);
-
-            String surname = surnameField.getText().trim();
-            bean.setSurname(surname);
-
-            LocalDate dateOfBirth = dateOfBirthField.getValue();
-            bean.setDateOfBirth(dateOfBirth);
-
-            String email = emailField.getText().trim();
-            bean.setEmail(email);
-
-            String password = isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim();
-            bean.setPassword(password);
-
-            String confirmPassword = isConfirmPasswordVisible ? confirmPasswordTextField.getText().trim() : confirmPasswordField.getText().trim();
-            bean.setConfirmPassword(confirmPassword);
-
-            String vatNumber = vatNumberField.getText().trim();
-            bean.setVatNumber(vatNumber);
-
-            String phone = phoneField.getText().trim();
-            bean.setPhoneNumber(phone);
+            validateField(()-> bean.setName(nameField.getText().trim()));
+            validateField(()-> bean.setSurname(surnameField.getText().trim()));
+            validateField(()-> bean.setDateOfBirth(dateOfBirthField.getValue()));
+            validateField(()-> bean.setEmail(emailField.getText().trim()));
+            validateField(()-> bean.setPassword(isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim()));
+            validateField(()-> bean.setConfirmPassword(isConfirmPasswordVisible ? confirmPasswordTextField.getText().trim() : confirmPasswordField.getText().trim()));
+            validateField(()-> bean.setVatNumber(vatNumberField.getText().trim()));
+            validateField(()-> bean.setPhoneNumber(phoneField.getText().trim()));
 
             controller.registerFieldManager(bean);
 
-            registerBox.setVisible(false);
-            registerBox.setManaged(false);
-            successBox.setVisible(true);
-            successBox.setManaged(true);
+            setNodeVisibility(registerBox, false);
+            setNodeVisibility(successBox, true);
         } catch (EmailAlreadyExistsException | IllegalArgumentException | DateTimeParseException e) {
-            errorLabel.setText(e.getMessage());
+            setErrorMessage(errorLabel, e.getMessage());
             showError(errorLabel);
         }
     }
@@ -114,24 +95,18 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
         confirmPasswordField.clear();
         vatNumberField.clear();
         phoneField.clear();
-        hideError(errorLabel);
+        setNodeVisibility(errorLabel, false);
 
         isVisible = false;
-        passwordTextField.setVisible(false);
-        passwordTextField.setManaged(false);
-        passwordField.setVisible(true);
-        passwordField.setManaged(true);
+        setNodeVisibility(passwordTextField, false);
+        setNodeVisibility(passwordField, true);
 
         isConfirmPasswordVisible = false;
-        confirmPasswordTextField.setVisible(false);
-        confirmPasswordTextField.setManaged(false);
-        confirmPasswordField.setVisible(true);
-        confirmPasswordField.setManaged(true);
+        setNodeVisibility(confirmPasswordTextField, false);
+        setNodeVisibility(confirmPasswordField, true);
 
-        registerBox.setVisible(true);
-        registerBox.setManaged(true);
-        successBox.setVisible(false);
-        successBox.setManaged(false);
+        setNodeVisibility(registerBox, true);
+        setNodeVisibility(successBox, false);
         setEyeIcon();
     }
 
@@ -142,7 +117,6 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
 
     @FXML
     public void goToLogin() {
-        Navigator.setPreviousPage("Altro");
-        Navigator.show("Login");
+        switchTo("Login", "Altro");
     }
 }

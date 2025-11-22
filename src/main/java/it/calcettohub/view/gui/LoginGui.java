@@ -25,7 +25,7 @@ public class LoginGui extends BaseFormerGui {
     public void initialize() {
         PasswordUtils.bindPasswordFields(passwordField, textField, isVisible);
         setEyeIcon();
-        hideError(errorLabel);
+        setNodeVisibility(errorLabel, false);
         setupResponsiveLabel(30.0);
     }
 
@@ -45,18 +45,15 @@ public class LoginGui extends BaseFormerGui {
         bean.setRole(Navigator.getUserType());
 
         try {
-            String email = emailField.getText().trim();
-            bean.setEmail(email);
-
-            String password = isVisible ? textField.getText().trim() : passwordField.getText().trim();
-            bean.setPassword(password);
+            validateField(()-> bean.setEmail(emailField.getText().trim()));
+            validateField(()-> bean.setPassword(isVisible ? textField.getText().trim() : passwordField.getText().trim()));
 
             controller.login(bean);
 
             Session session = SessionManager.getInstance().getCurrentSession();
 
             if (session == null) {
-                errorLabel.setText("Errore: impossibile creare la sessione");
+                setErrorMessage(errorLabel, "Errore: impossibile creare la sessione");
                 showError(errorLabel);
                 return;
             }
@@ -67,7 +64,7 @@ public class LoginGui extends BaseFormerGui {
                 default -> throw new UnexpectedRoleException("Ruolo inatteso, errore nel caricamento della nuova scheramta.");
             }
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
-            errorLabel.setText(e.getMessage());
+            setErrorMessage(errorLabel, e.getMessage());
             showError(errorLabel);
         } catch (UnexpectedRoleException _) {
             System.exit(1);
@@ -79,13 +76,11 @@ public class LoginGui extends BaseFormerGui {
         emailField.clear();
         passwordField.clear();
         textField.clear();
-        hideError(errorLabel);
+        setNodeVisibility(errorLabel, false);
 
         isVisible = false;
-        textField.setVisible(false);
-        textField.setManaged(false);
-        passwordField.setVisible(true);
-        passwordField.setManaged(true);
+        setNodeVisibility(textField, false);
+        setNodeVisibility(passwordField, true);
         setEyeIcon();
     }
 
@@ -96,11 +91,9 @@ public class LoginGui extends BaseFormerGui {
 
     @FXML
     public void switchToRegister() {
-        Navigator.setPreviousPage("Altro");
-
         switch (Navigator.getUserType()) {
-            case PLAYER -> Navigator.show("Player Registration");
-            case FIELDMANAGER -> Navigator.show("Field Manager Registration");
+            case PLAYER -> switchTo("Player Registration", "Altro");
+            case FIELDMANAGER -> switchTo("Field Manager Registration", "Altro");
             default -> throw new UnexpectedRoleException("Ruolo inatteso nella navigazione verso la registrazione: " + Navigator.getUserType());
         }
     }
