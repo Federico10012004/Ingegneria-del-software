@@ -3,7 +3,6 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.RegisterFieldManagerBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
-import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.util.PageManager;
 
 public class FieldManagerRegistrationCli extends CliContext {

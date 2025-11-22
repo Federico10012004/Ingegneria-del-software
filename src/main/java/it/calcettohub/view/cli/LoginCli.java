@@ -3,7 +3,6 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.LoginBean;
 import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;
-import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.InvalidPasswordException;
 import it.calcettohub.exceptions.UnexpectedRoleException;
 import it.calcettohub.util.AppContext;
@@ -51,12 +50,9 @@ public class LoginCli extends CliContext {
                     default -> throw new UnexpectedRoleException("Ruolo inatteso: " + AppContext.getSelectedRole());
                 }
                 break;
-            } catch (EscPressedException e) {
-                // Return to the previous page
-                return;
             } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
                 showExceptionMessage(e);
-            } catch (UnexpectedRoleException e) {
+            } catch (UnexpectedRoleException _) {
                 System.exit(1);
             }
         }

@@ -97,7 +97,7 @@ public abstract class CliContext {
             }
 
             return value;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             throw new IllegalArgumentException("Inserisci un numero valido oppure digita 'esc' per tornare indietro.");
         }
     }
@@ -123,7 +123,7 @@ public abstract class CliContext {
 
         try {
             return LocalDate.parse(input, italian);
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException _) {
             throw new IllegalArgumentException("Questa input non rappresenta una data valida. Usare il formato gg-MM-aaaa");
         }
     }

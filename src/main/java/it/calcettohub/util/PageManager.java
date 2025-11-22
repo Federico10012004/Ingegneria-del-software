@@ -1,10 +1,11 @@
 package it.calcettohub.util;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class PageManager {
 
-    private static final Stack<Runnable> pageStack = new Stack<>();
+    private static final Deque<Runnable> pageStack = new ArrayDeque<>();
 
     private PageManager() {}
 

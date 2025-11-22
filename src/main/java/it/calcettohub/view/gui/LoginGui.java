@@ -4,6 +4,7 @@ import it.calcettohub.bean.LoginBean;
 import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;
 import it.calcettohub.exceptions.InvalidPasswordException;
+import it.calcettohub.exceptions.UnexpectedRoleException;
 import it.calcettohub.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -63,7 +64,7 @@ public class LoginGui extends BaseFormerGui {
             switch (Navigator.getUserType()) {
                 case PLAYER -> new HomePagePlayerGui().start();
                 case FIELDMANAGER -> new HomePageFieldManagerGui().start();
-                default -> throw new RuntimeException();
+                default -> throw new UnexpectedRoleException("Ruolo inatteso, errore nel caricamento della nuova scheramta.");
             }
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             errorLabel.setText(e.getMessage());
@@ -101,6 +102,7 @@ public class LoginGui extends BaseFormerGui {
         switch (Navigator.getUserType()) {
             case PLAYER -> Navigator.show("Player Registration");
             case FIELDMANAGER -> Navigator.show("Field Manager Registration");
+            default -> throw new UnexpectedRoleException("Ruolo inatteso nella navigazione verso la registrazione: " + Navigator.getUserType());
         }
     }
 }

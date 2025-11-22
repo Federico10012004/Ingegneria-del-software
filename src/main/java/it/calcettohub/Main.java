@@ -29,12 +29,12 @@ public class Main extends Application {
                     throw new IllegalArgumentException();
                 }
                 break;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 System.err.println("Input non valido, inserire un numero.");
-            } catch (IOException e) {
+            } catch (IOException _) {
                 System.err.println("Errore nella lettura dell'input.");
                 System.exit(1);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException _) {
                 System.err.println("Inserire 1 o 2.");
             }
         }

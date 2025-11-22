@@ -1,7 +1,6 @@
 package it.calcettohub.model;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public abstract class User {
     private String email;

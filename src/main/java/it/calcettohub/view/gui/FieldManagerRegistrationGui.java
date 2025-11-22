@@ -42,7 +42,6 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
         setEyeIcon();
         hideError(errorLabel);
         setupResponsiveLabel(40.0);
-        //configureButtons();
     }
 
     @FXML
