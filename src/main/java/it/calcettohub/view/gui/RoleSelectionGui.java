@@ -3,7 +3,6 @@ package it.calcettohub.view.gui;
 import it.calcettohub.model.Role;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
@@ -22,9 +21,7 @@ public class RoleSelectionGui extends BaseFormerGui {
     @FXML private Label playerLabel;
     @FXML private Label managerLabel;
     @FXML private Label refereeLabel;
-    @FXML private Label sloganLabel;
     @FXML private Label roleLabel;
-    @FXML private Group logoGroup;
 
     private static final String FONT_STYLE_TEMPLATE =
             "-fx-font-size: %.1fpx; -fx-font-family: 'Impact'; -fx-font-style: normal;";
