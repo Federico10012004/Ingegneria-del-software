@@ -1,8 +1,13 @@
 package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.RegisterFieldManagerBean;
+import it.calcettohub.bean.RegisterPlayerBean;
+import it.calcettohub.bean.RegistrationBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
+import it.calcettohub.model.PlayerPosition;
+import it.calcettohub.model.Role;
+import it.calcettohub.util.Navigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,10 +17,13 @@ import javafx.scene.layout.StackPane;
 
 import java.time.format.DateTimeParseException;
 
-public class FieldManagerRegistrationGui extends BaseFormerGui {
+public class RegistrationGui extends BaseFormerGui {
     @FXML private ImageView eyeImageView;
     @FXML private ImageView eyeConfirmImageView;
+    @FXML private ImageView vatNumberImageView;
+    @FXML private ImageView positionImageView;
     @FXML private Label errorLabel;
+    @FXML private Label successRegister;
     @FXML private TextField nameField;
     @FXML private TextField surnameField;
     @FXML private TextField emailField;
@@ -23,11 +31,13 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
     @FXML private TextField confirmPasswordTextField;
     @FXML private TextField vatNumberField;
     @FXML private TextField phoneField;
+    @FXML private TextField positionField;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private DatePicker dateOfBirthField;
     @FXML private StackPane registerBox;
     @FXML private StackPane successBox;
+    @FXML private StackPane phonePane;
 
     private boolean isVisible = false;
     private boolean isConfirmPasswordVisible = false;
@@ -39,7 +49,12 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
         PasswordUtils.bindPasswordFields(confirmPasswordField, confirmPasswordTextField, isConfirmPasswordVisible);
         setEyeIcon();
         setNodeVisibility(errorLabel, false);
-        setupResponsiveLabel(40.0);
+        bindResponsiveLogo(logoGroup, 900.0);
+        setupResponsiveLabel(sloganLabel, root, 60.0, FONT_STYLE_SLOGAN);
+        setupResponsiveLabel(welcomeLabel, root, 40.0, FONT_STYLE_WELCOME);
+        setupResponsiveLabel(successRegister, root, 30.0, FONT_STYLE_SUCCESS_REGISTER);
+
+        setUpRoleVisibility();
     }
 
     @FXML
@@ -63,25 +78,56 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
 
     @FXML
     private void handleRegister() {
-        RegisterFieldManagerBean bean = new RegisterFieldManagerBean();
-
         try {
-            validateField(()-> bean.setName(nameField.getText().trim()));
-            validateField(()-> bean.setSurname(surnameField.getText().trim()));
-            validateField(()-> bean.setDateOfBirth(dateOfBirthField.getValue()));
-            validateField(()-> bean.setEmail(emailField.getText().trim()));
-            validateField(()-> bean.setPassword(isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim()));
-            validateField(()-> bean.setConfirmPassword(isConfirmPasswordVisible ? confirmPasswordTextField.getText().trim() : confirmPasswordField.getText().trim()));
-            validateField(()-> bean.setVatNumber(vatNumberField.getText().trim()));
-            validateField(()-> bean.setPhoneNumber(phoneField.getText().trim()));
+            if (Navigator.getUserType() == Role.PLAYER) {
+                RegisterPlayerBean bean = new RegisterPlayerBean();
 
-            controller.registerFieldManager(bean);
+                validateCommonFields(bean);
+                validateField(()-> bean.setPreferredPosition(PlayerPosition.fromString(positionField.getText().trim())));
+
+                controller.registerPlayer(bean);
+            } else {
+                RegisterFieldManagerBean bean = new RegisterFieldManagerBean();
+
+                validateCommonFields(bean);
+                validateField(()-> bean.setVatNumber(vatNumberField.getText().trim()));
+                validateField(()-> bean.setPhoneNumber(phoneField.getText().trim()));
+
+                controller.registerFieldManager(bean);
+            }
 
             setNodeVisibility(registerBox, false);
             setNodeVisibility(successBox, true);
         } catch (EmailAlreadyExistsException | IllegalArgumentException | DateTimeParseException e) {
             setErrorMessage(errorLabel, e.getMessage());
             showError(errorLabel);
+        }
+    }
+
+    private void validateCommonFields(RegistrationBean bean) {
+        validateField(()-> bean.setName(nameField.getText().trim()));
+        validateField(()-> bean.setSurname(surnameField.getText().trim()));
+        validateField(()-> bean.setDateOfBirth(dateOfBirthField.getValue()));
+        validateField(()-> bean.setEmail(emailField.getText().trim()));
+        validateField(()-> bean.setPassword(isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim()));
+        validateField(()-> bean.setConfirmPassword(isConfirmPasswordVisible ? confirmPasswordTextField.getText().trim() : confirmPasswordField.getText().trim()));
+    }
+
+    private void setUpRoleVisibility() {
+        if (Navigator.getUserType() == Role.PLAYER) {
+            setNodeVisibility(positionField, true);
+            setNodeVisibility(positionImageView, true);
+
+            setNodeVisibility(vatNumberField, false);
+            setNodeVisibility(vatNumberImageView, false);
+            setNodeVisibility(phonePane, false);
+        } else {
+            setNodeVisibility(positionField, false);
+            setNodeVisibility(positionImageView, false);
+
+            setNodeVisibility(vatNumberField, true);
+            setNodeVisibility(vatNumberImageView, true);
+            setNodeVisibility(phonePane, true);
         }
     }
 
@@ -95,6 +141,7 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
         confirmPasswordField.clear();
         vatNumberField.clear();
         phoneField.clear();
+        positionField.clear();
         setNodeVisibility(errorLabel, false);
 
         isVisible = false;
@@ -108,6 +155,8 @@ public class FieldManagerRegistrationGui extends BaseFormerGui {
         setNodeVisibility(registerBox, true);
         setNodeVisibility(successBox, false);
         setEyeIcon();
+
+        setUpRoleVisibility();
     }
 
     @FXML

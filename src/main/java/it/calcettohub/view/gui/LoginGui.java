@@ -26,7 +26,10 @@ public class LoginGui extends BaseFormerGui {
         PasswordUtils.bindPasswordFields(passwordField, textField, isVisible);
         setEyeIcon();
         setNodeVisibility(errorLabel, false);
-        setupResponsiveLabel(30.0);
+
+        bindResponsiveLogo(logoGroup, 900.0);
+        setupResponsiveLabel(sloganLabel, root, 60.0, FONT_STYLE_SLOGAN);
+        setupResponsiveLabel(welcomeLabel, root, 30.0, FONT_STYLE_WELCOME);
     }
 
     private void setEyeIcon() {
@@ -91,10 +94,6 @@ public class LoginGui extends BaseFormerGui {
 
     @FXML
     public void switchToRegister() {
-        switch (Navigator.getUserType()) {
-            case PLAYER -> switchTo("Player Registration", "Altro");
-            case FIELDMANAGER -> switchTo("Field Manager Registration", "Altro");
-            default -> throw new UnexpectedRoleException("Ruolo inatteso nella navigazione verso la registrazione: " + Navigator.getUserType());
-        }
+        switchTo("Registration Gui", "Altro");
     }
 }

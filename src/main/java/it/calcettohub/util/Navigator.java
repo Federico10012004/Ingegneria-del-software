@@ -54,6 +54,10 @@ public class Navigator {
         return previousPage;
     }
 
+    public static void resetUserType() {
+        userType = null;
+    }
+
     /**
      * Mostra una scena. Se non è stata ancora caricata, la carica automaticamente (lazy loading).
      */
@@ -78,8 +82,8 @@ public class Navigator {
             mainStage.setScene(scene);
             mainStage.show();
 
-        } catch (IOException _) {
-            System.err.println("Errore nel caricamento della scena: " + name);
+        } catch (IOException e) {
+            System.err.println("Errore nel caricamento della scena: " + name + e);
         }
     }
 
@@ -91,8 +95,7 @@ public class Navigator {
         return switch (name) {
             case "Login" -> "/fxml/Login.fxml";
             case "Role Selection" -> "/fxml/RoleSelection.fxml";
-            case "Field Manager Registration" -> "/fxml/FieldManagerRegistration.fxml";
-            case "Player Registration" -> "/fxml/PlayerRegistration.fxml";
+            case "Registration Gui" -> "/fxml/FieldManagerRegistration.fxml";
             default -> throw new IllegalArgumentException("Percorso FXML non definito per: " + name);
         };
     }
