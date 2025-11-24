@@ -44,13 +44,13 @@ public abstract class BaseFormerGui implements Resettable {
         node.setManaged(visible);
     }
 
-    protected void bindResponsiveLogo(Group Logo, double baseWidth) {
+    protected void bindResponsiveLogo(Group logo, double baseWidth) {
         Platform.runLater(() -> {
             Stage stage = Navigator.getMainStage();
             if (stage == null) return;
 
-            Logo.scaleXProperty().bind(stage.widthProperty().divide(baseWidth));
-            Logo.scaleYProperty().bind(stage.widthProperty().divide(baseWidth));
+            logo.scaleXProperty().bind(stage.widthProperty().divide(baseWidth));
+            logo.scaleYProperty().bind(stage.widthProperty().divide(baseWidth));
         });
     }
 
