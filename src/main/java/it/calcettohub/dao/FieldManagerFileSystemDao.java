@@ -53,14 +53,7 @@ public class FieldManagerFileSystemDao implements FieldManagerDao {
             throw new PersistenceException("Errore durante la lettura del file csv", e);
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            for (String l : lines) {
-                writer.write(l);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            throw new PersistenceException("Errore durante la scrittura del file csv", e);
-        }
+        writeAll(lines);
     }
 
     @Override
@@ -95,14 +88,7 @@ public class FieldManagerFileSystemDao implements FieldManagerDao {
             throw new PersistenceException("Errore durante la lettura del file csv", e);
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            for (String l : lines) {
-                writer.write(l);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            throw new PersistenceException("Errore durante la scrittura del file csv", e);
-        }
+        writeAll(lines);
     }
 
     @Override
@@ -123,6 +109,17 @@ public class FieldManagerFileSystemDao implements FieldManagerDao {
             return Optional.empty();
         } catch (IOException e) {
             throw new PersistenceException("Errore nel caricamento nel player", e);
+        }
+    }
+
+    private void writeAll(List<String> lines) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (String l : lines) {
+                writer.write(l);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            throw new PersistenceException("Errore durante la scrittura del file csv", e);
         }
     }
 }
