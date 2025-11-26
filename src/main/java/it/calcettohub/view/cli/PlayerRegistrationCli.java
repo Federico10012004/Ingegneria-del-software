@@ -4,6 +4,7 @@ import it.calcettohub.bean.RegisterPlayerBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
 import it.calcettohub.model.PlayerPosition;
+import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
 
 public class PlayerRegistrationCli extends CliContext {
@@ -11,13 +12,16 @@ public class PlayerRegistrationCli extends CliContext {
 
     public void playerRegistration() {
         // ESC → torna alla schermata precedente
-        CliContext.setEscHandler(() -> {
-            print("Torno alla pagina precedente...");
+        setEscHandler(() -> {
+            clearScreen();
             PageManager.pop();
         });
 
         RegisterPlayerBean bean = new RegisterPlayerBean();
         while (true) {
+            printTitle("Registrazione " + AppContext.getSelectedRole());
+            printEscInfo();
+
             try {
                 validateBeanField(()-> bean.setName(requestString("Nome: ")));
                 validateBeanField(()-> bean.setSurname(requestString("Cognome: ")));

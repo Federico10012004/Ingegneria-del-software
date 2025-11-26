@@ -16,8 +16,8 @@ public class LoginCli extends CliContext {
     public void login() {
 
         // ESC → torna alla schermata precedente
-        CliContext.setEscHandler(() -> {
-            print("Torno alla pagina precedente...");
+        setEscHandler(() -> {
+            clearScreen();
             PageManager.pop();
         });
 

@@ -3,6 +3,7 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.RegisterFieldManagerBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
+import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
 
 public class FieldManagerRegistrationCli extends CliContext {
@@ -10,13 +11,16 @@ public class FieldManagerRegistrationCli extends CliContext {
 
     public void fieldManagerRegistration() {
         // ESC → torna alla schermata precedente
-        CliContext.setEscHandler(() -> {
-            print("Torno alla pagina precedente...");
+        setEscHandler(() -> {
+            clearScreen();
             PageManager.pop();
         });
 
         RegisterFieldManagerBean bean = new RegisterFieldManagerBean();
         while (true) {
+            printTitle("Registrazione " + AppContext.getSelectedRole());
+            printEscInfo();
+
             try {
                 validateBeanField(() -> bean.setName(requestString("Nome: ")));
                 validateBeanField(() -> bean.setSurname(requestString("Cognome: ")));

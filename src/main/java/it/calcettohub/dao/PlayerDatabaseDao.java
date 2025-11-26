@@ -30,7 +30,7 @@ public class PlayerDatabaseDao implements PlayerDao {
     @Override
     public void add(Player player) {
         String email = player.getEmail();
-        String password = PasswordUtils.hashPassword(player.getPassword());
+        String password = player.getPassword();
         String name = player.getName();
         String surname = player.getSurname();
         LocalDate dateOfBirth = player.getDateOfBirth();

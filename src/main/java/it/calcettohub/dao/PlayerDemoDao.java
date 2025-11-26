@@ -25,13 +25,6 @@ public class PlayerDemoDao implements PlayerDao {
     @Override
     public void add(Player player) {
         String email = player.getEmail();
-        if (players.containsKey(email)) {
-            return;
-        }
-
-        String hashedPassword = PasswordUtils.hashPassword(player.getPassword());
-        player.setPassword(hashedPassword);
-
         players.put(email,player);
     }
 

@@ -29,7 +29,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
     @Override
     public void add(FieldManager manager) {
         String email = manager.getEmail();
-        String password = PasswordUtils.hashPassword(manager.getPassword());
+        String password = manager.getPassword();
         String name = manager.getName();
         String surname = manager.getSurname();
         LocalDate dateOfBirth = manager.getDateOfBirth();

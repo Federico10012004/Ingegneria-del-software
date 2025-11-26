@@ -1,6 +1,7 @@
 package it.calcettohub.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Player extends User {
     private PlayerPosition preferredPosition;
@@ -21,5 +22,10 @@ public class Player extends User {
 
     public void setPreferredPosition(PlayerPosition preferredPosition) {
         this.preferredPosition = preferredPosition;
+    }
+
+    @Override
+    protected List<String> getSpecificFields() {
+        return List.of(preferredPosition.toString());
     }
 }

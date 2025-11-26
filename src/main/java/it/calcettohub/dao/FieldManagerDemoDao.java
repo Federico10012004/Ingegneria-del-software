@@ -25,13 +25,6 @@ public class FieldManagerDemoDao implements FieldManagerDao {
     @Override
     public void add(FieldManager manager) {
         String email = manager.getEmail();
-        if (fieldManagers.containsKey(email)) {
-            return;
-        }
-
-        String hashedPassword = PasswordUtils.hashPassword(manager.getPassword());
-        manager.setPassword(hashedPassword);
-
         fieldManagers.put(email,manager);
     }
 

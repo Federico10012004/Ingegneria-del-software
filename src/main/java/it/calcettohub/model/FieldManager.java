@@ -59,4 +59,9 @@ public class FieldManager extends User {
             field.setManager(null);
         }
     }
+
+    @Override
+    protected List<String> getSpecificFields() {
+        return List.of(vatNumber, phoneNumber);
+    }
 }

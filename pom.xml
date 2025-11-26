@@ -72,7 +72,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <mainClass>it.calcettohub.MainProva</mainClass>
+                    <mainClass>it.calcettohub.Main</mainClass>
                 </configuration>
             </plugin>
 

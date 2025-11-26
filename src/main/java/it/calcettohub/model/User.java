@@ -1,6 +1,8 @@
 package it.calcettohub.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class User {
     private String email;
@@ -72,5 +74,17 @@ public abstract class User {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    protected List<String> getCommonFields() {
+        return List.of(email, password, name, surname, dateOfBirth.toString());
+    }
+
+    protected abstract List<String> getSpecificFields();
+
+    public final List<String> getAllFields() {
+        List<String> fields = new ArrayList<>(getCommonFields());
+        fields.addAll(getSpecificFields());
+        return fields;
     }
 }

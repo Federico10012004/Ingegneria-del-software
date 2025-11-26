@@ -9,6 +9,7 @@ import it.calcettohub.exceptions.EmailAlreadyExistsException;
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.PlayerPosition;
+import it.calcettohub.util.PasswordUtils;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -27,7 +28,8 @@ public class RegistrationController {
         Optional<Player> opt = dao.findByEmail(email);
 
         if (opt.isEmpty()) {
-            Player player = new Player(email, password,name, surname, dateOfBirth,position);
+            String hashedPassword = PasswordUtils.hashPassword(password);
+            Player player = new Player(email, hashedPassword, name, surname, dateOfBirth, position);
             dao.add(player);
         } else {
             throw new EmailAlreadyExistsException();
@@ -47,7 +49,8 @@ public class RegistrationController {
         Optional<FieldManager> opt = dao.findByEmail(email);
 
         if (opt.isEmpty()) {
-            FieldManager fieldManager = new FieldManager(email, password, name, surname, dateOfBirth, vatNumber, phoneNumber);
+            String hashedPassword = PasswordUtils.hashPassword(password);
+            FieldManager fieldManager = new FieldManager(email, hashedPassword, name, surname, dateOfBirth, vatNumber, phoneNumber);
             dao.add(fieldManager);
         } else {
             throw new EmailAlreadyExistsException();
