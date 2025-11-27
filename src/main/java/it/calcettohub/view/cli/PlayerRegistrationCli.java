@@ -7,7 +7,7 @@ import it.calcettohub.model.PlayerPosition;
 import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
 
-public class PlayerRegistrationCli extends CliContext {
+public class PlayerRegistrationCli extends BaseRegistrationCli<RegisterPlayerBean> {
     private final RegistrationController registration = new RegistrationController();
 
     public void playerRegistration() {
@@ -23,13 +23,7 @@ public class PlayerRegistrationCli extends CliContext {
             printEscInfo();
 
             try {
-                validateBeanField(()-> bean.setName(requestString("Nome: ")));
-                validateBeanField(()-> bean.setSurname(requestString("Cognome: ")));
-                validateBeanField(()-> bean.setDateOfBirth(requestDate("Data di nascita (gg-mm-aaaa): ")));
-                validateBeanField(()-> bean.setEmail(requestString("Email: ")));
-                validateBeanField(()-> bean.setPassword(requestString("Password: ")));
-                validateBeanField(()-> bean.setConfirmPassword(requestString("Conferma password: ")));
-                validateBeanField(()-> bean.setPreferredPosition(PlayerPosition.fromString(requestString("Posizione preferita (portiere, difensore, centrocampista, attaccante): "))));
+                validateAllFields(bean);
 
                 registration.registerPlayer(bean);
                 print("Registrazione effettuata con successo.");
@@ -39,5 +33,10 @@ public class PlayerRegistrationCli extends CliContext {
                 showExceptionMessage(e);
             }
         }
+    }
+
+    @Override
+    protected void fillSpecificFields(RegisterPlayerBean bean) {
+        validateBeanField(()-> bean.setPreferredPosition(PlayerPosition.fromString(requestString("Posizione preferita (portiere, difensore, centrocampista, attaccante): "))));
     }
 }

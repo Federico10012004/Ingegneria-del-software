@@ -13,8 +13,9 @@ public abstract class UserCredentialsBean {
     }
 
     public void setEmail(String email) {
-        if (ValidationUtils.isValidEmail(email.trim().toLowerCase())) {
-            this.email = email;
+        String normalized = email.trim().toLowerCase();
+        if (ValidationUtils.isValidEmail(normalized)) {
+            this.email = normalized;
         } else {
             throw new IllegalArgumentException("Formato email non valido.");
         }

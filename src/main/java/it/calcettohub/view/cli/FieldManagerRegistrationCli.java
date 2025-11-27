@@ -6,7 +6,7 @@ import it.calcettohub.exceptions.EmailAlreadyExistsException;
 import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
 
-public class FieldManagerRegistrationCli extends CliContext {
+public class FieldManagerRegistrationCli extends BaseRegistrationCli<RegisterFieldManagerBean> {
     private final RegistrationController registration = new RegistrationController();
 
     public void fieldManagerRegistration() {
@@ -22,14 +22,7 @@ public class FieldManagerRegistrationCli extends CliContext {
             printEscInfo();
 
             try {
-                validateBeanField(() -> bean.setName(requestString("Nome: ")));
-                validateBeanField(() -> bean.setSurname(requestString("Cognome: ")));
-                validateBeanField(() -> bean.setDateOfBirth(requestDate("Data di nascita (gg-mm-aaaa): ")));
-                validateBeanField(() -> bean.setEmail(requestString("Email: ")));
-                validateBeanField(() -> bean.setPassword(requestString("Password: ")));
-                validateBeanField(() -> bean.setConfirmPassword(requestString("Conferma password: ")));
-                validateBeanField(() -> bean.setVatNumber(requestString("Partita iva: ")));
-                validateBeanField(() -> bean.setPhoneNumber(requestString("Numero di telefono: ")));
+                validateAllFields(bean);
 
                 registration.registerFieldManager(bean);
                 print("Registrazione completata con successo.");
@@ -39,5 +32,11 @@ public class FieldManagerRegistrationCli extends CliContext {
                 showExceptionMessage(e);
             }
         }
+    }
+
+    @Override
+    protected void fillSpecificFields(RegisterFieldManagerBean bean) {
+        validateBeanField(() -> bean.setVatNumber(requestString("Partita iva: ")));
+        validateBeanField(() -> bean.setPhoneNumber(requestString("Numero di telefono: ")));
     }
 }
