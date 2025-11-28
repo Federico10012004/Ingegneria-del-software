@@ -9,7 +9,6 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     private String phoneNumber;
 
     private static final Pattern VAT_PATTERN = Pattern.compile("^\\d{11}$");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\+39)?\\s?(\\d\\s?){9,10}$");
 
     public RegisterFieldManagerBean() {
         //empty
@@ -32,7 +31,7 @@ public class RegisterFieldManagerBean extends RegistrationBean {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (ValidationUtils.isNotNull(phoneNumber) && PHONE_PATTERN.matcher(phoneNumber).matches()) {
+        if (ValidationUtils.isValidPhone(phoneNumber)) {
             this.phoneNumber = phoneNumber;
         } else {
             throw new IllegalArgumentException("Numero di telefono non valido.");

@@ -15,6 +15,8 @@ public class LoginCli extends CliContext {
 
     public void login() {
 
+        disableSessionCheck();
+
         // ESC → torna alla schermata precedente
         setEscHandler(() -> {
             clearScreen();
@@ -39,14 +41,14 @@ public class LoginCli extends CliContext {
                 Session session = SessionManager.getInstance().getCurrentSession();
 
                 if (session == null) {
-                    System.err.println("Errore: impossibile creare la sessione.");
-                    return;
+                    showErrorMessage("Errore: impossibile creare la sessione.");
+                    continue;
                 }
 
                 print("Login effettuato con successo!");
                 switch (AppContext.getSelectedRole()) {
-                    case PLAYER -> System.out.println("Benvenuto player");
-                    case FIELDMANAGER -> System.out.println("Benvenuto Field Manger");
+                    case PLAYER -> PageManager.push(()->new HomePagePlayerCli().start());
+                    case FIELDMANAGER -> PageManager.push(()->new HomePageFieldManagerCli().start());
                     default -> throw new UnexpectedRoleException("Ruolo inatteso: " + AppContext.getSelectedRole());
                 }
                 break;

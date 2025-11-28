@@ -11,6 +11,9 @@ public class PlayerRegistrationCli extends BaseRegistrationCli<RegisterPlayerBea
     private final RegistrationController registration = new RegistrationController();
 
     public void playerRegistration() {
+
+        disableSessionCheck();
+
         // ESC → torna alla schermata precedente
         setEscHandler(() -> {
             clearScreen();

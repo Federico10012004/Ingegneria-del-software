@@ -10,6 +10,9 @@ public class FieldManagerRegistrationCli extends BaseRegistrationCli<RegisterFie
     private final RegistrationController registration = new RegistrationController();
 
     public void fieldManagerRegistration() {
+
+        disableSessionCheck();
+
         // ESC → torna alla schermata precedente
         setEscHandler(() -> {
             clearScreen();

@@ -6,8 +6,6 @@ public abstract class UserCredentialsBean {
     private String email;
     private String password;
 
-    protected UserCredentialsBean() {}
-
     public String getEmail() {
         return email;
     }

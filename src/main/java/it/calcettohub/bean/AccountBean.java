@@ -4,23 +4,11 @@ import it.calcettohub.util.ValidationUtils;
 
 import java.time.LocalDate;
 
-public abstract class RegistrationBean extends UserCredentialsBean {
-    private String confirmPassword;
+public abstract class AccountBean {
     private String name;
     private String surname;
     private LocalDate dateOfBirth;
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        if (ValidationUtils.passwordMatch(getPassword(), confirmPassword)) {
-            this.confirmPassword = confirmPassword;
-        } else {
-            throw new IllegalArgumentException("Le password inserite sono differenti.");
-        }
-    }
+    private String password;
 
     public String getName() {
         return name;
@@ -55,6 +43,18 @@ public abstract class RegistrationBean extends UserCredentialsBean {
             this.dateOfBirth = dateOfBirth;
         } else {
             throw new IllegalArgumentException("La data di nascita non può essere successiva ad oggi.");
+        }
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        if (ValidationUtils.isValidPassword(password)) {
+            this.password = password;
+        } else {
+            throw new IllegalArgumentException("La password deve contenere almeno 8 caratteri di cui 1 lettera maiuscola, 1 numero, 1 carattere speciale.");
         }
     }
 }

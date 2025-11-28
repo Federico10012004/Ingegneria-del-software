@@ -1,6 +1,9 @@
 package it.calcettohub.view.cli;
 
 import it.calcettohub.exceptions.EscPressedException;
+import it.calcettohub.exceptions.SessionExpiredException;
+import it.calcettohub.util.Session;
+import it.calcettohub.util.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +15,7 @@ import java.time.format.DateTimeParseException;
 public abstract class CliContext {
     private static BufferedReader reader;
     private static Runnable escHandler;
+    private boolean sessionCheckEnabled = false;
 
     protected static synchronized BufferedReader getReader() {
         if (reader == null) {
@@ -19,6 +23,14 @@ public abstract class CliContext {
         }
 
         return reader;
+    }
+
+    protected void enableSessionCheck() {
+        this.sessionCheckEnabled = true;
+    }
+
+    protected void disableSessionCheck() {
+        this.sessionCheckEnabled = false;
     }
 
     protected static void setEscHandler(Runnable handler) {
@@ -51,6 +63,8 @@ public abstract class CliContext {
                 }
                 return null; // segnala alla pagina che ESC è stato premuto
             }
+
+            checkSession();
 
             return input;
 
@@ -135,5 +149,14 @@ public abstract class CliContext {
     protected void showExceptionMessage(Exception e) {
         System.err.println(e.getMessage());
         System.out.println();
+    }
+
+    protected void checkSession() {
+        if (sessionCheckEnabled) {
+            Session session = SessionManager.getInstance().getCurrentSession();
+            if (session == null) {
+                throw new SessionExpiredException();
+            }
+        }
     }
 }

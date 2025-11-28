@@ -34,7 +34,7 @@ public class LoginController {
                     boolean validation = PasswordUtils.checkPassword(password, player.getPassword());
 
                     if (validation) {
-                        SessionManager.getInstance().createSession(email);
+                        SessionManager.getInstance().createSession(player);
                     } else {
                         throw new InvalidPasswordException();
                     }
@@ -52,7 +52,7 @@ public class LoginController {
                     boolean validation = PasswordUtils.checkPassword(password, fieldManager.getPassword());
 
                     if (validation) {
-                        SessionManager.getInstance().createSession(email);
+                        SessionManager.getInstance().createSession(fieldManager);
                     } else {
                         throw new InvalidPasswordException();
                     }

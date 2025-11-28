@@ -1,21 +1,23 @@
 package it.calcettohub.util;
 
+import it.calcettohub.model.User;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Session {
-    private static final Duration TIMEOUT = Duration.ofMinutes(30);
+    private static final Duration TIMEOUT = Duration.ofMinutes(1);
 
-    private final String userEmail;
+    private final User user;
     private LocalDateTime expiryTime;
 
-    public Session(String userEmail) {
-        this.userEmail = userEmail;
+    public Session(User user) {
+        this.user = user;
         resetExpiryTime();
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public User getUser() {
+        return user;
     }
 
     public void resetExpiryTime() {

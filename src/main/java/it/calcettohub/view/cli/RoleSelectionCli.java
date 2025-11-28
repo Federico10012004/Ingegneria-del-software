@@ -8,6 +8,8 @@ public class RoleSelectionCli extends CliContext {
 
     public void start() {
 
+        disableSessionCheck();
+
         setEscHandler(()-> {
             print("Uscita dall'app ...");
             System.exit(0);
@@ -22,7 +24,7 @@ public class RoleSelectionCli extends CliContext {
         while (true) {
             try {
                 int role = requestIntInRange("Scelta: ", 1, 2);
-                boolean account = requestBoolean("Hai già un account(s/n): ");
+                boolean account = requestBoolean("Hai già un account (s/n)? ");
 
                 if (role == 1) {
                     AppContext.setSelectedRole(Role.PLAYER);

@@ -1,5 +1,7 @@
 package it.calcettohub.util;
 
+import it.calcettohub.model.User;
+
 public class SessionManager {
     private static SessionManager instance;
     private Session currentSession;
@@ -13,12 +15,8 @@ public class SessionManager {
         return instance;
     }
 
-    public synchronized void createSession(String userEmail) {
-        if (currentSession != null && !currentSession.isExpired()) {
-            currentSession.resetExpiryTime();
-            return;
-        }
-        currentSession = new Session(userEmail);
+    public synchronized void createSession(User user) {
+        currentSession = new Session(user);
     }
 
     public synchronized Session getCurrentSession() {
@@ -30,6 +28,7 @@ public class SessionManager {
             return null;
         }
 
+        refreshSession();
         return currentSession;
     }
 

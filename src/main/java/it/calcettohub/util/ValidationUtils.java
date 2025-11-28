@@ -8,6 +8,7 @@ public class ValidationUtils {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$");
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\+39)?\\s?(\\d\\s?){9,10}$");
 
     public static boolean isValidEmail(String email) {
         return isNotNull(email) && EMAIL_PATTERN.matcher(email).matches();
@@ -32,5 +33,9 @@ public class ValidationUtils {
     public static boolean isValidDate(LocalDate dateOfBirth) {
         if (dateOfBirth == null) throw new IllegalArgumentException("La data di nascita è obbligatoria.");
         return dateOfBirth.isBefore(LocalDate.now());
+    }
+
+    public static boolean isValidPhone(String phoneNumber) {
+        return isNotNull(phoneNumber) && PHONE_PATTERN.matcher(phoneNumber).matches();
     }
 }
