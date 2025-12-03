@@ -11,8 +11,8 @@ public class Player extends User {
         this.preferredPosition = preferredPosition;
     }
 
-    public Player (String email, String name, String surname, LocalDate dateOfBirth, PlayerPosition preferredPosition) {
-        super(email, name, surname, dateOfBirth);
+    public Player (String password, String name, String surname, LocalDate dateOfBirth, PlayerPosition preferredPosition) {
+        super(password, name, surname, dateOfBirth);
         this.preferredPosition = preferredPosition;
     }
 

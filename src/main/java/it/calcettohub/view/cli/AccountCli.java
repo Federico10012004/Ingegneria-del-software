@@ -1,14 +1,15 @@
-/*package it.calcettohub.view.cli;
+package it.calcettohub.view.cli;
 
-import it.calcettohub.model.Player;
+import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.User;
 import it.calcettohub.util.PageManager;
-import it.calcettohub.util.Session;
 import it.calcettohub.util.SessionManager;
 
 public class AccountCli extends CliContext {
 
     public void start() {
+
+        enableSessionCheck();
 
         setEscHandler(() -> {
             clearScreen();
@@ -17,33 +18,25 @@ public class AccountCli extends CliContext {
 
         while (true) {
 
-            Session session = SessionManager.getInstance().getCurrentSession();
-            if (session == null) {
-                showErrorMessage("Sessione scaduta, reindirizzamento al login ...");
-                PageManager.push(()->new LoginCli().login());
-                return;
-            }
+            User user = SessionManager.getInstance().getLoggedUser();
 
-            User user = session.getUser();
-
-            printTitle("Ciao " + user.getName() + user.getSurname());
+            printTitle("Il tuo account");
+            print("Ciao " + user.getEmail());
             print("1) Modifica dati account");
-            print("2) Modifica password");
-            print("3) Effettua logout");
+            print("2) Effettua logout");
 
             try {
-                int select = requestIntInRange("Selezione: ", 1, 3);
+                int select = requestIntInRange("Selezione: ", 1, 2);
 
                 if (select == 1) {
-                    PageManager.push(()->new AccountEditCli().modify(user.getRole()));
-                } else if (select == 2) {
-                    System.out.println("Modifica password");
+                    PageManager.push(() -> new AccountEditCli().modify(user.getRole()));
                 } else {
                     boolean logout = requestBoolean("Sei sicuro di voler effettuare il logout (s/n)? ");
                     if (logout) {
+                        SessionManager.getInstance().closeSession();
                         clearScreen();
                         print("Logout effettuato");
-                        PageManager.push(()->new LoginCli().login());
+                        PageManager.push(() -> new LoginCli().login());
                         return;
                     } else {
                         continue;
@@ -51,10 +44,13 @@ public class AccountCli extends CliContext {
                 }
 
                 break;
+            } catch (SessionExpiredException e) {
+                showExceptionMessage(e);
+                PageManager.push(() -> new LoginCli().login());
+                return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
             }
         }
     }
 }
-*/

@@ -1,5 +1,6 @@
 package it.calcettohub.util;
 
+import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.User;
 
 public class SessionManager {
@@ -30,6 +31,14 @@ public class SessionManager {
 
         refreshSession();
         return currentSession;
+    }
+
+    public synchronized User getLoggedUser() {
+        Session session = getCurrentSession();
+        if (session == null) {
+            throw new SessionExpiredException("Sessione scaduta.");
+        }
+        return session.getUser();
     }
 
     public synchronized void refreshSession() {

@@ -1,5 +1,6 @@
 package it.calcettohub.view.cli;
 
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.util.PageManager;
 
@@ -24,10 +25,12 @@ public class HomePagePlayerCli extends CliContext {
                 } else if (select == 2) {
                     System.out.println("Organizza partita");
                 } else {
-                    System.out.println("Gestione account");
+                    PageManager.push(() -> new AccountCli().start());
                 }
 
                 break;
+            } catch (EscPressedException e) {
+                showErrorMessage("Esc non disponibile in questa pagina.");
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);
                 PageManager.pop();

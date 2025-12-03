@@ -11,10 +11,11 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 public abstract class CliContext {
     private static BufferedReader reader;
-    private static Runnable escHandler;
+    private Runnable escHandler;
     private boolean sessionCheckEnabled = false;
 
     protected static synchronized BufferedReader getReader() {
@@ -33,7 +34,7 @@ public abstract class CliContext {
         this.sessionCheckEnabled = false;
     }
 
-    protected static void setEscHandler(Runnable handler) {
+    protected void setEscHandler(Runnable handler) {
         escHandler = handler;
     }
 
@@ -84,7 +85,6 @@ public abstract class CliContext {
         }
     }
 
-
     protected int requestInt(String message) {
         return requestIntInRange(message, null, null);
     }
@@ -112,7 +112,7 @@ public abstract class CliContext {
 
             return value;
         } catch (NumberFormatException _) {
-            throw new IllegalArgumentException("Inserisci un numero valido oppure digita 'esc' per tornare indietro.");
+            throw new IllegalArgumentException("Inserisci un numero valido.");
         }
     }
 
@@ -157,6 +157,14 @@ public abstract class CliContext {
             if (session == null) {
                 throw new SessionExpiredException();
             }
+        }
+    }
+
+    protected void showMenu(List<String> options) {
+        int num = 1;
+        for (String option : options) {
+            print(num + ") " + option);
+            num++;
         }
     }
 }

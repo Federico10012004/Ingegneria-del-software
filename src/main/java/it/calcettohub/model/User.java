@@ -21,8 +21,8 @@ public abstract class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    protected User (String email, String name, String surname, LocalDate dateOfBirth) {
-        this.email = email;
+    protected User (String password, String name, String surname, LocalDate dateOfBirth) {
+        this.password = password;
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;

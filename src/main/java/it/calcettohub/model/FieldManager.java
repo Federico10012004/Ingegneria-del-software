@@ -16,8 +16,8 @@ public class FieldManager extends User {
         this.fields = new ArrayList<>();
     }
 
-    public FieldManager (String email, String name, String surname, LocalDate dateOfBirth, String vatNumber, String phoneNumber) {
-        super(email, name, surname, dateOfBirth);
+    public FieldManager (String password, String name, String surname, LocalDate dateOfBirth, String vatNumber, String phoneNumber) {
+        super(password, name, surname, dateOfBirth);
         this.vatNumber = vatNumber;
         this.phoneNumber = phoneNumber;
     }

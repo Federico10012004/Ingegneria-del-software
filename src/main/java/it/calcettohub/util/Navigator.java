@@ -95,7 +95,7 @@ public class Navigator {
         return switch (name) {
             case "Login" -> "/fxml/Login.fxml";
             case "Role Selection" -> "/fxml/RoleSelection.fxml";
-            case "Registration Gui" -> "/fxml/FieldManagerRegistration.fxml";
+            case "Registration Gui" -> "/fxml/Registration.fxml";
             default -> throw new IllegalArgumentException("Percorso FXML non definito per: " + name);
         };
     }
