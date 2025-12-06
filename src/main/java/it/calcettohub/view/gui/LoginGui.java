@@ -22,14 +22,14 @@ public class LoginGui extends BaseFormerGui {
     private final LoginController controller = new LoginController();
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         PasswordUtils.bindPasswordFields(passwordField, textField, isVisible);
         setEyeIcon();
         setNodeVisibility(errorLabel, false);
 
         bindResponsiveLogo(logoGroup, 900.0);
         setupResponsiveLabel(sloganLabel, root, 60.0, FONT_STYLE_SLOGAN);
-        setupResponsiveLabel(welcomeLabel, root, 30.0, FONT_STYLE_WELCOME);
+        setupResponsiveLabel(welcomeLabel, root, 30.0, FONT_STYLE_TAHOMA);
     }
 
     private void setEyeIcon() {
@@ -62,7 +62,7 @@ public class LoginGui extends BaseFormerGui {
             }
 
             switch (Navigator.getUserType()) {
-                case PLAYER -> new HomePagePlayerGui().start();
+                case PLAYER -> switchTo("Home Player", "Altro");
                 case FIELDMANAGER -> new HomePageFieldManagerGui().start();
                 default -> throw new UnexpectedRoleException("Ruolo inatteso, errore nel caricamento della nuova scheramta.");
             }
@@ -88,12 +88,12 @@ public class LoginGui extends BaseFormerGui {
     }
 
     @FXML
-    public void goBack() {
+    private void goBack() {
         Navigator.show("Role Selection");
     }
 
     @FXML
-    public void switchToRegister() {
+    private void switchToRegister() {
         switchTo("Registration Gui", "Altro");
     }
 }

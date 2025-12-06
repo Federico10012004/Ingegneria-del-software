@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import it.calcettohub.view.gui.Resettable;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,6 +95,7 @@ public class Navigator {
             case "Login" -> "/fxml/Login.fxml";
             case "Role Selection" -> "/fxml/RoleSelection.fxml";
             case "Registration Gui" -> "/fxml/Registration.fxml";
+            case "Home Player" -> "/fxml/HomePagePlayer.fxml";
             default -> throw new IllegalArgumentException("Percorso FXML non definito per: " + name);
         };
     }

@@ -9,6 +9,9 @@ import it.calcettohub.model.PlayerPosition;
 import it.calcettohub.model.Role;
 import it.calcettohub.util.PageManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AccountEditCli extends CliContext {
     private final AccountController controller = new AccountController();
 
@@ -34,7 +37,7 @@ public class AccountEditCli extends CliContext {
 
         while (true) {
 
-            showMenu(role);
+            showOption(role);
 
             try {
                 int choice = requestIntInRange("Selezione: ", 0, 5);
@@ -43,7 +46,12 @@ public class AccountEditCli extends CliContext {
                     case 1 -> validateBeanField(()-> bean.setName(requestString("Nome: ")));
                     case 2 -> validateBeanField(()-> bean.setSurname(requestString("Cognome: ")));
                     case 3 -> validateBeanField(()-> bean.setDateOfBirth(requestDate("Data di nascita (gg-mm-aaaa): ")));
-                    case 4 -> validateBeanField(()-> bean.setPassword(requestString("Nuova password: ")));
+                    case 4 -> {
+                        validateBeanField(()-> bean.setPassword(requestString("Nuova password: ")));
+                        validateBeanField(()-> bean.setConfirmPassword(requestString("Conferma nuova password: ")));
+                        controller.updateUserPassword(bean);
+                        print("Password modificata con successo");
+                    }
                     case 5 -> {
                         if (bean instanceof PlayerAccountBean p) {
                             validateBeanField(()-> p.setPosition(PlayerPosition.fromString(requestString("Nuova posizione preferita (portiere, difensore, centrocampista, attaccante): "))));
@@ -53,7 +61,7 @@ public class AccountEditCli extends CliContext {
                         }
                     }
                     case 0 -> {
-                        controller.updateUser(bean);
+                        controller.updateUserData(bean);
                         clearScreen();
                         print("Modifiche applicate con successo.");
                         PageManager.pop();
@@ -69,11 +77,13 @@ public class AccountEditCli extends CliContext {
         }
     }
 
-    private void showMenu(Role role) {
-        print("1) Modifica nome");
-        print("2) Modifica cognome");
-        print("3) Modifica data di nascita");
-        print("4) Modifica password");
+    private void showOption(Role role) {
+        List<String> menu = new ArrayList<>();
+        menu.add("Modifica nome");
+        menu.add("Modifica cognome");
+        menu.add("Modifica data di nascita");
+        menu.add("Modifica password");
+        showMenu(menu);
 
         if (role == Role.PLAYER) {
             print("5) Modifica posizione preferita");

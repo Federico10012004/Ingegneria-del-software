@@ -2,7 +2,6 @@ package it.calcettohub.dao;
 
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.util.DatabaseConnection;
-import it.calcettohub.util.PasswordUtils;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -77,11 +76,10 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
     @Override
     public void updatePassword(String email, String newPassword) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
-        String hashedPassword = PasswordUtils.hashPassword(newPassword);
 
         try (CallableStatement stmt = conn.prepareCall(UPDATE_PASSWORD_MANAGER)) {
             stmt.setString(1, email);
-            stmt.setString(2, hashedPassword);
+            stmt.setString(2, newPassword);
 
             stmt.executeUpdate();
         } catch (SQLException _) {

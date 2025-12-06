@@ -9,6 +9,7 @@ public abstract class AccountBean {
     private String surname;
     private LocalDate dateOfBirth;
     private String password;
+    private String confirmPassword;
 
     public String getName() {
         return name;
@@ -55,6 +56,18 @@ public abstract class AccountBean {
             this.password = password;
         } else {
             throw new IllegalArgumentException("La password deve contenere almeno 8 caratteri di cui 1 lettera maiuscola, 1 numero, 1 carattere speciale.");
+        }
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        if (ValidationUtils.passwordMatch(getPassword(), confirmPassword)) {
+            this.confirmPassword = confirmPassword;
+        } else {
+            throw new IllegalArgumentException("Le password inserite sono differenti.");
         }
     }
 }

@@ -47,7 +47,7 @@
          </Label>
       </VBox>
    </StackPane>
-   <StackPane fx:id="registerBox" GridPane.columnIndex="1">
+   <StackPane GridPane.columnIndex="1">
       <VBox alignment="CENTER" spacing="20.0" styleClass="login-box" StackPane.alignment="CENTER">
          <StackPane.margin>
             <Insets bottom="30.0" left="50.0" right="50.0" top="30.0" />
@@ -302,20 +302,6 @@
                </Button>
             </VBox>
          </AnchorPane>
-      </VBox>
-   </StackPane>
-   <StackPane fx:id="successBox" style="-fx-background-color: white;" visible="false" GridPane.columnIndex="1">
-      <VBox alignment="CENTER" StackPane.alignment="CENTER">
-         <Label fx:id="successRegister" text="Registrazione completata">
-            <font>
-               <Font name="Tahoma Bold" size="30.0" />
-            </font>
-         </Label>
-         <Hyperlink onAction="#goToLogin" text="Vai al login" underline="true">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Hyperlink>
       </VBox>
    </StackPane>
 </GridPane>

@@ -2,7 +2,6 @@ package it.calcettohub.dao;
 
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.util.DemoRepository;
-import it.calcettohub.util.PasswordUtils;
 
 import java.util.Map;
 import java.util.Optional;
@@ -51,8 +50,7 @@ public class FieldManagerDemoDao implements FieldManagerDao {
             return;
         }
 
-        String newHashedPassword = PasswordUtils.hashPassword(newPassword);
-        manager.setPassword(newHashedPassword);
+        manager.setPassword(newPassword);
     }
 
     @Override

@@ -23,10 +23,11 @@ public class AccountCli extends CliContext {
             printTitle("Il tuo account");
             print("Ciao " + user.getEmail());
             print("1) Modifica dati account");
-            print("2) Effettua logout");
+            print("2) Modifica password");
+            print("3) Effettua logout");
 
             try {
-                int select = requestIntInRange("Selezione: ", 1, 2);
+                int select = requestIntInRange("Selezione: ", 1, 3);
 
                 if (select == 1) {
                     PageManager.push(() -> new AccountEditCli().modify(user.getRole()));

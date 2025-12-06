@@ -35,8 +35,6 @@ public class RegistrationGui extends BaseFormerGui {
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private DatePicker dateOfBirthField;
-    @FXML private StackPane registerBox;
-    @FXML private StackPane successBox;
     @FXML private StackPane phonePane;
 
     private boolean isVisible = false;
@@ -44,15 +42,18 @@ public class RegistrationGui extends BaseFormerGui {
     private final RegistrationController controller = new RegistrationController();
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         PasswordUtils.bindPasswordFields(passwordField, passwordTextField, isVisible);
         PasswordUtils.bindPasswordFields(confirmPasswordField, confirmPasswordTextField, isConfirmPasswordVisible);
+
         setEyeIcon();
+
         setNodeVisibility(errorLabel, false);
+
         bindResponsiveLogo(logoGroup, 900.0);
         setupResponsiveLabel(sloganLabel, root, 60.0, FONT_STYLE_SLOGAN);
-        setupResponsiveLabel(welcomeLabel, root, 40.0, FONT_STYLE_WELCOME);
-        setupResponsiveLabel(successRegister, root, 30.0, FONT_STYLE_SUCCESS_REGISTER);
+        setupResponsiveLabel(welcomeLabel, root, 40.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(successRegister, root, 30.0, FONT_STYLE_TAHOMA);
 
         setUpRoleVisibility();
     }
@@ -96,8 +97,8 @@ public class RegistrationGui extends BaseFormerGui {
                 controller.registerFieldManager(bean);
             }
 
-            setNodeVisibility(registerBox, false);
-            setNodeVisibility(successBox, true);
+            showInfo("Registrazione completata con successo.");
+            goToLogin();
         } catch (EmailAlreadyExistsException | IllegalArgumentException | DateTimeParseException e) {
             setErrorMessage(errorLabel, e.getMessage());
             showError(errorLabel);
@@ -151,9 +152,6 @@ public class RegistrationGui extends BaseFormerGui {
         isConfirmPasswordVisible = false;
         setNodeVisibility(confirmPasswordTextField, false);
         setNodeVisibility(confirmPasswordField, true);
-
-        setNodeVisibility(registerBox, true);
-        setNodeVisibility(successBox, false);
         setEyeIcon();
 
         setUpRoleVisibility();
@@ -165,7 +163,7 @@ public class RegistrationGui extends BaseFormerGui {
     }
 
     @FXML
-    public void goToLogin() {
+    private void goToLogin() {
         switchTo("Login", "Altro");
     }
 }

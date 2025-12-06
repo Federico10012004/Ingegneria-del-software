@@ -2,7 +2,6 @@ package it.calcettohub.dao;
 
 import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.User;
-import it.calcettohub.util.PasswordUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -84,9 +83,8 @@ public abstract class UserFileSystemDao<T extends User> {
 
         if (optionalUser.isPresent()) {
             T user = optionalUser.get();
-            String hashedPassword = PasswordUtils.hashPassword(newPassword);
 
-            user.setPassword(hashedPassword);
+            user.setPassword(newPassword);
             update(user);
         }
     }

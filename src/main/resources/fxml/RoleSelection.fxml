@@ -6,101 +6,116 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.RoleSelectionGui">
-
-            <!-- Header con logo -->
-   <Group fx:id="logoGroup" StackPane.alignment="TOP_CENTER">
-      <Label text="Calcett  Hub" textFill="WHITE">
-         <font>
-            <Font name="Tahoma Bold" size="65.0" />
-         </font>
-      </Label>
-      <ImageView accessibleRole="TEXT" fitHeight="43.0" fitWidth="43.0" layoutX="228.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@../img/Soccer-Ball.png" />
-      </ImageView>
-      <StackPane.margin>
-         <Insets top="5.0" />
-      </StackPane.margin>
-   </Group>
-
-                  <VBox alignment="CENTER_LEFT" StackPane.alignment="CENTER">
-
-                     <Label fx:id="roleLabel" text="SCEGLI IL TUO RUOLO" textFill="WHITE" VBox.vgrow="ALWAYS">
-         <font>
-            <Font name="Impact" size="30.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="170.0" />
-         </VBox.margin>
-      </Label>
-      <Label fx:id="sloganLabel" text="Il calcio, una passione che ci unisce" textFill="#ffffffe5">
-         <font>
-            <Font name="System Italic" size="20.0" />
-         </font>
-      </Label>
-
-                     <!-- Container bottoni responsive -->
-      <VBox alignment="CENTER_LEFT" spacing="50.0" VBox.vgrow="ALWAYS">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-
-                        <!-- Bottone Giocatore -->
-         <Button fx:id="playerButton" accessibleText="giocatore" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="200.0" onAction="#switchToLogin" prefHeight="100.0" prefWidth="200.0" styleClass="rounded-button" userData="giocatore">
-            <graphic>
-               <HBox alignment="CENTER_LEFT" spacing="20.0">
-                  <ImageView fx:id="playerIcon" fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
-                     <Image url="@../img/soccer-player.png" />
-                  </ImageView>
-                  <Label fx:id="playerLabel" text="Giocatore">
-                     <font>
-                        <Font name="Impact" size="32.0" />
-                     </font>
-                  </Label>
-               </HBox>
-            </graphic>
-         </Button>
-
-                        <!-- Bottone Proprietario -->
-         <Button fx:id="managerButton" accessibleText="gestore" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="200.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="100.0" prefWidth="200.0" styleClass="rounded-button" userData="gestore">
-            <graphic>
-               <HBox alignment="CENTER_LEFT" spacing="20.0">
-                  <ImageView fx:id="managerIcon" fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
-                     <Image url="@../img/stadium.png" />
-                  </ImageView>
-                  <Label fx:id="managerLabel" text="Gestore Campo">
-                     <font>
-                        <Font name="Impact" size="32.0" />
-                     </font>
-                  </Label>
-               </HBox>
-            </graphic>
-         </Button>
-
-                        <!-- Bottone Arbitro -->
-         <Button fx:id="refereeButton" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="200.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="100.0" prefWidth="200.0" styleClass="rounded-button">
-            <graphic>
-               <HBox alignment="CENTER_LEFT" spacing="20.0">
-                  <ImageView fx:id="refereeIcon" fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
-                     <Image url="@../img/referee.png" />
-                  </ImageView>
-                  <Label fx:id="refereeLabel" text="Arbitro">
-                     <font>
-                        <Font name="Impact" size="32.0" />
-                     </font>
-                  </Label>
-               </HBox>
-            </graphic>
-         </Button>
+<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url(&quot;../img/background.png&quot;);"
+          stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="it.calcettohub.view.gui.RoleSelectionGui">
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="40.0"/>
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="60.0"/>
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+   </rowConstraints>
+   <StackPane styleClass="background">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+         <Group fx:id="logoGroup">
+            <Label text="Calcett  Hub" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="35.0"/>
+               </font>
+            </Label>
+            <ImageView accessibleRole="TEXT" fitHeight="23.0" fitWidth="23.0" layoutX="123.0" layoutY="14.0"
+                       pickOnBounds="true" preserveRatio="true">
+               <Image url="@../img/Soccer-Ball.png"/>
+            </ImageView>
+         </Group>
+         <Label fx:id="sloganLabel" text="Il calcio, una passione che ci unisce" textFill="#ffffffe5">
+            <font>
+               <Font name="System Italic" size="15.0"/>
+            </font>
+         </Label>
       </VBox>
-
-      <StackPane.margin>
-         <Insets left="35.0" />
-      </StackPane.margin>
-   </VBox>
-</StackPane>
+   </StackPane>
+   <StackPane GridPane.columnIndex="1">
+      <VBox alignment="CENTER" spacing="20.0" styleClass="login-box" StackPane.alignment="CENTER">
+         <StackPane.margin>
+            <Insets bottom="30.0" left="50.0" right="50.0" top="30.0"/>
+         </StackPane.margin>
+         <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+            <Label fx:id="roleLabel" text="Scegli il tuo ruolo">
+               <VBox.margin>
+                  <Insets/>
+               </VBox.margin>
+               <font>
+                  <Font name="Tahoma Bold" size="30.0"/>
+               </font>
+            </Label>
+         </VBox>
+         <VBox alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
+            <Button fx:id="playerButton" accessibleText="giocatore" maxWidth="Infinity"
+                    onAction="#switchToLogin" style="-fx-border-color: #016326;" styleClass="rounded-button">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
+                        <Image url="@../img/soccer-player.png"/>
+                     </ImageView>
+                     <Label text="Giocatore">
+                        <font>
+                           <Font name="Impact" size="32.0"/>
+                        </font>
+                     </Label>
+                  </HBox>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0"/>
+               </VBox.margin>
+            </Button>
+            <Button fx:id="managerButton" accessibleText="gestore" maxWidth="Infinity" mnemonicParsing="false"
+                    onAction="#switchToLogin" style="-fx-border-color: #016326;" styleClass="rounded-button">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
+                        <Image url="@../img/stadium.png"/>
+                     </ImageView>
+                     <Label text="Gestore Campo">
+                        <font>
+                           <Font name="Impact" size="32.0"/>
+                        </font>
+                     </Label>
+                  </HBox>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0"/>
+               </VBox.margin>
+            </Button>
+            <Button fx:id="refereeButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#switchToLogin"
+                    style="-fx-border-color: #016326;" styleClass="rounded-button">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
+                        <Image url="@../img/referee.png"/>
+                     </ImageView>
+                     <Label text="Arbitro">
+                        <font>
+                           <Font name="Impact" size="32.0"/>
+                        </font>
+                     </Label>
+                  </HBox>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0"/>
+               </VBox.margin>
+            </Button>
+         </VBox>
+      </VBox>
+   </StackPane>
+</GridPane>
