@@ -15,21 +15,22 @@ public class HomePageFieldManagerCli extends CliContext {
         print("1) Gestisci campi");
         print("2) Gestisci prenotazioni");
         print("3) Gestisci il tuo account");
+        print("4) Esci");
 
         while (true) {
             try {
-                int select = requestIntInRange("Selezione: ", 1, 3);
+                int choice = requestIntInRange("Selezione: ", 1, 4);
 
-                if (select == 1) {
-                    System.out.println("Gestisci campi");
-                } else if (select == 2) {
-                    System.out.println("Gestisci prenotazione");
-                } else {
-                    PageManager.push(() -> new AccountCli().start());
+                switch (choice) {
+                    case 1 -> System.out.println("Gestisci campi");
+                    case 2 -> System.out.println("Gestisci prenotazione");
+                    case 3 -> PageManager.push(() -> new AccountCli().start());
+                    case 4 -> System.exit(0);
+                    default -> throw new IllegalStateException("Valore imprevisto: " + choice);
                 }
 
                 break;
-            } catch (EscPressedException e) {
+            } catch (EscPressedException _) {
                 showErrorMessage("Esc non disponibile in questa pagina.");
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);

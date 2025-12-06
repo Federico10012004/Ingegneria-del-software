@@ -66,6 +66,7 @@ public class AccountEditCli extends CliContext {
                         print("Modifiche applicate con successo.");
                         PageManager.pop();
                     }
+                    default -> throw new IllegalStateException("Valore imprevisto: " + choice);
                 }
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);

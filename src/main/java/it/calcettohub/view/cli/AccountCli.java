@@ -23,8 +23,7 @@ public class AccountCli extends CliContext {
             printTitle("Il tuo account");
             print("Ciao " + user.getEmail());
             print("1) Modifica dati account");
-            print("2) Modifica password");
-            print("3) Effettua logout");
+            print("2) Effettua logout");
 
             try {
                 int select = requestIntInRange("Selezione: ", 1, 3);
@@ -38,7 +37,7 @@ public class AccountCli extends CliContext {
                         clearScreen();
                         print("Logout effettuato");
                         PageManager.push(() -> new LoginCli().login());
-                        return;
+                        break;
                     } else {
                         continue;
                     }
