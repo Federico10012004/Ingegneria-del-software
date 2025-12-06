@@ -42,7 +42,7 @@ public class RoleSelectionCli extends CliContext {
                 }
 
                 PageManager.push(()->new LoginCli().login());
-                break;
+                return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
             }

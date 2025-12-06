@@ -30,7 +30,7 @@ public class FieldManagerRegistrationCli extends BaseRegistrationCli<RegisterFie
                 registration.registerFieldManager(bean);
                 print("Registrazione completata con successo.");
                 PageManager.pop();
-                break;
+                return;
             } catch (EmailAlreadyExistsException e) {
                 showExceptionMessage(e);
             }

@@ -31,7 +31,7 @@ public class PlayerRegistrationCli extends BaseRegistrationCli<RegisterPlayerBea
                 registration.registerPlayer(bean);
                 print("Registrazione effettuata con successo.");
                 PageManager.pop();
-                break;
+                return;
             } catch (EmailAlreadyExistsException e) {
                 showExceptionMessage(e);
             }

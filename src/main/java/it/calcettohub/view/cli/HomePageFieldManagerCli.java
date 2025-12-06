@@ -28,8 +28,6 @@ public class HomePageFieldManagerCli extends CliContext {
                     case 4 -> System.exit(0);
                     default -> throw new IllegalStateException("Valore imprevisto: " + choice);
                 }
-
-                break;
             } catch (EscPressedException _) {
                 showErrorMessage("Esc non disponibile in questa pagina.");
             } catch (SessionExpiredException e) {

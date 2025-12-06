@@ -37,13 +37,9 @@ public class AccountCli extends CliContext {
                         clearScreen();
                         print("Logout effettuato");
                         PageManager.push(() -> new LoginCli().login());
-                        break;
-                    } else {
-                        continue;
+                        return;
                     }
                 }
-
-                break;
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);
                 PageManager.push(() -> new LoginCli().login());

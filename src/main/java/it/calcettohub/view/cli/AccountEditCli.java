@@ -65,6 +65,7 @@ public class AccountEditCli extends CliContext {
                         clearScreen();
                         print("Modifiche applicate con successo.");
                         PageManager.pop();
+                        return;
                     }
                     default -> throw new IllegalStateException("Valore imprevisto: " + choice);
                 }

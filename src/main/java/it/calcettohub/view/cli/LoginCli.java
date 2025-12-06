@@ -41,8 +41,8 @@ public class LoginCli extends CliContext {
                 Session session = SessionManager.getInstance().getCurrentSession();
 
                 if (session == null) {
-                    showErrorMessage("Errore: impossibile creare la sessione.");
-                    continue;
+                    showErrorMessage("Errore inatteso: impossibile creare la sessione.");
+                    System.exit(1);
                 }
 
                 print("Login effettuato con successo!");
@@ -51,7 +51,8 @@ public class LoginCli extends CliContext {
                     case FIELDMANAGER -> PageManager.push(()->new HomePageFieldManagerCli().start());
                     default -> throw new UnexpectedRoleException("Ruolo inatteso: " + AppContext.getSelectedRole());
                 }
-                break;
+
+                return;
             } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
                 showExceptionMessage(e);
             } catch (UnexpectedRoleException _) {
