@@ -1,14 +1,18 @@
 package it.calcettohub.view.gui;
 
+import it.calcettohub.util.SessionManager;
 import javafx.application.Platform;
 import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -28,6 +32,42 @@ public abstract class BaseFormerGui implements Resettable {
             "-fx-font-size: %.1fpx; -fx-font-family: 'System'; -fx-font-style: italic;";
     protected static final String FONT_STYLE_TAHOMA =
             "-fx-font-size: %.1fpx; -fx-font-family: 'Tahoma'; -fx-font-weight: bold;";
+
+    private boolean sessionCheckEnabled = false;
+
+    protected void enableSessionCheck() {
+        sessionCheckEnabled = true;
+    }
+
+    protected void disableSessionCheck() {
+        sessionCheckEnabled = false;
+    }
+
+    public void installSessionFilters(Scene scene) {
+        if (!sessionCheckEnabled) return;
+
+        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+            if (checkSession()) {
+                e.consume();
+            }
+        });
+
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+            if (checkSession()) {
+                e.consume();
+            }
+        });
+    }
+
+    protected boolean checkSession() {
+        // Se la sessione è scaduta, SessionManager.getCurrentSession() restituisce null
+        if (SessionManager.getInstance().getCurrentSession() == null) {
+            showError("Sessione scaduta", "Verrai reindirizzato al login.");
+            Navigator.show("Login");
+            return true;
+        }
+        return false;
+    }
 
     protected void validateField(Runnable setter) {
         setter.run();

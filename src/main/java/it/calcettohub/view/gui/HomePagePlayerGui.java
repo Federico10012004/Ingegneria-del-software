@@ -51,6 +51,8 @@ public class HomePagePlayerGui extends BaseFormerGui {
 
     @FXML
     private void initialize() {
+        enableSessionCheck();
+
         PasswordUtils.bindPasswordFields(passwordField, passwordTextField, isVisible);
         PasswordUtils.bindPasswordFields(confirmPasswordField, confirmPasswordTextField, isConfirmPasswordVisible);
 

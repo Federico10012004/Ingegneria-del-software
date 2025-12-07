@@ -16,6 +16,8 @@ public class RoleSelectionGui extends BaseFormerGui {
 
     @FXML
     private void initialize() {
+        disableSessionCheck();
+
         playerButton.setUserData(Role.PLAYER);
         managerButton.setUserData(Role.FIELDMANAGER);
         refereeButton.setUserData(Role.REFEREE);

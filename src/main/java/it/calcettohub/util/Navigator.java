@@ -1,6 +1,7 @@
 package it.calcettohub.util;
 
 import it.calcettohub.model.Role;
+import it.calcettohub.view.gui.BaseFormerGui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -73,10 +74,12 @@ public class Navigator {
                 scenes.put(name, scene);
             }
 
-            Object controller = scene.getUserData();
-            if (controller instanceof Resettable resettable) {
-                resettable.reset(); // pulisci o reimposta la UI
-            }
+            BaseFormerGui controller = (BaseFormerGui) scene.getUserData();
+
+            // Installiamo i filtri di sessione
+            controller.installSessionFilters(scene);
+
+            controller.reset(); // pulisci o reimposta la UI
 
             mainStage.setScene(scene);
             mainStage.show();

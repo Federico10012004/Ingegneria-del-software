@@ -43,6 +43,8 @@ public class RegistrationGui extends BaseFormerGui {
 
     @FXML
     private void initialize() {
+        disableSessionCheck();
+
         PasswordUtils.bindPasswordFields(passwordField, passwordTextField, isVisible);
         PasswordUtils.bindPasswordFields(confirmPasswordField, confirmPasswordTextField, isConfirmPasswordVisible);
 

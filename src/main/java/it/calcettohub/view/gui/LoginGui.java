@@ -23,6 +23,8 @@ public class LoginGui extends BaseFormerGui {
 
     @FXML
     private void initialize() {
+        disableSessionCheck();
+
         PasswordUtils.bindPasswordFields(passwordField, textField, isVisible);
         setEyeIcon();
         setNodeVisibility(errorLabel, false);
