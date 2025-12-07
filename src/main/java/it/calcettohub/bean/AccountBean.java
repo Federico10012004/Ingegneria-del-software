@@ -2,12 +2,9 @@ package it.calcettohub.bean;
 
 import it.calcettohub.util.ValidationUtils;
 
-import java.time.LocalDate;
-
 public abstract class AccountBean {
     private String name;
     private String surname;
-    private LocalDate dateOfBirth;
     private String password;
     private String confirmPassword;
 
@@ -32,18 +29,6 @@ public abstract class AccountBean {
             this.surname = surname;
         } else {
             throw new IllegalArgumentException("Cognome non inserito.");
-        }
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        if (ValidationUtils.isValidDate(dateOfBirth)) {
-            this.dateOfBirth = dateOfBirth;
-        } else {
-            throw new IllegalArgumentException("La data di nascita non può essere successiva ad oggi.");
         }
     }
 

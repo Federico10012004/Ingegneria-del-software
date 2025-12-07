@@ -19,7 +19,6 @@ public class AccountController {
 
         if (bean.getName() != null) user.setName(bean.getName());
         if (bean.getSurname() != null) user.setSurname(bean.getSurname());
-        if (bean.getDateOfBirth() != null) user.setDateOfBirth(bean.getDateOfBirth());
 
         if (user instanceof Player p && bean instanceof PlayerAccountBean pb) {
             if (pb.getPosition() != null) p.setPreferredPosition(pb.getPosition());

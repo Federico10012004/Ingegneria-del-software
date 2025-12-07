@@ -62,11 +62,21 @@ public abstract class UserFileSystemDao<T extends User> {
             String line;
 
             while ((line = reader.readLine()) != null) {
+                // uso split con limite -1 per mantenere eventuali campi vuoti
                 String[] arr = line.split(SEP);
 
                 String csvEmail = arr[0];
+
                 if (csvEmail.equals(user.getEmail())) {
-                    lines.add(String.join(SEP, user.getAllFields()));
+                    // Prendo tutti i campi dall'oggetto User
+                    List<String> newFields = new ArrayList<>(user.getAllFields());
+
+                    // Mantengo la password presente nel CSV (indice 1)
+                    if (arr.length > 1 && newFields.size() > 1) {
+                        newFields.set(1, arr[1]);   // 0 = email, 1 = password
+                    }
+
+                    lines.add(String.join(SEP, newFields));
                 } else {
                     lines.add(line);
                 }
@@ -78,16 +88,36 @@ public abstract class UserFileSystemDao<T extends User> {
         writeAll(lines);
     }
 
+
     public void updatePassword(String email, String newPassword) {
-        Optional<T> optionalUser = findByEmail(email);
+        List<String> lines = new ArrayList<>();
 
-        if (optionalUser.isPresent()) {
-            T user = optionalUser.get();
+        try (BufferedReader reader = new BufferedReader(new FileReader(getFilePath()))) {
+            String line;
 
-            user.setPassword(newPassword);
-            update(user);
+            while ((line = reader.readLine()) != null) {
+                String[] arr = line.split(SEP);
+
+                if (arr.length == 0) {
+                    continue; // riga vuota di sicurezza
+                }
+
+                String csvEmail = arr[0];
+
+                if (csvEmail.equals(email)) {
+                    // password è la seconda colonna (indice 1)
+                    arr[1] = newPassword;
+                }
+
+                lines.add(String.join(SEP, arr));
+            }
+        } catch (IOException e) {
+            throw new PersistenceException("Errore durante la lettura del file csv", e);
         }
+
+        writeAll(lines);
     }
+
 
     public Optional<T> findByEmail(String email) {
         try (BufferedReader reader = new BufferedReader(new FileReader(getFilePath()))) {

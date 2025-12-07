@@ -5,8 +5,7 @@ import it.calcettohub.bean.FieldManagerAccountBean;
 import it.calcettohub.bean.PlayerAccountBean;
 import it.calcettohub.controller.AccountController;
 import it.calcettohub.exceptions.SessionExpiredException;
-import it.calcettohub.model.PlayerPosition;
-import it.calcettohub.model.Role;
+import it.calcettohub.model.*;
 import it.calcettohub.util.PageManager;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 public class AccountEditCli extends CliContext {
     private final AccountController controller = new AccountController();
 
-    public void modify(Role role) {
+    public void modify(User user) {
 
         enableSessionCheck();
 
@@ -23,6 +22,8 @@ public class AccountEditCli extends CliContext {
             clearScreen();
             PageManager.pop();
         });
+
+        Role role = user.getRole();
 
         printTitle("Modifica dati account");
         printEscInfo();
@@ -40,23 +41,22 @@ public class AccountEditCli extends CliContext {
             showOption(role);
 
             try {
-                int choice = requestIntInRange("Selezione: ", 0, 5);
+                int choice = requestIntInRange("Selezione: ", 0, 4);
 
                 switch (choice) {
                     case 1 -> validateBeanField(()-> bean.setName(requestString("Nome: ")));
                     case 2 -> validateBeanField(()-> bean.setSurname(requestString("Cognome: ")));
-                    case 3 -> validateBeanField(()-> bean.setDateOfBirth(requestDate("Data di nascita (gg-mm-aaaa): ")));
-                    case 4 -> {
+                    case 3 -> {
                         validateBeanField(()-> bean.setPassword(requestString("Nuova password: ")));
                         validateBeanField(()-> bean.setConfirmPassword(requestString("Conferma nuova password: ")));
                         controller.updateUserPassword(bean);
                         print("Password modificata con successo");
                     }
-                    case 5 -> {
+                    case 4 -> {
                         if (bean instanceof PlayerAccountBean p) {
                             validateBeanField(()-> p.setPosition(PlayerPosition.fromString(requestString("Nuova posizione preferita (portiere, difensore, centrocampista, attaccante): "))));
-                        } else {
-                            FieldManagerAccountBean f = (FieldManagerAccountBean) bean;
+                        }
+                        if (bean instanceof FieldManagerAccountBean f){
                             validateBeanField(()-> f.setPhoneNumber(requestString("Nuovo numero di telefono: ")));
                         }
                     }
@@ -83,15 +83,15 @@ public class AccountEditCli extends CliContext {
         List<String> menu = new ArrayList<>();
         menu.add("Modifica nome");
         menu.add("Modifica cognome");
-        menu.add("Modifica data di nascita");
         menu.add("Modifica password");
-        showMenu(menu);
 
         if (role == Role.PLAYER) {
-            print("5) Modifica posizione preferita");
+            menu.add("Modifica posizione preferita");
         } else {
-            print("5) Modifica numero di telefono");
+            menu.add("Modifica numero di telefono");
         }
+
+        showMenu(menu);
 
         print("Digita 0 per applicare le modifiche");
     }

@@ -37,7 +37,6 @@ public class HomePagePlayerGui extends BaseFormerGui {
     @FXML private TextField confirmPasswordTextField;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
-    @FXML private DatePicker dateOfBirthField;
     @FXML private Button confirmModifyButton;
     @FXML private VBox accountPanel;
     @FXML private VBox changePasswordPanel;
@@ -85,13 +84,11 @@ public class HomePagePlayerGui extends BaseFormerGui {
     private void populateFields() {
         nameField.setText(currentPlayer.getName());
         surnameField.setText(currentPlayer.getSurname());
-        dateOfBirthField.setValue(currentPlayer.getDateOfBirth());
         positionField.setText(currentPlayer.getPreferredPosition().toString());
 
         initialState = new PlayerAccountBean();
         initialState.setName(currentPlayer.getName());
         initialState.setSurname(currentPlayer.getSurname());
-        initialState.setDateOfBirth(currentPlayer.getDateOfBirth());
         initialState.setPosition(currentPlayer.getPreferredPosition());
         initialState.setPassword(currentPlayer.getPassword());
     }
@@ -103,7 +100,6 @@ public class HomePagePlayerGui extends BaseFormerGui {
         nameField.textProperty().addListener(listener);
         surnameField.textProperty().addListener(listener);
         positionField.textProperty().addListener(listener);
-        dateOfBirthField.valueProperty().addListener(listener);
     }
 
     private void updateConfirmButtonVisibility() {
@@ -175,25 +171,22 @@ public class HomePagePlayerGui extends BaseFormerGui {
         try {
             validateField(()-> bean.setName(nameField.getText().trim()));
             validateField(()-> bean.setSurname(surnameField.getText().trim()));
-            validateField(()-> bean.setDateOfBirth(dateOfBirthField.getValue()));
             validateField(()-> bean.setPosition(PlayerPosition.fromString(positionField.getText().trim())));
 
             controller.updateUserData(bean);
 
             currentPlayer.setName(bean.getName());
             currentPlayer.setSurname(bean.getSurname());
-            currentPlayer.setDateOfBirth(bean.getDateOfBirth());
             currentPlayer.setPreferredPosition(bean.getPosition());
 
             initialState.setName(bean.getName());
             initialState.setSurname(bean.getSurname());
-            initialState.setDateOfBirth(bean.getDateOfBirth());
             initialState.setPosition(bean.getPosition());
 
             showInfo("Modifiche applicate con successo.");
             setNodeVisibility(confirmModifyButton, false);
             populateFields();
-        } catch (IllegalArgumentException | DateTimeParseException e) {
+        } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
             showError(errorLabel);
         }
@@ -206,13 +199,7 @@ public class HomePagePlayerGui extends BaseFormerGui {
         if (!surnameField.getText().trim().equals(initialState.getSurname()))
             return true;
 
-        if (!dateOfBirthField.getValue().equals(initialState.getDateOfBirth()))
-            return true;
-
-        if (!positionField.getText().trim().equals(initialState.getPosition().toString()))
-            return true;
-
-        return false;
+        return !positionField.getText().trim().equals(initialState.getPosition().toString());
     }
 
     @FXML
@@ -264,17 +251,15 @@ public class HomePagePlayerGui extends BaseFormerGui {
     }
 
     @FXML
-    private void showDatePicker() {
-        dateOfBirthField.show();
-    }
-
-    @FXML
     private void logout() {
         boolean confirm = showConfirmation(
                 "Vuoi effettuare il logut?",
                 "Verrai reindirizzato alla pagina di login");
 
         if (!confirm) return;
+
+        organizeMatch.setVisible(true);
+        buttonBox.setMouseTransparent(false);
 
         switchTo("Login", "Altro");
     }
