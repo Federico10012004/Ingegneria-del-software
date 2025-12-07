@@ -12,10 +12,12 @@ public class HomePageFieldManagerCli extends CliContext {
 
         printTitle("Home Field Manager");
         print("Benvenuto, cosa desideri fare?");
-        print("1) Gestisci campi");
-        print("2) Gestisci prenotazioni");
-        print("3) Gestisci il tuo account");
-        print("4) Esci");
+        showMenu(
+                "Gestisci campi",
+                "Gestisci prenotazioni",
+                "Gestisci il tuo account",
+                "Esci"
+        );
 
         while (true) {
             try {

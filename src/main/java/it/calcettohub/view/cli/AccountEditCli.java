@@ -8,9 +8,6 @@ import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.*;
 import it.calcettohub.util.PageManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AccountEditCli extends CliContext {
     private final AccountController controller = new AccountController();
 
@@ -80,18 +77,22 @@ public class AccountEditCli extends CliContext {
     }
 
     private void showOption(Role role) {
-        List<String> menu = new ArrayList<>();
-        menu.add("Modifica nome");
-        menu.add("Modifica cognome");
-        menu.add("Modifica password");
 
         if (role == Role.PLAYER) {
-            menu.add("Modifica posizione preferita");
+            showMenu(
+                    "Modifica nome",
+                    "Modifica cognome",
+                    "Modifica password",
+                    "Modifica posizione preferita"
+            );
         } else {
-            menu.add("Modifica numero di telefono");
+            showMenu(
+                    "Modifica nome",
+                    "Modifica cognome",
+                    "Modifica password",
+                    "Modifica numero di telefono"
+            );
         }
-
-        showMenu(menu);
 
         print("Digita 0 per applicare le modifiche");
     }

@@ -12,10 +12,12 @@ public class HomePagePlayerCli extends CliContext {
 
         printTitle("Home Player");
         print("Benvenuto, cosa desideri fare?");
-        print("1) Prenota campo");
-        print("2) Organizza nuova partita");
-        print("3) Gestisci il tuo account");
-        print("4) Esci");
+        showMenu(
+                "Prenota campo",
+                "Organizza nuova partita",
+                "Gestisci il tuo account",
+                "Esci"
+        );
 
         while (true) {
             try {

@@ -160,7 +160,7 @@ public abstract class CliContext {
         }
     }
 
-    protected void showMenu(List<String> options) {
+    protected void showMenu(String ... options) {
         int num = 1;
         for (String option : options) {
             print(num + ") " + option);

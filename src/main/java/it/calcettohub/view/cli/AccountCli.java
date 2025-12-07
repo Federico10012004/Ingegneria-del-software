@@ -22,8 +22,10 @@ public class AccountCli extends CliContext {
 
             printTitle("Il tuo account");
             print("Ciao " + user.getEmail());
-            print("1) Modifica dati account");
-            print("2) Effettua logout");
+            showMenu(
+                    "Modifica dati account",
+                    "Effettua logout"
+            );
 
             try {
                 int choice = requestIntInRange("Selezione: ", 1, 2);
