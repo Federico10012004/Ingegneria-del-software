@@ -30,6 +30,8 @@ public class AccountCli extends CliContext {
             try {
                 int choice = requestIntInRange("Selezione: ", 1, 2);
 
+                clearScreen();
+
                 switch (choice) {
                     case 1 -> PageManager.push(() -> new AccountEditCli().modify(user));
                     case 2 -> {

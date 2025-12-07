@@ -47,6 +47,7 @@ public class AccountEditCli extends CliContext {
                         validateBeanField(()-> bean.setPassword(requestString("Nuova password: ")));
                         validateBeanField(()-> bean.setConfirmPassword(requestString("Conferma nuova password: ")));
                         controller.updateUserPassword(bean);
+                        clearScreen();
                         print("Password modificata con successo");
                     }
                     case 4 -> {

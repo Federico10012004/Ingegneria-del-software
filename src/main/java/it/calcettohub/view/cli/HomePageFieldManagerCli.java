@@ -1,44 +1,23 @@
 package it.calcettohub.view.cli;
 
-import it.calcettohub.exceptions.EscPressedException;
-import it.calcettohub.exceptions.SessionExpiredException;
-import it.calcettohub.util.PageManager;
+public class HomePageFieldManagerCli extends AbstractHomePageCli {
 
-public class HomePageFieldManagerCli extends CliContext {
+    protected String getHomeTitle() {
+        return "Home Field Manager";
+    }
 
-    public void start() {
-
-        enableSessionCheck();
-
-        printTitle("Home Field Manager");
-        print("Benvenuto, cosa desideri fare?");
-        showMenu(
+    protected String[] getSpecificOption() {
+        return new String[] {
                 "Gestisci campi",
-                "Gestisci prenotazioni",
-                "Gestisci il tuo account",
-                "Esci"
-        );
+                "Gestisci prenotazioni"
+        };
+    }
 
-        while (true) {
-            try {
-                int choice = requestIntInRange("Selezione: ", 1, 4);
+    protected void onFirstOption() {
+        System.out.println("Gestisci campi");
+    }
 
-                switch (choice) {
-                    case 1 -> System.out.println("Gestisci campi");
-                    case 2 -> System.out.println("Gestisci prenotazione");
-                    case 3 -> PageManager.push(() -> new AccountCli().start());
-                    case 4 -> System.exit(0);
-                    default -> throw new IllegalStateException("Valore imprevisto: " + choice);
-                }
-            } catch (EscPressedException _) {
-                showErrorMessage("Esc non disponibile in questa pagina.");
-            } catch (SessionExpiredException e) {
-                showExceptionMessage(e);
-                PageManager.pop();
-                return;
-            } catch (IllegalArgumentException e) {
-                showExceptionMessage(e);
-            }
-        }
+    protected void onSecondOption() {
+        System.out.println("Gestisci prenotazioni");
     }
 }

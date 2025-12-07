@@ -45,6 +45,7 @@ public class LoginCli extends CliContext {
                     System.exit(1);
                 }
 
+                clearScreen();
                 print("Login effettuato con successo!");
                 switch (AppContext.getSelectedRole()) {
                     case PLAYER -> PageManager.push(()->new HomePagePlayerCli().start());

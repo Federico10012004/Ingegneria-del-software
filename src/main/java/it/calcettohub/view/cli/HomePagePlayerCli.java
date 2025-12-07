@@ -1,44 +1,23 @@
 package it.calcettohub.view.cli;
 
-import it.calcettohub.exceptions.EscPressedException;
-import it.calcettohub.exceptions.SessionExpiredException;
-import it.calcettohub.util.PageManager;
+public class HomePagePlayerCli extends AbstractHomePageCli {
 
-public class HomePagePlayerCli extends CliContext {
+    protected String getHomeTitle() {
+        return "Home Player";
+    }
 
-    public void start() {
-
-        enableSessionCheck();
-
-        printTitle("Home Player");
-        print("Benvenuto, cosa desideri fare?");
-        showMenu(
+    protected String[] getSpecificOption() {
+        return new String[] {
                 "Prenota campo",
-                "Organizza nuova partita",
-                "Gestisci il tuo account",
-                "Esci"
-        );
+                "Organizza nuova partita"
+        };
+    }
 
-        while (true) {
-            try {
-                int choice = requestIntInRange("Selezione: ", 1, 4);
+    protected void onFirstOption() {
+        System.out.println("Prenota campo");
+    }
 
-                switch (choice) {
-                    case 1 -> System.out.println("Prenota campo");
-                    case 2 -> System.out.println("Organizza partita");
-                    case 3 -> PageManager.push(() -> new AccountCli().start());
-                    case 4 -> System.exit(0);
-                    default -> throw new IllegalStateException("Valore imprevisto: " + choice);
-                }
-            } catch (EscPressedException _) {
-                showErrorMessage("Esc non disponibile in questa pagina.");
-            } catch (SessionExpiredException e) {
-                showExceptionMessage(e);
-                PageManager.pop();
-                return;
-            } catch (IllegalArgumentException e) {
-                showExceptionMessage(e);
-            }
-        }
+    protected void onSecondOption() {
+        System.out.println("Organizza nuova partita");
     }
 }
