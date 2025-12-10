@@ -1,5 +1,6 @@
 package it.calcettohub.view.gui;
 
+import it.calcettohub.bean.AccountBean;
 import it.calcettohub.bean.PlayerAccountBean;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.PlayerPosition;
@@ -62,47 +63,24 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
         buttonBox.setMouseTransparent(true);
     }
 
-    /*@Override
+    @Override
+    protected void fillAccountBean(AccountBean bean) {
+        PlayerAccountBean playerBean = (PlayerAccountBean) bean;
+        validateField(()-> playerBean.setName(nameField.getText().trim()));
+        validateField(()-> playerBean.setSurname(surnameField.getText().trim()));
+        validateField(()-> playerBean.setPosition(PlayerPosition.fromString(positionField.getText().trim())));
+    }
+
+    @Override
     protected void applyChanges(AccountBean bean) {
-        currentPlayer.setName(bean.getName());
-        currentPlayer.setSurname(bean.getSurname());
-        currentPlayer.setPreferredPosition(bean.getPosition());
+        PlayerAccountBean playerBean = (PlayerAccountBean) bean;
+        currentPlayer.setName(playerBean.getName());
+        currentPlayer.setSurname(playerBean.getSurname());
+        currentPlayer.setPreferredPosition(playerBean.getPosition());
 
-        initialState.setName(bean.getName());
-        initialState.setSurname(bean.getSurname());
-        initialState.setPosition(bean.getPosition());
-    }*/
-
-    @FXML
-    private void modifyAccount() {
-        PlayerAccountBean bean = new PlayerAccountBean();
-
-        if (!hasAccountChanges()) {
-            return;
-        }
-
-        try {
-            validateField(()-> bean.setName(nameField.getText().trim()));
-            validateField(()-> bean.setSurname(surnameField.getText().trim()));
-            validateField(()-> bean.setPosition(PlayerPosition.fromString(positionField.getText().trim())));
-
-            controller.updateUserData(bean);
-
-            currentPlayer.setName(bean.getName());
-            currentPlayer.setSurname(bean.getSurname());
-            currentPlayer.setPreferredPosition(bean.getPosition());
-
-            initialState.setName(bean.getName());
-            initialState.setSurname(bean.getSurname());
-            initialState.setPosition(bean.getPosition());
-
-            showInfo("Modifiche applicate con successo.");
-            setNodeVisibility(confirmModifyButton, false);
-            populateFields();
-        } catch (IllegalArgumentException e) {
-            setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
-        }
+        initialState.setName(playerBean.getName());
+        initialState.setSurname(playerBean.getSurname());
+        initialState.setPosition(playerBean.getPosition());
     }
 
     @Override

@@ -63,50 +63,24 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
         buttonBox.setMouseTransparent(true);
     }
 
-    /*@Override
-    protected void fillAccountBean()
+    @Override
+    protected void fillAccountBean(AccountBean bean) {
+        FieldManagerAccountBean managerBean = (FieldManagerAccountBean) bean;
+        validateField(()-> managerBean.setName(nameField.getText().trim()));
+        validateField(()-> managerBean.setSurname(surnameField.getText().trim()));
+        validateField(()-> managerBean.setPhoneNumber(phoneField.getText().trim()));
+    }
 
     @Override
-    protected void applyChanges(FieldManagerAccountBean bean) {
-        currentManager.setName(bean.getName());
-        currentManager.setSurname(bean.getSurname());
-        currentManager.setPhoneNumber(bean.getPhoneNumber());
+    protected void applyChanges(AccountBean bean) {
+        FieldManagerAccountBean managerBean = (FieldManagerAccountBean) bean;
+        currentManager.setName(managerBean.getName());
+        currentManager.setSurname(managerBean.getSurname());
+        currentManager.setPhoneNumber(managerBean.getPhoneNumber());
 
-        initialState.setName(bean.getName());
-        initialState.setSurname(bean.getSurname());
-        initialState.setPhoneNumber(bean.getPhoneNumber());
-    }*/
-
-    @FXML
-    private void modifyAccount() {
-        FieldManagerAccountBean bean = new FieldManagerAccountBean();
-
-        if (!hasAccountChanges()) {
-            return;
-        }
-
-        try {
-            validateField(()-> bean.setName(nameField.getText().trim()));
-            validateField(()-> bean.setSurname(surnameField.getText().trim()));
-            validateField(()-> bean.setPhoneNumber(phoneField.getText().trim()));
-
-            controller.updateUserData(bean);
-
-            currentManager.setName(bean.getName());
-            currentManager.setSurname(bean.getSurname());
-            currentManager.setPhoneNumber(bean.getPhoneNumber());
-
-            initialState.setName(bean.getName());
-            initialState.setSurname(bean.getSurname());
-            initialState.setPhoneNumber(bean.getPhoneNumber());
-
-            showInfo("Modifiche applicate con successo.");
-            setNodeVisibility(confirmModifyButton, false);
-            populateFields();
-        } catch (IllegalArgumentException e) {
-            setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
-        }
+        initialState.setName(managerBean.getName());
+        initialState.setSurname(managerBean.getSurname());
+        initialState.setPhoneNumber(managerBean.getPhoneNumber());
     }
 
     @Override

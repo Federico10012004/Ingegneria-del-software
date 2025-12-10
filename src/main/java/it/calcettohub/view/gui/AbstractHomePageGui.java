@@ -137,12 +137,12 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
         }
     }
 
-    /*protected abstract void fillAccountBean(AccountBean bean);
+    protected abstract void fillAccountBean(AccountBean bean);
 
     protected abstract void applyChanges(AccountBean bean);
 
     @FXML
-    private void modifyAccount() {
+    protected void modifyAccount() {
         AccountBean bean;
 
         if (Navigator.getUserType() == Role.PLAYER) {
@@ -157,9 +157,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
         try {
             fillAccountBean(bean);
-
             controller.updateUserData(bean);
-
             applyChanges(bean);
 
             showInfo("Modifiche applicate con successo.");
@@ -169,7 +167,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             setErrorMessage(errorLabel, e.getMessage());
             showError(errorLabel);
         }
-    }*/
+    }
 
     @Override
     public void reset() {
