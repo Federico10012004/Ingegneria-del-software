@@ -22,13 +22,13 @@ public abstract class DaoFactory {
                 if (input != null) {
                     properties.load(input);
                 } else {
-                    System.err.println("File config.properties not found, defaulting to demo mode.");
+                    System.err.println("File di configurazione non trovato, inizializzazione della modalità demo.");
                 }
             } catch (IOException _) {
-                System.err.println("Error loading config.properties.");
+                System.err.println("Errore nel caricamento del file di configurazione.");
             }
 
-            String mode = properties.getProperty("mode").trim().toLowerCase();
+            String mode = properties.getProperty("mode", "demo").trim().toLowerCase();
             switch (mode) {
                 case "database":
                     instance = new DatabaseFactory();

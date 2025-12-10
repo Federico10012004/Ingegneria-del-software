@@ -65,7 +65,7 @@ public class LoginGui extends BaseFormerGui {
 
             switch (Navigator.getUserType()) {
                 case PLAYER -> switchTo("Home Player", "Altro");
-                case FIELDMANAGER -> new HomePageFieldManagerGui().start();
+                case FIELDMANAGER -> switchTo("Home Field Manager", "Altro");
                 default -> throw new UnexpectedRoleException("Ruolo inatteso, errore nel caricamento della nuova scheramta.");
             }
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
