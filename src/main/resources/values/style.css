@@ -59,13 +59,20 @@
 }
 
 /* Bottone Accedi */
-.login-button {
+.login-button, .logout-button {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
     -fx-transition: all 0.25s ease-in-out;
 }
 
 .login-button:hover {
     -fx-background-color: derive(#016326, 25%);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);
+}
+
+.logout-button: hover {
+    -fx-background-color: derive(red, 25%);
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);

@@ -113,6 +113,7 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
         setNodeVisibility(accountPanel, false);
         organizeMatch.setVisible(true);
         buttonBox.setMouseTransparent(false);
+        reset();
     }
 
     @Override

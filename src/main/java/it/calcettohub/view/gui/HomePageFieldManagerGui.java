@@ -112,6 +112,7 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
         setNodeVisibility(accountPanel, false);
         reservation.setVisible(true);
         buttonBox.setMouseTransparent(false);
+        reset();
     }
 
     @Override

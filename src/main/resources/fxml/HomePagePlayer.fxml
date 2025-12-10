@@ -30,7 +30,7 @@
    <BorderPane prefHeight="200.0" prefWidth="200.0">
       <right>
          <StackPane BorderPane.alignment="CENTER">
-            <VBox fx:id="accountPanel" prefWidth="325.0" spacing="20.0" styleClass="login-box">
+            <VBox fx:id="accountPanel" prefWidth="325.0" spacing="20.0" styleClass="login-box" visible="false">
                <StackPane alignment="TOP_LEFT">
                   <VBox.margin>
                      <Insets left="5.0" top="10.0" />
@@ -132,7 +132,7 @@
                </VBox>
                <AnchorPane>
                   <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                     <Button fx:id="confirmModifyButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#modifyAccount" prefHeight="42.4" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" text="Conferma modifiche" textFill="WHITE" visible="false">
+                     <Button fx:id="confirmModifyButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#modifyAccount" prefHeight="42.4" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" styleClass="login-button" text="Conferma modifiche" textFill="WHITE" visible="false">
                         <font>
                            <Font name="Tahoma Bold" size="14.0" />
                         </font>
@@ -153,7 +153,7 @@
                            <Cursor fx:constant="HAND" />
                         </cursor>
                      </Button>
-                     <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#logout" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: red; -fx-border-color: red;" text="Logout" textFill="WHITE">
+                     <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#logout" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: red; -fx-border-color: red;" styleClass="logout-button" text="Logout" textFill="WHITE">
                         <graphic>
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <Image url="@../img/exit_white.png" />
@@ -274,7 +274,7 @@
                   </StackPane>
                </VBox>
                <AnchorPane>
-                  <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#changePassword" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" text="Conferma modifica" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#changePassword" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" styleClass="login-button" text="Conferma modifica" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
@@ -297,6 +297,9 @@
                <ImageView accessibleRole="TEXT" fitHeight="26.0" fitWidth="26.0" layoutX="141.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@../img/Soccer-Ball.png" />
                </ImageView>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
             </Group>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAccount" style="-fx-background-color: transparent;" StackPane.alignment="TOP_RIGHT">
                <graphic>
@@ -314,6 +317,12 @@
                   <Insets right="30.0" top="7.0" />
                </padding>
             </Button>
+            <BorderPane.margin>
+               <Insets />
+            </BorderPane.margin>
+            <padding>
+               <Insets top="10.0" />
+            </padding>
          </StackPane>
       </top>
    </BorderPane>

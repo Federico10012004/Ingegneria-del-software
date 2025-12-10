@@ -20,435 +20,350 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" styleClass="home-background" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.HomePageFieldManagerGui">
+<GridPane fx:id="root" styleClass="home-background" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.HomePageFieldManagerGui">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
-   <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <right>
-            <StackPane BorderPane.alignment="CENTER">
-               <children>
-                  <VBox fx:id="accountPanel" prefWidth="325.0" spacing="20.0" styleClass="login-box" visible="false">
-                     <children>
-                        <StackPane alignment="TOP_LEFT">
-                           <VBox.margin>
-                              <Insets left="5.0" top="10.0" />
-                           </VBox.margin>
-                           <children>
-                              <Button mnemonicParsing="false" onAction="#backToHome" style="-fx-background-color: transparent;">
-                                 <font>
-                                    <Font size="1.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fx:id="backIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/back-button.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                              <VBox alignment="CENTER">
-                                 <StackPane.margin>
-                                    <Insets top="20.0" />
-                                 </StackPane.margin>
-                                 <children>
-                                    <Label fx:id="accountLabel" text="Il tuo account">
-                                       <font>
-                                          <Font name="Tahoma Bold" size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="helloLabel" alignment="TOP_LEFT">
-                                       <font>
-                                          <Font name="Tahoma Bold" size="14.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </StackPane>
-                        <VBox alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <StackPane>
-                                 <children>
-                                    <Label fx:id="errorLabel" textFill="RED" />
-                                 </children>
-                              </StackPane>
-                              <StackPane>
-                                 <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <TextField fx:id="nameField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
-                                    </TextField>
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
-                                       <StackPane.margin>
-                                          <Insets right="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/pen.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                                       <StackPane.margin>
-                                          <Insets left="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/user.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </StackPane>
-                              <StackPane>
-                                 <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <TextField fx:id="surnameField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" />
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
-                                       <StackPane.margin>
-                                          <Insets right="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/pen.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                                       <StackPane.margin>
-                                          <Insets left="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/user.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </StackPane>
-                              <StackPane>
-                                 <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <TextField fx:id="phoneField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" />
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
-                                       <StackPane.margin>
-                                          <Insets right="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/pen.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                                       <StackPane.margin>
-                                          <Insets left="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/team.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </VBox>
-                        <AnchorPane>
-                           <children>
-                              <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                                 <children>
-                                    <Button fx:id="confirmModifyButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#modifyAccount" prefHeight="42.4" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" text="Conferma modifiche" textFill="WHITE" visible="false">
-                                       <font>
-                                          <Font name="Tahoma Bold" size="14.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                    <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showChangePassword" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="register-button" text="Cambia password" textFill="WHITE">
-                                       <graphic>
-                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../img/lock.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <font>
-                                          <Font name="Tahoma Bold" size="14.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                    <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#logout" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: red; -fx-border-color: red;" text="Logout" textFill="WHITE">
-                                       <graphic>
-                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../img/exit_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <font>
-                                          <Font name="Tahoma Bold" size="14.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="changePasswordPanel" prefWidth="325.0" spacing="20.0" styleClass="login-box" visible="false">
-                     <children>
-                        <StackPane alignment="TOP_LEFT">
-                           <VBox.margin>
-                              <Insets left="5.0" top="10.0" />
-                           </VBox.margin>
-                           <children>
-                              <Button mnemonicParsing="false" onAction="#backToAccountPanel" style="-fx-background-color: transparent;">
-                                 <font>
-                                    <Font size="1.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fx:id="backIcon1" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/back-button.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                              <VBox alignment="CENTER">
-                                 <StackPane.margin>
-                                    <Insets top="20.0" />
-                                 </StackPane.margin>
-                                 <children>
-                                    <Label fx:id="passwordLabel" text="Modifica password">
-                                       <font>
-                                          <Font name="Tahoma Bold" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </StackPane>
-                        <VBox alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <StackPane>
-                                 <children>
-                                    <Label fx:id="errorLabel1" textFill="RED" />
-                                 </children>
-                              </StackPane>
-                              <StackPane>
-                                 <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <PasswordField fx:id="passwordField" promptText="Inserisci nuova password" style="-fx-padding: 10 10 10 40; -fx-border-color: #cccccc; -fx-background-radius: 8; -fx-border-radius: 8;">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </PasswordField>
-                                    <TextField fx:id="passwordTextField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" visible="false">
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
-                                    </TextField>
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                                       <StackPane.margin>
-                                          <Insets left="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/lock.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Button mnemonicParsing="false" onAction="#togglePasswordVisibility" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
-                                       <graphic>
-                                          <ImageView fx:id="eyeIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../img/hidden.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <font>
-                                          <Font size="1.0" />
-                                       </font>
-                                       <StackPane.margin>
-                                          <Insets right="10.0" />
-                                       </StackPane.margin>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                 </children>
-                              </StackPane>
-                              <StackPane>
-                                 <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <PasswordField fx:id="confirmPasswordField" promptText="Conferma nuova password" style="-fx-padding: 10 10 10 40; -fx-border-color: #cccccc; -fx-background-radius: 8; -fx-border-radius: 8;">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </PasswordField>
-                                    <TextField fx:id="confirmPasswordTextField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" visible="false" />
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                                       <StackPane.margin>
-                                          <Insets left="10.0" />
-                                       </StackPane.margin>
-                                       <image>
-                                          <Image url="@../img/lock.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Button mnemonicParsing="false" onAction="#togglePasswordVisibility" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
-                                       <graphic>
-                                          <ImageView fx:id="eyeConfirmIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../img/hidden.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <font>
-                                          <Font size="1.0" />
-                                       </font>
-                                       <StackPane.margin>
-                                          <Insets right="10.0" />
-                                       </StackPane.margin>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </VBox>
-                        <AnchorPane>
-                           <children>
-                              <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#changePassword" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" text="Conferma modifica" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
-               </children>
-            </StackPane>
-         </right>
-         <top>
-            <StackPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
-               <children>
-                  <Group fx:id="logoGroup">
-                     <children>
-                        <Label text="Calcett  Hub" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="40.0" />
-                           </font>
-                        </Label>
-                        <ImageView accessibleRole="TEXT" fitHeight="26.0" fitWidth="26.0" layoutX="141.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Soccer-Ball.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </Group>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAccount" style="-fx-background-color: transparent;" StackPane.alignment="TOP_RIGHT">
-                     <graphic>
-                        <ImageView fx:id="accountIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/account.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+   <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <right>
+         <StackPane BorderPane.alignment="CENTER">
+            <VBox fx:id="accountPanel" prefWidth="325.0" spacing="20.0" styleClass="login-box" visible="false">
+               <StackPane alignment="TOP_LEFT">
+                  <VBox.margin>
+                     <Insets left="5.0" top="10.0" />
+                  </VBox.margin>
+                  <Button mnemonicParsing="false" onAction="#backToHome" style="-fx-background-color: transparent;">
                      <font>
                         <Font size="1.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="backIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@../img/back-button.png" />
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <VBox alignment="CENTER">
+                     <StackPane.margin>
+                        <Insets top="20.0" />
+                     </StackPane.margin>
+                     <Label fx:id="accountLabel" text="Il tuo account">
+                        <font>
+                           <Font name="Tahoma Bold" size="20.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="helloLabel" alignment="TOP_LEFT">
+                        <font>
+                           <Font name="Tahoma Bold" size="14.0" />
+                        </font>
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                     </Label>
+                  </VBox>
+               </StackPane>
+               <VBox alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
+                  <StackPane>
+                     <Label fx:id="errorLabel" textFill="RED" />
+                  </StackPane>
+                  <StackPane>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                     <TextField fx:id="nameField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                        <StackPane.margin>
+                           <Insets />
+                        </StackPane.margin>
+                     </TextField>
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane.margin>
+                           <Insets right="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/pen.png" />
+                     </ImageView>
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                        <StackPane.margin>
+                           <Insets left="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/user.png" />
+                     </ImageView>
+                  </StackPane>
+                  <StackPane>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                     <TextField fx:id="surnameField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" />
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane.margin>
+                           <Insets right="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/pen.png" />
+                     </ImageView>
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                        <StackPane.margin>
+                           <Insets left="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/user.png" />
+                     </ImageView>
+                  </StackPane>
+                  <StackPane>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                     <TextField fx:id="phoneField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" />
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane.margin>
+                           <Insets right="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/pen.png" />
+                     </ImageView>
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                        <StackPane.margin>
+                           <Insets left="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/team.png" />
+                     </ImageView>
+                  </StackPane>
+               </VBox>
+               <AnchorPane>
+                  <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <Button fx:id="confirmModifyButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#modifyAccount" prefHeight="42.4" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" styleClass="login-button" text="Conferma modifiche" textFill="WHITE" visible="false">
+                        <font>
+                           <Font name="Tahoma Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                     <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showChangePassword" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="register-button" text="Cambia password" textFill="WHITE">
+                        <graphic>
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <Image url="@../img/lock.png" />
+                           </ImageView>
+                        </graphic>
+                        <font>
+                           <Font name="Tahoma Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                     <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#logout" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: red; -fx-border-color: red;" styleClass="logout-button" text="Logout" textFill="WHITE">
+                        <graphic>
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <Image url="@../img/exit_white.png" />
+                           </ImageView>
+                        </graphic>
+                        <font>
+                           <Font name="Tahoma Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                  </VBox>
+               </AnchorPane>
+            </VBox>
+            <VBox fx:id="changePasswordPanel" prefWidth="325.0" spacing="20.0" styleClass="login-box" visible="false">
+               <StackPane alignment="TOP_LEFT">
+                  <VBox.margin>
+                     <Insets left="5.0" top="10.0" />
+                  </VBox.margin>
+                  <Button mnemonicParsing="false" onAction="#backToAccountPanel" style="-fx-background-color: transparent;">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="backIcon1" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@../img/back-button.png" />
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <VBox alignment="CENTER">
+                     <StackPane.margin>
+                        <Insets top="20.0" />
+                     </StackPane.margin>
+                     <Label fx:id="passwordLabel" text="Modifica password">
+                        <font>
+                           <Font name="Tahoma Bold" size="20.0" />
+                        </font>
+                     </Label>
+                  </VBox>
+               </StackPane>
+               <VBox alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
+                  <StackPane>
+                     <Label fx:id="errorLabel1" textFill="RED" />
+                  </StackPane>
+                  <StackPane>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                     <PasswordField fx:id="passwordField" promptText="Inserisci nuova password" style="-fx-padding: 10 10 10 40; -fx-border-color: #cccccc; -fx-background-radius: 8; -fx-border-radius: 8;">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </PasswordField>
+                     <TextField fx:id="passwordTextField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" visible="false">
+                        <StackPane.margin>
+                           <Insets />
+                        </StackPane.margin>
+                     </TextField>
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                        <StackPane.margin>
+                           <Insets left="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/lock.png" />
+                     </ImageView>
+                     <Button mnemonicParsing="false" onAction="#togglePasswordVisibility" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
+                        <graphic>
+                           <ImageView fx:id="eyeIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                              <Image url="@../img/hidden.png" />
+                           </ImageView>
+                        </graphic>
+                        <font>
+                           <Font size="1.0" />
+                        </font>
+                        <StackPane.margin>
+                           <Insets right="10.0" />
+                        </StackPane.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                  </StackPane>
+                  <StackPane>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                     <PasswordField fx:id="confirmPasswordField" promptText="Conferma nuova password" style="-fx-padding: 10 10 10 40; -fx-border-color: #cccccc; -fx-background-radius: 8; -fx-border-radius: 8;">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </PasswordField>
+                     <TextField fx:id="confirmPasswordTextField" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;" visible="false" />
+                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                        <StackPane.margin>
+                           <Insets left="10.0" />
+                        </StackPane.margin>
+                        <Image url="@../img/lock.png" />
+                     </ImageView>
+                     <Button mnemonicParsing="false" onAction="#togglePasswordVisibility" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
+                        <graphic>
+                           <ImageView fx:id="eyeConfirmIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                              <Image url="@../img/hidden.png" />
+                           </ImageView>
+                        </graphic>
+                        <font>
+                           <Font size="1.0" />
+                        </font>
+                        <StackPane.margin>
+                           <Insets right="10.0" />
+                        </StackPane.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                  </StackPane>
+               </VBox>
+               <AnchorPane>
+                  <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#changePassword" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" styleClass="login-button" text="Conferma modifica" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <padding>
-                        <Insets right="30.0" top="7.0" />
-                     </padding>
                   </Button>
-               </children>
-            </StackPane>
-         </top>
-      </BorderPane>
-      <AnchorPane pickOnBounds="false">
-         <children>
-            <HBox fx:id="buttonBox" alignment="CENTER" spacing="250.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
-               <children>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <Button mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fx:id="fieldIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/football-field.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <styleClass>
-                              <String fx:value="rounded-button" />
-                              <String fx:value="home-button" />
-                           </styleClass>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Label fx:id="fieldLabel" text="Gestisci campi" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="reservation" alignment="CENTER">
-                     <children>
-                        <Button mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fx:id="reservationIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/reservation.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <styleClass>
-                              <String fx:value="rounded-button" />
-                              <String fx:value="home-button" />
-                           </styleClass>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Label fx:id="reservationLabel" text="Gestisci prenotazioni" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-      </AnchorPane>
-   </children>
+               </AnchorPane>
+            </VBox>
+         </StackPane>
+      </right>
+      <top>
+         <StackPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+            <Group fx:id="logoGroup">
+               <Label text="Calcett  Hub" textFill="WHITE">
+                  <font>
+                     <Font name="Tahoma Bold" size="40.0" />
+                  </font>
+               </Label>
+               <ImageView accessibleRole="TEXT" fitHeight="26.0" fitWidth="26.0" layoutX="141.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/Soccer-Ball.png" />
+               </ImageView>
+            </Group>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAccount" style="-fx-background-color: transparent;" StackPane.alignment="TOP_RIGHT">
+               <graphic>
+                  <ImageView fx:id="accountIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@../img/account.png" />
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <padding>
+                  <Insets right="30.0" top="7.0" />
+               </padding>
+            </Button>
+            <padding>
+               <Insets top="10.0" />
+            </padding>
+         </StackPane>
+      </top>
+   </BorderPane>
+   <AnchorPane pickOnBounds="false">
+      <HBox fx:id="buttonBox" alignment="CENTER" spacing="250.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+         <VBox alignment="CENTER">
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fx:id="fieldIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@../img/football-field.png" />
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="rounded-button" />
+                  <String fx:value="home-button" />
+               </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="fieldLabel" text="Gestisci campi" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="24.0" />
+               </font>
+            </Label>
+         </VBox>
+         <VBox fx:id="reservation" alignment="CENTER">
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fx:id="reservationIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@../img/reservation.png" />
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="rounded-button" />
+                  <String fx:value="home-button" />
+               </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="reservationLabel" text="Gestisci prenotazioni" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="24.0" />
+               </font>
+            </Label>
+         </VBox>
+      </HBox>
+   </AnchorPane>
 </GridPane>

@@ -1,11 +1,7 @@
 package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.AccountBean;
-import it.calcettohub.bean.FieldManagerAccountBean;
-import it.calcettohub.bean.PlayerAccountBean;
 import it.calcettohub.controller.AccountController;
-import it.calcettohub.model.Role;
-import it.calcettohub.util.Navigator;
 import it.calcettohub.util.PasswordUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -112,13 +108,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
     @FXML
     protected void changePassword() {
-        AccountBean bean;
-
-        if (Navigator.getUserType() == Role.PLAYER) {
-            bean = new PlayerAccountBean();
-        } else {
-            bean = new FieldManagerAccountBean();
-        }
+        AccountBean bean = createAccountBean();
 
         try {
             validateField(()-> bean.setPassword(isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim()));
@@ -167,13 +157,20 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
     @Override
     public void reset() {
+        clearPasswordPanel();
+
+        setNodeVisibility(errorLabel, false);
+        setNodeVisibility(accountPanel, false);
+        setNodeVisibility(changePasswordPanel, false);
+
+        populateFields();
+    }
+
+    protected void clearPasswordPanel() {
         passwordField.clear();
         confirmPasswordField.clear();
 
-        setNodeVisibility(errorLabel, false);
         setNodeVisibility(errorLabel1, false);
-        setNodeVisibility(accountPanel, false);
-        setNodeVisibility(changePasswordPanel, false);
 
         isVisible = false;
         setNodeVisibility(passwordTextField, false);
@@ -184,7 +181,6 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
         setNodeVisibility(confirmPasswordField, true);
 
         setEyeIcon();
-        populateFields();
     }
 
     @FXML
@@ -195,6 +191,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
         if (!confirm) return;
 
+        clearPasswordPanel();
         showAccount();
     }
 
