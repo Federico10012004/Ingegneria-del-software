@@ -148,8 +148,7 @@ public abstract class BaseFormerGui implements Resettable {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
-    protected void switchTo(String screen, String previous) {
-        Navigator.setPreviousPage(previous);
+    protected void switchTo(String screen) {
         Navigator.show(screen);
     }
 }

@@ -166,6 +166,6 @@ public class RegistrationGui extends BaseFormerGui {
 
     @FXML
     private void goToLogin() {
-        switchTo("Login", "Altro");
+        switchTo("Login");
     }
 }

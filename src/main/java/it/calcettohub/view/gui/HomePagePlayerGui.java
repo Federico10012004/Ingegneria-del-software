@@ -127,6 +127,6 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
         organizeMatch.setVisible(true);
         buttonBox.setMouseTransparent(false);
 
-        switchTo("Login", "Altro");
+        switchTo("Login");
     }
 }

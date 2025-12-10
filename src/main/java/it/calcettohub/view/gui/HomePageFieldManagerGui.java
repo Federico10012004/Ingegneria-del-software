@@ -126,6 +126,6 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
         reservation.setVisible(true);
         buttonBox.setMouseTransparent(false);
 
-        switchTo("Login", "Altro");
+        switchTo("Login");
     }
 }

@@ -26,7 +26,6 @@ public class Navigator {
 
     // Mantiene il tipo di utentee la pagina precedente
     private static Role userType;
-    private static String previousPage;
 
     public static void setStage(Stage stage) {
         mainStage = stage;
@@ -43,14 +42,6 @@ public class Navigator {
 
     public static Role getUserType() {
         return userType;
-    }
-
-    public static void setPreviousPage(String page) {
-        previousPage = page;
-    }
-
-    public static String getPreviousPage() {
-        return previousPage;
     }
 
     public static void resetUserType() {

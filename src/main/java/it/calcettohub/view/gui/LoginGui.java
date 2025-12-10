@@ -64,8 +64,8 @@ public class LoginGui extends BaseFormerGui {
             }
 
             switch (Navigator.getUserType()) {
-                case PLAYER -> switchTo("Home Player", "Altro");
-                case FIELDMANAGER -> switchTo("Home Field Manager", "Altro");
+                case PLAYER -> switchTo("Home Player");
+                case FIELDMANAGER -> switchTo("Home Field Manager");
                 default -> throw new UnexpectedRoleException("Ruolo inatteso, errore nel caricamento della nuova scheramta.");
             }
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
@@ -96,6 +96,6 @@ public class LoginGui extends BaseFormerGui {
 
     @FXML
     private void switchToRegister() {
-        switchTo("Registration Gui", "Altro");
+        switchTo("Registration Gui");
     }
 }
