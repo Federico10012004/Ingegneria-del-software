@@ -137,23 +137,19 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
         }
     }
 
+    protected abstract AccountBean createAccountBean();
+
     protected abstract void fillAccountBean(AccountBean bean);
 
     protected abstract void applyChanges(AccountBean bean);
 
     @FXML
     protected void modifyAccount() {
-        AccountBean bean;
-
-        if (Navigator.getUserType() == Role.PLAYER) {
-            bean = new PlayerAccountBean();
-        } else {
-            bean = new FieldManagerAccountBean();
-        }
-
         if (!hasAccountChanges()) {
             return;
         }
+
+        AccountBean bean = createAccountBean();
 
         try {
             fillAccountBean(bean);

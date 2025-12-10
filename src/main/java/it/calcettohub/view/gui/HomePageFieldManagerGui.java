@@ -64,6 +64,11 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
     }
 
     @Override
+    protected AccountBean createAccountBean() {
+        return new FieldManagerAccountBean();
+    }
+
+    @Override
     protected void fillAccountBean(AccountBean bean) {
         FieldManagerAccountBean managerBean = (FieldManagerAccountBean) bean;
         validateField(()-> managerBean.setName(nameField.getText().trim()));

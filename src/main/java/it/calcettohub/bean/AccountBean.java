@@ -20,18 +20,6 @@ public abstract class AccountBean {
         }
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        if (ValidationUtils.isNotEmpty(surname)) {
-            this.surname = surname;
-        } else {
-            throw new IllegalArgumentException("Cognome non inserito.");
-        }
-    }
-
     public String getPassword() {
         return password;
     }
@@ -53,6 +41,18 @@ public abstract class AccountBean {
             this.confirmPassword = confirmPassword;
         } else {
             throw new IllegalArgumentException("Le password inserite sono differenti.");
+        }
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        if (ValidationUtils.isNotEmpty(surname)) {
+            this.surname = surname;
+        } else {
+            throw new IllegalArgumentException("Cognome non inserito.");
         }
     }
 }
