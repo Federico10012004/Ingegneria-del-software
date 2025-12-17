@@ -23,7 +23,6 @@ public class RegistrationGui extends BaseFormerGui {
     @FXML private ImageView vatNumberImageView;
     @FXML private ImageView positionImageView;
     @FXML private Label errorLabel;
-    @FXML private Label successRegister;
     @FXML private TextField nameField;
     @FXML private TextField surnameField;
     @FXML private TextField emailField;
@@ -55,7 +54,6 @@ public class RegistrationGui extends BaseFormerGui {
         bindResponsiveLogo(logoGroup, 900.0);
         setupResponsiveLabel(sloganLabel, root, 60.0, FONT_STYLE_SLOGAN);
         setupResponsiveLabel(welcomeLabel, root, 40.0, FONT_STYLE_TAHOMA);
-        setupResponsiveLabel(successRegister, root, 30.0, FONT_STYLE_TAHOMA);
 
         setUpRoleVisibility();
     }

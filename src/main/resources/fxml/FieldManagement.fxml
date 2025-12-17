@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" styleClass="field_management" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.FieldManagementGui">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <BorderPane>
+      <top>
+         <StackPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+            <padding>
+               <Insets top="10.0" />
+            </padding>
+            <Group fx:id="logoGroup" StackPane.alignment="TOP_CENTER">
+               <Label text="Calcett  Hub" textFill="WHITE">
+                  <font>
+                     <Font name="Tahoma Bold" size="40.0" />
+                  </font>
+               </Label>
+               <ImageView accessibleRole="TEXT" fitHeight="26.0" fitWidth="26.0" layoutX="141.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/Soccer-Ball.png" />
+               </ImageView>
+            </Group>
+            <Button fx:id="homeButton" alignment="CENTER" mnemonicParsing="false" onAction="#backToHome" style="-fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
+               <graphic>
+                  <ImageView fx:id="homeIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@../img/homepage-white.png" />
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <padding>
+                  <Insets left="30.0" top="7.0" />
+               </padding>
+            </Button>
+         </StackPane>
+      </top>
+      <center>
+         <StackPane fx:id="containerPane" maxHeight="500.0" maxWidth="600.0" BorderPane.alignment="CENTER">
+            <StackPane fx:id="fieldView">
+               <VBox alignment="CENTER">
+                  <HBox>
+                     <StackPane HBox.hgrow="ALWAYS">
+                        <TextField fx:id="searchField" promptText="Cerca campo" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="searchButton" mnemonicParsing="false" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@../img/search.png" />
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </StackPane>
+                     <Button fx:id="addFieldButton" mnemonicParsing="false" onAction="#showAddField" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="register-button" text="Aggiungi campo">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                        <graphic>
+                           <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                              <Image url="@../img/add.png" />
+                           </ImageView>
+                        </graphic>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                  </HBox>
+                  <VBox fx:id="noFieldPresent" alignment="CENTER" styleClass="login-box" visible="false">
+                     <children>
+                        <Label alignment="CENTER" text="Nessun campo associato. Inserire nuovi campi">
+                           <font>
+                              <Font name="Tahoma" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background-color: transparent;" styleClass="transparent-scrollpane" VBox.vgrow="ALWAYS">
+                     <VBox fx:id="fieldsContainer" alignment="CENTER" styleClass="login-box" />
+                  </ScrollPane>
+               </VBox>
+            </StackPane>
+            <StackPane fx:id="fieldInformation" visible="false">
+               <VBox alignment="TOP_CENTER" spacing="30.0" styleClass="login-box" StackPane.alignment="CENTER">
+                  <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <Label text="Inserisci dati campo" VBox.vgrow="ALWAYS">
+                        <font>
+                           <Font name="Tahoma Bold" size="30.0" />
+                        </font>
+                        <padding>
+                           <Insets top="15.0" />
+                        </padding>
+                     </Label>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="20.0">
+                     <Label fx:id="errorLabel" textFill="RED">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <StackPane>
+                        <padding>
+                           <Insets left="90.0" right="90.0" />
+                        </padding>
+                        <TextField fx:id="fieldName" promptText="Nome campo" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                           <StackPane.margin>
+                              <Insets left="10.0" />
+                           </StackPane.margin>
+                           <Image url="@../img/football-field.png" />
+                        </ImageView>
+                     </StackPane>
+                     <StackPane>
+                        <padding>
+                           <Insets left="90.0" right="90.0" />
+                        </padding>
+                        <TextField fx:id="fieldAddress" promptText="Indirizzo campo" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                           <StackPane.margin>
+                              <Insets left="10.0" />
+                           </StackPane.margin>
+                           <Image url="@../img/pin.png" />
+                        </ImageView>
+                     </StackPane>
+                     <StackPane>
+                        <padding>
+                           <Insets left="90.0" right="90.0" />
+                        </padding>
+                        <TextField fx:id="fieldCity" promptText="Città/Paese" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                           <StackPane.margin>
+                              <Insets left="10.0" />
+                           </StackPane.margin>
+                           <Image url="@../img/earth-globe-with-continents-maps.png" />
+                        </ImageView>
+                     </StackPane>
+                     <StackPane>
+                        <padding>
+                           <Insets left="90.0" right="90.0" />
+                        </padding>
+                        <TextField fx:id="fieldSurface" promptText="Tipo di superficie" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                           <StackPane.margin>
+                              <Insets left="10.0" />
+                           </StackPane.margin>
+                           <Image url="@../img/parquet.png" />
+                        </ImageView>
+                     </StackPane>
+                     <StackPane>
+                        <padding>
+                           <Insets left="90.0" right="90.0" />
+                        </padding>
+                        <TextField fx:id="fieldPrice" promptText="Prezzo orario" style="-fx-padding: 10 10 10 40; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                           <StackPane.margin>
+                              <Insets left="10.0" />
+                           </StackPane.margin>
+                           <Image url="@../img/dollar.png" />
+                        </ImageView>
+                     </StackPane>
+                     <StackPane>
+                        <padding>
+                           <Insets left="90.0" right="90.0" />
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="40.0">
+                           <Label alignment="CENTER" text="Il campo è indoor?">
+                              <font>
+                                 <Font size="14.0" />
+                              </font>
+                           </Label>
+                           <RadioButton fx:id="indoorYes" mnemonicParsing="false" text="Si">
+                              <toggleGroup>
+                                 <ToggleGroup fx:id="indoorGroup" />
+                              </toggleGroup>
+                           </RadioButton>
+                           <RadioButton fx:id="indoorNo" mnemonicParsing="false" text="No" toggleGroup="$indoorGroup" />
+                        </HBox>
+                     </StackPane>
+                  </VBox>
+                  <AnchorPane VBox.vgrow="ALWAYS">
+                     <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAvailability" style="-fx-background-color: #016326; -fx-border-color: #016326; -fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="login-button" text="Avanti" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0">
+                        <font>
+                           <Font name="Tahoma Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                  </AnchorPane>
+               </VBox>
+               <Button fx:id="backButton" mnemonicParsing="false" onAction="#backToFieldView" style="-fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
+                  <font>
+                     <Font size="1.0" />
+                  </font>
+                  <graphic>
+                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../img/back-button.png" />
+                     </ImageView>
+                  </graphic>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <StackPane.margin>
+                     <Insets left="10.0" top="10.0" />
+                  </StackPane.margin>
+               </Button>
+            </StackPane>
+            <StackPane fx:id="fieldAvailability" visible="false">
+               <VBox alignment="CENTER" spacing="35.0" styleClass="login-box" StackPane.alignment="CENTER">
+                  <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <Label text="Inserisci orari lavorativi" VBox.vgrow="ALWAYS">
+                        <font>
+                           <Font name="Tahoma Bold" size="30.0" />
+                        </font>
+                        <padding>
+                           <Insets top="15.0" />
+                        </padding>
+                     </Label>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="20.0">
+                     <Label fx:id="errorLabel1" textFill="RED">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <GridPane alignment="CENTER" hgap="15.0" vgap="5.0" VBox.vgrow="ALWAYS">
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" prefWidth="0.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <Label text="Lunedì" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                        </Label>
+                        <ToggleButton fx:id="mondayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                        <Label text="Sabato" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Venerdì" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Giovedì" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Mercoledì" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Martedì" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Domenica" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                        </Label>
+                        <ToggleButton fx:id="tuesdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ToggleButton fx:id="wednesdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ToggleButton fx:id="thursdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ToggleButton fx:id="fridayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ToggleButton fx:id="saturdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ToggleButton fx:id="sundayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="mondayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Spinner fx:id="startMonday" GridPane.columnIndex="2" />
+                        <Spinner fx:id="endMonday" GridPane.columnIndex="3" />
+                        <Label fx:id="tuesdayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="saturdayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="fridayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="thursdayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="wednesdayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="sundayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Tahoma" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Spinner fx:id="startSaturday" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Spinner fx:id="startFriday" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Spinner fx:id="startThursday" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Spinner fx:id="startWednesday" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Spinner fx:id="startTuesday" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Spinner fx:id="startSunday" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Spinner fx:id="endSunday" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                        <Spinner fx:id="endSaturday" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <Spinner fx:id="endFriday" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Spinner fx:id="endThursday" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Spinner fx:id="endWednesday" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Spinner fx:id="endTuesday" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                     </GridPane>
+                  </VBox>
+                  <AnchorPane VBox.vgrow="ALWAYS">
+                     <Button fx:id="confirmButton" alignment="CENTER" mnemonicParsing="false" onAction="#addField" style="-fx-background-color: #016326; -fx-border-color: #016326; -fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="login-button" text="Aggiungi campo" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0">
+                        <font>
+                           <Font name="Tahoma Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                     </Button>
+                  </AnchorPane>
+               </VBox>
+               <Button fx:id="backButton1" mnemonicParsing="false" onAction="#backToFieldInformation" style="-fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
+                  <font>
+                     <Font size="1.0" />
+                  </font>
+                  <graphic>
+                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../img/back-button.png" />
+                     </ImageView>
+                  </graphic>
+                  <padding>
+                     <Insets left="10.0" top="10.0" />
+                  </padding>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </Button>
+            </StackPane>
+         </StackPane>
+      </center>
+   </BorderPane>
+</GridPane>

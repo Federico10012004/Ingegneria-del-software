@@ -55,7 +55,6 @@ public class PlayerDatabaseDao implements PlayerDao {
         String email = player.getEmail();
         String name = player.getName();
         String surname = player.getSurname();
-        LocalDate dateOfBirth = player.getDateOfBirth();
         PlayerPosition position = player.getPreferredPosition();
 
         Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -63,8 +62,7 @@ public class PlayerDatabaseDao implements PlayerDao {
             stmt.setString(1, email);
             stmt.setString(2, name);
             stmt.setString(3, surname);
-            stmt.setDate(4, java.sql.Date.valueOf(dateOfBirth));
-            stmt.setString(5, position.name());
+            stmt.setString(4, position.name());
 
             stmt.executeUpdate();
         } catch (SQLException _) {

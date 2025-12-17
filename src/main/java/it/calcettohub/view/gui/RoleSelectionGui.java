@@ -43,6 +43,6 @@ public class RoleSelectionGui extends BaseFormerGui {
         }
 
         Navigator.setUserType(selectedRole);
-        Navigator.show("Login");
+        switchTo("Login");
     }
 }

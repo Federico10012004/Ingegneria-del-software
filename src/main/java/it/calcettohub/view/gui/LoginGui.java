@@ -91,7 +91,7 @@ public class LoginGui extends BaseFormerGui {
 
     @FXML
     private void goBack() {
-        Navigator.show("Role Selection");
+        switchTo("Role Selection");
     }
 
     @FXML

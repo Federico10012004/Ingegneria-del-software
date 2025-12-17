@@ -128,4 +128,9 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
 
         switchTo("Login");
     }
+
+    @FXML
+    private void goToFieldManagement() {
+        switchTo("Field Management");
+    }
 }

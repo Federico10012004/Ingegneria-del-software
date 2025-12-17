@@ -148,6 +148,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
             showInfo("Modifiche applicate con successo.");
             setNodeVisibility(confirmModifyButton, false);
+            setNodeVisibility(errorLabel, false);
             populateFields();
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());

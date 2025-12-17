@@ -2,38 +2,42 @@ package it.calcettohub.model;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Field {
+    private final String id;
     private String fieldName;
-    private SurfaceType surface;
     private String address;
     private String city;
-    private Map<DayOfWeek, LocalTime[]> openingHours;
-    private List<Booking> bookings;
+    private SurfaceType surface;
+    private Map<DayOfWeek, OpeningTime> openingHours;
     private boolean indoor;
     private BigDecimal hourlyPrice;
-    private boolean isActive; // per gestire ristrutturazioni
-    private FieldManager manager;
+    private String emailManager;
 
-    public Field() {}
-
-    public Field (String fieldName, SurfaceType surface, String address, String city, boolean indoor, BigDecimal hourlyPrice, FieldManager manager) {
+    public Field (String fieldName, String address, String city, SurfaceType surface, Map<DayOfWeek, OpeningTime> openingHours, boolean indoor, BigDecimal hourlyPrice, String emailManager) {
+        this.id = UUID.randomUUID().toString();
         this.fieldName = fieldName;
-        this.surface = surface;
         this.address = address;
         this.city = city;
-        this.openingHours = new EnumMap<>(DayOfWeek.class);
-        this.bookings = new ArrayList<>();
+        this.surface = surface;
+        this.openingHours = new EnumMap<>(openingHours);
         this.indoor = indoor;
         this.hourlyPrice = hourlyPrice;
-        this.isActive = true;
-        this.manager = manager;
+        this.emailManager = emailManager;
+    }
+
+    public Field (String id, String fieldName, String address, String city, SurfaceType surface) {
+        this.id = id;
+        this.fieldName = fieldName;
+        this.address = address;
+        this.city = city;
+        this.surface = surface;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getFieldName() {
@@ -64,62 +68,12 @@ public class Field {
         return city;
     }
 
-    public Map<DayOfWeek, LocalTime[]> getOpeningHours() {
+    public Map<DayOfWeek, OpeningTime> getOpeningHours() {
         return openingHours;
     }
 
     public void setOpeningHours(DayOfWeek day, LocalTime open, LocalTime close) {
-        openingHours.put(day, new LocalTime[]{open, close});
-    }
-
-    // --- DISPONIBILITÀ DINAMICA ---
-
-    /**
-     * Calcola le fasce orarie ancora libere in un determinato giorno,
-     * in base alla durata delle partite (slotDurationMinutes).
-     */
-    // DA RICONTROLLARE SE LOGICA TROPPO COMPLESSA PER UN MODEL
-    public List<LocalTime[]> getAvailableSlots(LocalDate date, int slotDurationMinutes) {
-        DayOfWeek day = date.getDayOfWeek();
-        LocalTime[] hours = openingHours.get(day);
-        if (hours == null) return List.of(); // giorno non lavorativo
-
-        LocalTime open = hours[0];
-        LocalTime close = hours[1];
-
-        List<LocalTime[]> freeSlots = new ArrayList<>();
-        LocalTime current = open;
-
-        while (current.plusMinutes(slotDurationMinutes).isBefore(close) ||
-                current.plusMinutes(slotDurationMinutes).equals(close)) {
-
-            LocalTime end = current.plusMinutes(slotDurationMinutes);
-
-            LocalTime finalCurrent = current;
-            boolean occupied = bookings.stream()
-                    .anyMatch(b -> b.getDate().equals(date) &&
-                            !(end.isBefore(b.getStartTime()) || finalCurrent.isAfter(b.getEndTime())));
-
-            if (!occupied) {
-                freeSlots.add(new LocalTime[]{current, end});
-            }
-
-            current = end;
-        }
-
-        return freeSlots;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    public void addBooking(Booking booking) {
-        bookings.add(booking);
+        openingHours.put(day, new OpeningTime(open, close));
     }
 
     public void setCity(String city) {
@@ -142,15 +96,7 @@ public class Field {
         this.hourlyPrice = hourlyPrice;
     }
 
-    public boolean isActive() { return isActive; }
-
-    public void setActive(boolean active) { isActive = active; }
-
-    public FieldManager getManager() {
-        return manager;
-    }
-
-    public void setManager(FieldManager manager) {
-        this.manager = manager;
+    public String getManager() {
+        return emailManager;
     }
 }

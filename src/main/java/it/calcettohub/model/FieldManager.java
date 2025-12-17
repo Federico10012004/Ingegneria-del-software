@@ -46,20 +46,6 @@ public class FieldManager extends User {
         this.phoneNumber = phoneNumber;
     }
 
-    public void addField(Field field) {
-        if (field != null && !fields.contains(field)) {
-            fields.add(field);
-            field.setManager(this);
-        }
-    }
-
-    public void removeField(Field field) {
-        if (field != null && fields.contains(field)) {
-            fields.remove(field);
-            field.setManager(null);
-        }
-    }
-
     @Override
     protected List<String> getSpecificFields() {
         return List.of(vatNumber, phoneNumber);

@@ -5,7 +5,7 @@ import it.calcettohub.dao.*;
 public class FileSystemFactory extends DaoFactory {
 
     public FieldDao getFieldDao() {
-        return FieldFileSystemDao.getInstance();
+        return null;
     }
     public PlayerDao getPlayerDao() {
         return PlayerFileSystemDao.getInstance();

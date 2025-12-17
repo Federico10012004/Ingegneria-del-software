@@ -56,7 +56,6 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
         String email = manager.getEmail();
         String name = manager.getName();
         String surname = manager.getSurname();
-        LocalDate dateOfBirth = manager.getDateOfBirth();
         String phone = manager.getPhoneNumber();
 
         Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -64,7 +63,6 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.setString(1, email);
             stmt.setString(2, name);
             stmt.setString(3, surname);
-            stmt.setDate(4, java.sql.Date.valueOf(dateOfBirth));
             stmt.setString(5, phone);
 
             stmt.executeUpdate();
@@ -102,8 +100,8 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
 
     @Override
     public Optional<FieldManager> findByEmail(String managerEmail) {
-        Connection conn = DatabaseConnection.getInstance().getConnection();
 
+        Connection conn = DatabaseConnection.getInstance().getConnection();
         try (CallableStatement stmt = conn.prepareCall(VIEW_MANAGER)) {
             stmt.setString(1, managerEmail);
             ResultSet rs = stmt.executeQuery();

@@ -150,3 +150,49 @@
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
+
+.field_management {
+    -fx-background-image: url("../img/sfondo-erba.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.transparent-scrollpane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.transparent-scrollpane > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.transparent-scrollpane .scroll-bar:vertical,
+.transparent-scrollpane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.field-card {
+    -fx-padding: 12 20 12 20;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.toggle-button {
+    -fx-background-color: white;
+    -fx-border-color: #cfcfcf;
+    -fx-border-width: 1;
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
+
+    -fx-padding: 5 16 5 16;
+    -fx-font-size: 8px;
+    -fx-text-fill: #444;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #016326;   /* verde chiarissimo */
+    -fx-border-color: #66bb6a;
+    -fx-text-fill: #2e7d32;
+}
