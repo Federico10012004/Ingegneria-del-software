@@ -168,12 +168,12 @@ public class FieldManagementGui extends BaseFormerGui {
         try {
             Node fieldCardNode = loader.load();
 
-            FieldCardGui controller = loader.getController();
+            FieldCardGui fxmlController = loader.getController();
 
-            controller.setData(field, () -> deleteField(field));  // Passa l'azione di eliminazione (funzione lambda)
+            fxmlController.setData(field, () -> deleteField(field));  // Passa l'azione di eliminazione (funzione lambda)
 
             return fieldCardNode;
-        } catch (IOException e) {
+        } catch (IOException _) {
             System.err.println("Errore nel caricamento del file fxml");
             return null;
         }

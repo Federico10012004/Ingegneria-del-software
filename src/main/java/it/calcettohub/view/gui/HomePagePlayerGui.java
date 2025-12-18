@@ -1,7 +1,6 @@
 package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.AccountBean;
-import it.calcettohub.bean.FieldManagerAccountBean;
 import it.calcettohub.bean.PlayerAccountBean;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.PlayerPosition;

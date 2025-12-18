@@ -20,7 +20,7 @@ public class FieldBean {
     private boolean indoor;
     private BigDecimal hourlyPrice;
 
-    private static final Pattern ADDRESS_PATTERN = Pattern.compile("^[A-Za-z'. ]+\\s[0-9]+(/[A-Za-z])?$");
+    private static final Pattern ADDRESS_PATTERN = Pattern.compile("^[A-Za-z'. ]+\\s\\d+(/[A-Za-z])?$");
 
     public FieldBean() {
         //empty
