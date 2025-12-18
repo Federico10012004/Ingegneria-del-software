@@ -291,28 +291,37 @@ public class FieldManagementGui extends BaseFormerGui {
         switchTo("Home Field Manager");
     }
 
+    private static class LocalTimeSpinnerValueFactory extends SpinnerValueFactory<LocalTime> {
+
+        LocalTimeSpinnerValueFactory(int defaultHour) {
+            setConverter(new javafx.util.StringConverter<>() {
+                @Override
+                public String toString(LocalTime t) {
+                    return t == null ? "" : t.toString();
+                }
+
+                @Override
+                public LocalTime fromString(String s) {
+                    return LocalTime.parse(s);
+                }
+            });
+
+            setValue(LocalTime.of(defaultHour, 0));
+        }
+
+        @Override
+        public void decrement(int steps) {
+            setValue(getValue().minusHours(steps));
+        }
+
+        @Override
+        public void increment(int steps) {
+            setValue(getValue().plusHours(steps));
+        }
+    }
+
     private void initTimeSpinner(Spinner<LocalTime> spinner, int defaultHour) {
-        SpinnerValueFactory<LocalTime> vf = new SpinnerValueFactory<>() {
-            {
-                setConverter(new javafx.util.StringConverter<>() {
-                    @Override public String toString(LocalTime t) { return t == null ? "" : t.toString(); }
-                    @Override public LocalTime fromString(String s) { return LocalTime.parse(s); }
-                });
-                setValue(LocalTime.of(defaultHour, 0));
-            }
-
-            @Override
-            public void decrement(int steps) {
-                setValue(getValue().minusHours(steps));
-            }
-
-            @Override
-            public void increment(int steps) {
-                setValue(getValue().plusHours(steps));
-            }
-        };
-
-        spinner.setValueFactory(vf);
+        spinner.setValueFactory(new LocalTimeSpinnerValueFactory(defaultHour));
         spinner.setEditable(false);
     }
 
