@@ -55,10 +55,6 @@ public class FieldManagerDemoDao implements FieldManagerDao {
 
     @Override
     public void delete(String email) {
-        if (!fieldManagers.containsKey(email)) {
-            return;
-        }
-
         fieldManagers.remove(email);
     }
 

@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" styleClass="field_management" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.FieldManagementGui">
+<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" styleClass="field_management" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.calcettohub.view.gui.FieldManagementGui">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
    </columnConstraints>
@@ -107,13 +107,11 @@
                      </Button>
                   </HBox>
                   <VBox fx:id="noFieldPresent" alignment="CENTER" styleClass="login-box" visible="false">
-                     <children>
-                        <Label alignment="CENTER" text="Nessun campo associato. Inserire nuovi campi">
-                           <font>
-                              <Font name="Tahoma" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
+                     <Label alignment="CENTER" text="Nessun campo associato. Inserire nuovi campi">
+                        <font>
+                           <Font name="Tahoma" size="20.0"/>
+                        </font>
+                     </Label>
                   </VBox>
                   <ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background-color: transparent;" styleClass="transparent-scrollpane" VBox.vgrow="ALWAYS">
                      <VBox fx:id="fieldsContainer" alignment="CENTER" styleClass="login-box" />

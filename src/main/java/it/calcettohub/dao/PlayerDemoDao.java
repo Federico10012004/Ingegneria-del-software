@@ -55,10 +55,6 @@ public class PlayerDemoDao implements PlayerDao {
 
     @Override
     public void delete(String email) {
-        if (!players.containsKey(email)) {
-            return;
-        }
-
         players.remove(email);
     }
 

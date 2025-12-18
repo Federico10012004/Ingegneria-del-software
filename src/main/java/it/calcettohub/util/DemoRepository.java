@@ -1,5 +1,6 @@
 package it.calcettohub.util;
 
+import it.calcettohub.model.Field;
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.model.Player;
 
@@ -16,10 +17,12 @@ public class DemoRepository {
     private static DemoRepository instance;
     private final Map<String, Player> players;
     private final Map<String, FieldManager> fieldManagers;
+    private final Map<String, Field> fields;
 
     private DemoRepository() {
         this.players = new HashMap<>();
         this.fieldManagers = new HashMap<>();
+        this.fields = new HashMap<>();
     }
 
     public static synchronized DemoRepository getInstance() {
@@ -35,5 +38,9 @@ public class DemoRepository {
 
     public Map<String, FieldManager> getFieldManagers() {
         return fieldManagers;
+    }
+
+    public Map<String, Field> getFields() {
+        return fields;
     }
 }
