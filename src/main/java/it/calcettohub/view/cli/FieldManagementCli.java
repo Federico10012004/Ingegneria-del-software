@@ -160,30 +160,25 @@ public class FieldManagementCli extends CliContext {
                 return null;
             }
 
-            LocalTime open = null;
+            LocalTime open;
             try {
                 open = LocalTime.parse(openRaw, fmt);
             } catch (DateTimeParseException _) {
                 showErrorMessage("Formato orario non valido. Usa HH:mm (es. 09:00).");
+                continue;
             }
 
-            if (open != null) {
-                String closeRaw = requestString(day + " - Chiusura (HH:mm): ");
+            String closeRaw = requestString(day + " - Chiusura (HH:mm): ");
 
-                LocalTime close = null;
-                try {
-                    close = LocalTime.parse(closeRaw, fmt);
-                } catch (DateTimeParseException _) {
-                    showErrorMessage("Formato non valido. Usa HH:mm (es. 18:30).");
-                }
-
-                if (close != null) {
-                    if (close.isAfter(open)) {
-                        return new OpeningTime(open, close);
-                    }
-                    showErrorMessage("La chiusura deve essere successiva all'apertura.");
-                }
+            LocalTime close;
+            try {
+                close = LocalTime.parse(closeRaw, fmt);
+            } catch (DateTimeParseException _) {
+                showErrorMessage("Formato non valido. Usa HH:mm (es. 18:30).");
+                continue;
             }
+
+            return new OpeningTime(open, close);
         }
     }
 }
