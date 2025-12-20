@@ -3,6 +3,7 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.LoginBean;
 import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.InvalidPasswordException;
 import it.calcettohub.exceptions.UnexpectedRoleException;
 import it.calcettohub.util.AppContext;
@@ -17,7 +18,6 @@ public class LoginCli extends CliContext {
 
         disableSessionCheck();
 
-        // ESC → torna alla schermata precedente
         setEscHandler(() -> {
             clearScreen();
             PageManager.pop();
@@ -58,6 +58,8 @@ public class LoginCli extends CliContext {
                 showExceptionMessage(e);
             } catch (UnexpectedRoleException _) {
                 System.exit(1);
+            }  catch (EscPressedException _) {
+                return;
             }
         }
     }

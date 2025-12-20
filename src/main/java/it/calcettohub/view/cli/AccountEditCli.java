@@ -4,6 +4,7 @@ import it.calcettohub.bean.AccountBean;
 import it.calcettohub.bean.FieldManagerAccountBean;
 import it.calcettohub.bean.PlayerAccountBean;
 import it.calcettohub.controller.AccountController;
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.*;
 import it.calcettohub.util.PageManager;
@@ -73,6 +74,8 @@ public class AccountEditCli extends CliContext {
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
+            }  catch (EscPressedException _) {
+                return;
             }
         }
     }

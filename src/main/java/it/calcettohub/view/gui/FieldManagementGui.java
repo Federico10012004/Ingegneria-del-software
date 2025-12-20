@@ -170,7 +170,7 @@ public class FieldManagementGui extends BaseFormerGui {
 
             FieldCardGui fxmlController = loader.getController();
 
-            fxmlController.setData(field, () -> deleteField(field));  // Passa l'azione di eliminazione (funzione lambda)
+            fxmlController.setData(field, () -> deleteField(field));
 
             return fieldCardNode;
         } catch (IOException _) {

@@ -1,5 +1,7 @@
 package it.calcettohub.view.cli;
 
+import it.calcettohub.util.PageManager;
+
 public class HomePageFieldManagerCli extends AbstractHomePageCli {
 
     protected String getHomeTitle() {
@@ -14,7 +16,7 @@ public class HomePageFieldManagerCli extends AbstractHomePageCli {
     }
 
     protected void onFirstOption() {
-        System.out.println("Gestisci campi");
+        PageManager.push(() -> new FieldManagementCli().start());
     }
 
     protected void onSecondOption() {

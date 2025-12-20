@@ -8,7 +8,9 @@ import it.calcettohub.util.SessionManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -58,10 +60,9 @@ public abstract class CliContext {
             if (input.equalsIgnoreCase("esc")) {
                 if (escHandler != null) {
                     escHandler.run();
-                } else {
-                    throw new EscPressedException();
                 }
-                return null; // segnala alla pagina che ESC è stato premuto
+                // IMPORTANTISSIMO: interrompe il flusso corrente (loop, validateBeanField, ecc.)
+                throw new EscPressedException();
             }
 
             checkSession();
@@ -94,10 +95,6 @@ public abstract class CliContext {
 
     protected int requestIntInRange(String message, Integer min, Integer max) {
         String input = requestString(message);
-
-        if (input == null) {
-            throw new EscPressedException();
-        }
 
         try {
             int value = Integer.parseInt(input);
@@ -137,7 +134,7 @@ public abstract class CliContext {
         try {
             return LocalDate.parse(input, italian);
         } catch (DateTimeParseException _) {
-            throw new IllegalArgumentException("Questa input non rappresenta una data valida. Usare il formato gg-MM-aaaa");
+            throw new IllegalArgumentException("Questo input non rappresenta una data valida. Usare il formato gg-MM-aaaa");
         }
     }
 

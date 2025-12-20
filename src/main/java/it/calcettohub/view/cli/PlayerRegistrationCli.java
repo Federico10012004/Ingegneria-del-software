@@ -3,6 +3,7 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.RegisterPlayerBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.model.PlayerPosition;
 import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
@@ -34,6 +35,8 @@ public class PlayerRegistrationCli extends BaseRegistrationCli<RegisterPlayerBea
                 return;
             } catch (EmailAlreadyExistsException e) {
                 showExceptionMessage(e);
+            }  catch (EscPressedException _) {
+                return;
             }
         }
     }

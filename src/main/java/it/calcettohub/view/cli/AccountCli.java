@@ -1,5 +1,6 @@
 package it.calcettohub.view.cli;
 
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.User;
 import it.calcettohub.util.PageManager;
@@ -52,6 +53,8 @@ public class AccountCli extends CliContext {
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
+            }  catch (EscPressedException _) {
+                return;
             }
         }
     }

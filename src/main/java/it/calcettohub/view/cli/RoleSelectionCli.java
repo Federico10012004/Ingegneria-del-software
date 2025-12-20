@@ -1,5 +1,6 @@
 package it.calcettohub.view.cli;
 
+import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.model.Role;
 import it.calcettohub.util.AppContext;
 import it.calcettohub.util.PageManager;
@@ -24,6 +25,8 @@ public class RoleSelectionCli extends CliContext {
         while (true) {
             try {
                 int role = requestIntInRange("Scelta: ", 1, 2);
+
+                clearScreen();
                 boolean account = requestBoolean("Hai già un account (s/n)? ");
 
                 if (role == 1) {
@@ -45,6 +48,8 @@ public class RoleSelectionCli extends CliContext {
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
+            }  catch (EscPressedException _) {
+                return;
             }
         }
     }
