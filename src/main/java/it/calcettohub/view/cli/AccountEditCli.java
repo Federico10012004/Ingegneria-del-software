@@ -26,13 +26,7 @@ public class AccountEditCli extends CliContext {
         printTitle("Modifica dati account");
         printEscInfo();
 
-        AccountBean bean;
-
-        if (role == Role.PLAYER) {
-            bean = new PlayerAccountBean();
-        } else {
-            bean = new FieldManagerAccountBean();
-        }
+        AccountBean bean = (role == Role.PLAYER) ? new PlayerAccountBean() : new FieldManagerAccountBean();
 
         while (true) {
 
@@ -68,14 +62,14 @@ public class AccountEditCli extends CliContext {
                     }
                     default -> throw new IllegalStateException("Valore imprevisto: " + choice);
                 }
+            } catch (EscPressedException _) {
+                return;
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);
                 PageManager.push(() -> new LoginCli().login());
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
-            }  catch (EscPressedException _) {
-                return;
             }
         }
     }
