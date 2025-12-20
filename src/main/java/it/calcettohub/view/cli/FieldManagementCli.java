@@ -153,44 +153,37 @@ public class FieldManagementCli extends CliContext {
     }
 
     private OpeningTime readOpeningTimeForDay(String day, DateTimeFormatter fmt) {
-        OpeningTime result = null;
-        boolean done = false;
-
-        while (!done) {
+        while (true) {
             String openRaw = requestString(day + " - Apertura (HH:mm, invio=chiuso): ");
 
             if (openRaw.isEmpty()) {
-                done = true;
-                continue;
+                return null;
             }
 
-            LocalTime open;
+            LocalTime open = null;
             try {
                 open = LocalTime.parse(openRaw, fmt);
             } catch (DateTimeParseException _) {
                 showErrorMessage("Formato orario non valido. Usa HH:mm (es. 09:00).");
-                continue;
             }
 
-            String closeRaw = requestString(day + " - Chiusura (HH:mm): ");
+            if (open != null) {
+                String closeRaw = requestString(day + " - Chiusura (HH:mm): ");
 
-            LocalTime close;
-            try {
-                close = LocalTime.parse(closeRaw, fmt);
-            } catch (DateTimeParseException _) {
-                showErrorMessage("Formato non valido. Usa HH:mm (es. 18:30).");
-                continue;
+                LocalTime close = null;
+                try {
+                    close = LocalTime.parse(closeRaw, fmt);
+                } catch (DateTimeParseException _) {
+                    showErrorMessage("Formato non valido. Usa HH:mm (es. 18:30).");
+                }
+
+                if (close != null) {
+                    if (close.isAfter(open)) {
+                        return new OpeningTime(open, close);
+                    }
+                    showErrorMessage("La chiusura deve essere successiva all'apertura.");
+                }
             }
-
-            if (!close.isAfter(open)) {
-                showErrorMessage("La chiusura deve essere successiva all'apertura.");
-                continue;
-            }
-
-            result = new OpeningTime(open, close);
-            done = true;
         }
-
-        return result;
     }
 }
