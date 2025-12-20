@@ -177,7 +177,7 @@ public class FieldManagementCli extends CliContext {
             LocalTime close;
             try {
                 close = LocalTime.parse(closeRaw, fmt);
-            } catch (DateTimeParseException e) {
+            } catch (DateTimeParseException _) {
                 showErrorMessage("Formato non valido. Usa HH:mm (es. 18:30).");
                 continue;
             }
