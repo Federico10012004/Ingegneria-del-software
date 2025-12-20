@@ -45,14 +45,7 @@ public class AccountEditCli extends CliContext {
                         clearScreen();
                         print("Password modificata con successo");
                     }
-                    case 4 -> {
-                        if (bean instanceof PlayerAccountBean p) {
-                            validateBeanField(()-> p.setPosition(PlayerPosition.fromString(requestString("Nuova posizione preferita (portiere, difensore, centrocampista, attaccante): "))));
-                        }
-                        if (bean instanceof FieldManagerAccountBean f){
-                            validateBeanField(()-> f.setPhoneNumber(requestString("Nuovo numero di telefono: ")));
-                        }
-                    }
+                    case 4 -> updateRoleSpecificField(bean);
                     case 0 -> {
                         controller.updateUserData(bean);
                         clearScreen();
@@ -71,6 +64,15 @@ public class AccountEditCli extends CliContext {
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
             }
+        }
+    }
+
+    private void updateRoleSpecificField(AccountBean bean) {
+        if (bean instanceof PlayerAccountBean p) {
+            validateBeanField(()-> p.setPosition(PlayerPosition.fromString(requestString("Nuova posizione preferita (portiere, difensore, centrocampista, attaccante): "))));
+        }
+        if (bean instanceof FieldManagerAccountBean f){
+            validateBeanField(()-> f.setPhoneNumber(requestString("Nuovo numero di telefono: ")));
         }
     }
 
