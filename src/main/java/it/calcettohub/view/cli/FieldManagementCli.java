@@ -168,17 +168,15 @@ public class FieldManagementCli extends CliContext {
                 continue;
             }
 
-            String closeRaw = requestString(day + " - Chiusura (HH:mm): ");
-
-            LocalTime close;
-            try {
-                close = LocalTime.parse(closeRaw, fmt);
-            } catch (DateTimeParseException _) {
-                showErrorMessage("Formato non valido. Usa HH:mm (es. 18:30).");
-                continue;
+            while (true) {
+                String closeRaw = requestString(day + " - Chiusura (HH:mm): ").trim();
+                try {
+                    LocalTime close = LocalTime.parse(closeRaw, fmt);
+                    return new OpeningTime(open, close);
+                } catch (DateTimeParseException _) {
+                    showErrorMessage("Formato chiusura non valido. Usa HH:mm (es. 18:30).");
+                }
             }
-
-            return new OpeningTime(open, close);
         }
     }
 }
