@@ -5,9 +5,9 @@ import it.calcettohub.controller.FieldController;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.Field;
-import it.calcettohub.model.OpeningTime;
+import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.model.SurfaceType;
-import it.calcettohub.util.PageManager;
+import it.calcettohub.utils.PageManager;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
@@ -69,18 +69,35 @@ public class FieldManagementCli extends CliContext {
     }
 
     private void showFields() {
+        showFields(false);
+    }
+
+    private void showFieldsNumbered() {
+        showFields(true);
+    }
+
+    private void showFields(boolean numbered) {
         fields = controller.getFields();
 
         if (fields.isEmpty()) {
             print("Nessun campo associato. Inserire nuovi campi.");
-        } else {
-            for (Field f : fields) {
+        }
+
+        for (int i = 0; i < fields.size(); i++) {
+            Field f = fields.get(i);
+
+            if (numbered) {
+                print((i+1) + ") " + f.getFieldName());
+            } else {
                 print(f.getFieldName());
-                print(f.getAddress());
-                print(f.getCity());
-                print(f.getSurfaceType().toString());
-                print("-----------------------");
             }
+
+            print(f.getAddress());
+            print(f.getCity());
+            print(f.getSurfaceType().toString());
+            print(f.isIndoor() ? "Indoor: si" : "Indoor: no");
+            print(f.getHourlyPrice().toString());
+            print("-----------------------");
         }
     }
 
@@ -121,20 +138,28 @@ public class FieldManagementCli extends CliContext {
 
     private void deleteField() {
         printTitle("Elimina campo");
-        showFields();
+        showFieldsNumbered();
 
-        int choice = requestIntInRange("Seleziona campo da eliminare: ", 1, fields.size());
-        Field selected = fields.get(choice - 1);
+        while (true) {
+            try {
+                int choice = requestIntInRange("Seleziona campo da eliminare: ", 1, fields.size());
+                Field selected = fields.get(choice - 1);
 
-        controller.delete(selected.getId());
+                controller.delete(selected.getId());
 
-        clearScreen();
-        print("Campo eliminato con successo.");
-        showFields();
+                clearScreen();
+                print("Campo eliminato con successo.");
+                showFields();
+
+                return;
+            } catch (IllegalArgumentException e) {
+                showExceptionMessage(e);
+            }
+        }
     }
 
-    private Map<DayOfWeek, OpeningTime> requestOpeningHours() {
-        EnumMap<DayOfWeek, OpeningTime> openingHours = new EnumMap<>(DayOfWeek.class);
+    private Map<DayOfWeek, TimeRange> requestOpeningHours() {
+        EnumMap<DayOfWeek, TimeRange> openingHours = new EnumMap<>(DayOfWeek.class);
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
 
         print("Inserisci gli orari per ogni giorno (formato HH:mm). Premi INVIO per segnare il giorno come CHIUSO.");
@@ -143,7 +168,7 @@ public class FieldManagementCli extends CliContext {
             String dayItalian = day.getDisplayName(TextStyle.FULL, Locale.ITALIAN);
             dayItalian = dayItalian.substring(0, 1).toUpperCase(Locale.ITALIAN) + dayItalian.substring(1);
 
-            OpeningTime openingTime = readOpeningTimeForDay(dayItalian, time);
+            TimeRange openingTime = readOpeningTimeForDay(dayItalian, time);
 
             if (openingTime != null) {
                 openingHours.put(day, openingTime);
@@ -152,7 +177,7 @@ public class FieldManagementCli extends CliContext {
         return openingHours;
     }
 
-    private OpeningTime readOpeningTimeForDay(String day, DateTimeFormatter fmt) {
+    private TimeRange readOpeningTimeForDay(String day, DateTimeFormatter fmt) {
         while (true) {
             String openRaw = requestString(day + " - Apertura (HH:mm, invio=chiuso): ");
 
@@ -172,7 +197,7 @@ public class FieldManagementCli extends CliContext {
                 String closeRaw = requestString(day + " - Chiusura (HH:mm): ").trim();
                 try {
                     LocalTime close = LocalTime.parse(closeRaw, fmt);
-                    return new OpeningTime(open, close);
+                    return new TimeRange(open, close);
                 } catch (DateTimeParseException _) {
                     showErrorMessage("Formato chiusura non valido. Usa HH:mm (es. 18:30).");
                 }

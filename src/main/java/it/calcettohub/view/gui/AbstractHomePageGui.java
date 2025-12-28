@@ -2,7 +2,7 @@ package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.AccountBean;
 import it.calcettohub.controller.AccountController;
-import it.calcettohub.util.PasswordUtils;
+import it.calcettohub.utils.PasswordUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

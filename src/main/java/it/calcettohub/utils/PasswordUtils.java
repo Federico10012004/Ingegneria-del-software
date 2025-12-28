@@ -1,4 +1,4 @@
-package it.calcettohub.util;
+package it.calcettohub.utils;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

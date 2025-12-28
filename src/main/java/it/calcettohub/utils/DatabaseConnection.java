@@ -1,4 +1,4 @@
-package it.calcettohub.util;
+package it.calcettohub.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

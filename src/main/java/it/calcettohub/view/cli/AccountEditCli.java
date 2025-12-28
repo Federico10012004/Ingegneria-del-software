@@ -7,7 +7,7 @@ import it.calcettohub.controller.AccountController;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.*;
-import it.calcettohub.util.PageManager;
+import it.calcettohub.utils.PageManager;
 
 public class AccountEditCli extends CliContext {
     private final AccountController controller = new AccountController();

@@ -1,6 +1,6 @@
 package it.calcettohub.bean;
 
-import it.calcettohub.util.ValidationUtils;
+import it.calcettohub.utils.ValidationUtils;
 
 import java.time.LocalDate;
 

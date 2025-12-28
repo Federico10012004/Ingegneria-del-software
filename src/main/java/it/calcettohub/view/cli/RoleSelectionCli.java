@@ -2,8 +2,8 @@ package it.calcettohub.view.cli;
 
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.model.Role;
-import it.calcettohub.util.AppContext;
-import it.calcettohub.util.PageManager;
+import it.calcettohub.utils.AppContext;
+import it.calcettohub.utils.PageManager;
 
 public class RoleSelectionCli extends CliContext {
 

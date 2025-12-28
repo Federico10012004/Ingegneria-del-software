@@ -1,5 +1,7 @@
 package it.calcettohub.model;
 
+import it.calcettohub.model.valueobject.TimeRange;
+
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -11,12 +13,14 @@ public class Field {
     private String address;
     private String city;
     private SurfaceType surface;
-    private Map<DayOfWeek, OpeningTime> openingHours;
+    private Map<DayOfWeek, TimeRange> openingHours;
     private boolean indoor;
     private BigDecimal hourlyPrice;
     private String emailManager;
 
-    public Field (String fieldName, String address, String city, SurfaceType surface, Map<DayOfWeek, OpeningTime> openingHours, boolean indoor, BigDecimal hourlyPrice, String emailManager) {
+    public Field (String fieldName, String address, String city,
+                  SurfaceType surface, Map<DayOfWeek, TimeRange> openingHours,
+                  boolean indoor, BigDecimal hourlyPrice, String emailManager) {
         this.id = UUID.randomUUID().toString();
         this.fieldName = fieldName;
         this.address = address;
@@ -28,12 +32,29 @@ public class Field {
         this.emailManager = emailManager;
     }
 
-    public Field (String id, String fieldName, String address, String city, SurfaceType surface) {
+    public Field (String id, String fieldName, String address, String city,
+                  SurfaceType surface, boolean indoor, BigDecimal hourlyPrice) {
         this.id = id;
         this.fieldName = fieldName;
         this.address = address;
         this.city = city;
         this.surface = surface;
+        this.indoor = indoor;
+        this.hourlyPrice = hourlyPrice;
+    }
+
+    public Field(String id, String fieldName, String address, String city,
+                 SurfaceType surface, Map<DayOfWeek, TimeRange> openingHours,
+                 boolean indoor, BigDecimal hourlyPrice, String emailManager) {
+        this.id = id;
+        this.fieldName = fieldName;
+        this.address = address;
+        this.city = city;
+        this.surface = surface;
+        this.openingHours = new EnumMap<>(openingHours);
+        this.indoor = indoor;
+        this.hourlyPrice = hourlyPrice;
+        this.emailManager = emailManager;
     }
 
     public String getId() {
@@ -68,12 +89,12 @@ public class Field {
         return city;
     }
 
-    public Map<DayOfWeek, OpeningTime> getOpeningHours() {
+    public Map<DayOfWeek, TimeRange> getOpeningHours() {
         return openingHours;
     }
 
     public void setOpeningHours(DayOfWeek day, LocalTime open, LocalTime close) {
-        openingHours.put(day, new OpeningTime(open, close));
+        openingHours.put(day, new TimeRange(open, close));
     }
 
     public void setCity(String city) {

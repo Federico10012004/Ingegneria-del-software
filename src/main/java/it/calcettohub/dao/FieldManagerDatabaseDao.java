@@ -1,12 +1,10 @@
 package it.calcettohub.dao;
 
+import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.FieldManager;
-import it.calcettohub.util.DatabaseConnection;
+import it.calcettohub.utils.DatabaseConnection;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -41,13 +39,13 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.setString(2, password);
             stmt.setString(3, name);
             stmt.setString(4, surname);
-            stmt.setDate(5, java.sql.Date.valueOf(dateOfBirth));
+            stmt.setDate(5, Date.valueOf(dateOfBirth));
             stmt.setString(6, vatNumber);
             stmt.setString(7, phoneNumber);
 
             stmt.execute();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'aggiunta del field manager", e);
         }
     }
 
@@ -66,8 +64,8 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.setString(5, phone);
 
             stmt.executeUpdate();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'update del field manager", e);
         }
     }
 
@@ -80,8 +78,8 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.setString(2, newPassword);
 
             stmt.executeUpdate();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'update della password", e);
         }
     }
 
@@ -93,8 +91,8 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.setString(1, email);
 
             stmt.execute();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'eliminazione del field manager", e);
         }
     }
 
@@ -118,8 +116,8 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
                 FieldManager manager = new FieldManager(email, password, name, surname, dateOfBirth, vatNumber, phoneNumber);
                 return Optional.of(manager);
             }
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nella ricerca del field manager", e);
         }
         return Optional.empty();
     }

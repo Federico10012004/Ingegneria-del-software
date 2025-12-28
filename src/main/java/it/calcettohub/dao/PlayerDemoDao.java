@@ -1,7 +1,7 @@
 package it.calcettohub.dao;
 
 import it.calcettohub.model.Player;
-import it.calcettohub.util.DemoRepository;
+import it.calcettohub.utils.DemoRepository;
 
 import java.util.Map;
 import java.util.Optional;

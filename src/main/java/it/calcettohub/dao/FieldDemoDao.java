@@ -1,7 +1,7 @@
 package it.calcettohub.dao;
 
 import it.calcettohub.model.Field;
-import it.calcettohub.util.DemoRepository;
+import it.calcettohub.utils.DemoRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -33,9 +33,19 @@ public class FieldDemoDao implements FieldDao {
     }
 
     @Override
-    public List<Field> findFields(String manager) {
+    public List<Field> findFieldsByManager(String manager) {
         return fields.values().stream()
                 .filter(f -> manager.equals(f.getManager()))
                 .toList();
+    }
+
+    @Override
+    public List<Field> searchFields(String fieldAddress, String fieldCity) {
+        return null;
+    }
+
+    @Override
+    public Field findById(String id) {
+        return null;
     }
 }

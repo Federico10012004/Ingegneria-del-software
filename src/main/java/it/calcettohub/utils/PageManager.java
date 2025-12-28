@@ -1,4 +1,4 @@
-package it.calcettohub.util;
+package it.calcettohub.utils;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -22,6 +22,10 @@ public class PageManager {
         if (!pageStack.isEmpty()) {
             pageStack.peek().run();
         }
+    }
+
+    public static void pushSilent(Runnable page) {
+        pageStack.push(page);
     }
 
     public static void clear() {

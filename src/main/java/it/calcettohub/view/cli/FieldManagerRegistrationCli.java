@@ -4,8 +4,8 @@ import it.calcettohub.bean.RegisterFieldManagerBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
 import it.calcettohub.exceptions.EscPressedException;
-import it.calcettohub.util.AppContext;
-import it.calcettohub.util.PageManager;
+import it.calcettohub.utils.AppContext;
+import it.calcettohub.utils.PageManager;
 
 public class FieldManagerRegistrationCli extends BaseRegistrationCli<RegisterFieldManagerBean> {
     private final RegistrationController registration = new RegistrationController();

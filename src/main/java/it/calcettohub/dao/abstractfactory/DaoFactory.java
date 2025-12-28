@@ -8,6 +8,8 @@ import java.util.Properties;
 
 public abstract class DaoFactory {
 
+    public abstract NotificationDao getNotificationDao();
+    public abstract BookingDao getBookingDao();
     public abstract FieldDao getFieldDao();
     public abstract PlayerDao getPlayerDao();
     public abstract FieldManagerDao getFieldManagerDao();

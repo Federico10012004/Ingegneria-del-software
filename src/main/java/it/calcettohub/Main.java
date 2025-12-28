@@ -1,10 +1,10 @@
 package it.calcettohub;
 
-import it.calcettohub.util.PageManager;
+import it.calcettohub.utils.PageManager;
 import it.calcettohub.view.cli.RoleSelectionCli;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import it.calcettohub.util.Navigator;
+import it.calcettohub.utils.Navigator;
 
 import java.io.BufferedReader;
 import java.io.IOException;

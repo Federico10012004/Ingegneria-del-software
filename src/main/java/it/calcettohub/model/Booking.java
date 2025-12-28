@@ -2,40 +2,54 @@ package it.calcettohub.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 public class Booking {
-    private Field field;
-    private Player player;
+    private final String code;
+    private String fieldId;
+    private String playerEmail;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
-    private boolean confirmed;
+    private String status;
 
-    public Booking() {}
-
-    public Booking (Field field, Player player, LocalDate date, LocalTime startTime, LocalTime endTime, boolean confirmed) {
-        this.field = field;
-        this.player = player;
+    public Booking (String fieldId, String playerEmail, LocalDate date, LocalTime startTime, LocalTime endTime) {
+        this.code = UUID.randomUUID().toString();
+        this.fieldId = fieldId;
+        this.playerEmail = playerEmail;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.confirmed = confirmed;
+        this.status = "APERTA";
     }
 
-    public Field getField() {
-        return field;
+    public Booking (String code, String fieldId, String playerEmail, LocalDate date, LocalTime startTime, LocalTime endTime) {
+        this.code = code;
+        this.fieldId = fieldId;
+        this.playerEmail = playerEmail;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
-    public void setField(Field field) {
-        this.field = field;
+    public String getCode() {
+        return code;
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getFieldId() {
+        return fieldId;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setField(String fieldId) {
+        this.fieldId = fieldId;
+    }
+
+    public String getPlayerEmail() {
+        return playerEmail;
+    }
+
+    public void setPlayer(String playerEmail) {
+        this.playerEmail = playerEmail;
     }
 
     public LocalDate getDate() {
@@ -62,11 +76,11 @@ public class Booking {
         this.endTime = endTime;
     }
 
-    public boolean isConfirmed() {
-        return confirmed;
+    public String getStatus() {
+        return status;
     }
 
-    public void setConfirmed(boolean confirmed) {
-        this.confirmed = confirmed;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

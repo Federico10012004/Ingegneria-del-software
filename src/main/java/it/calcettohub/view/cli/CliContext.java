@@ -2,8 +2,8 @@ package it.calcettohub.view.cli;
 
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
-import it.calcettohub.util.Session;
-import it.calcettohub.util.SessionManager;
+import it.calcettohub.utils.Session;
+import it.calcettohub.utils.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,13 +53,13 @@ public abstract class CliContext {
         System.out.print(message);
 
         try {
-            String input = getReader().readLine();
+            String input = getReader().readLine().trim();
 
             if (input.equalsIgnoreCase("esc")) {
                 if (escHandler != null) {
                     escHandler.run();
                 }
-                // IMPORTANTISSIMO: interrompe il flusso corrente (loop, validateBeanField, ecc.)
+
                 throw new EscPressedException();
             }
 

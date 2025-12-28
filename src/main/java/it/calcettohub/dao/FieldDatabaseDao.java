@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Field;
-import it.calcettohub.model.OpeningTime;
+import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.model.SurfaceType;
-import it.calcettohub.util.DatabaseConnection;
+import it.calcettohub.utils.DatabaseConnection;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
@@ -14,13 +14,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.*;
 
 public class FieldDatabaseDao implements FieldDao {
     private static FieldDatabaseDao instance;
     private static final String ADD_FIELD = "{call add_field(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-    private static final String FIND_FIELDS = "{call find_fields(?)}";
+    private static final String FIND_FIELDS = "{call find_fields_by_manager(?)}";
     private static final String DELETE_FIELD = "{call delete_field(?)}";
+    private static final String SEARCH_FIELDS = "{call search_fields(?, ?)}";
+    private static final String FIND_BY_ID = "{call find_field_by_id(?)}";
 
     public static synchronized FieldDatabaseDao getInstance() {
         if (instance== null) {
@@ -60,15 +63,15 @@ public class FieldDatabaseDao implements FieldDao {
         }
     }
 
-    private static String createJson(Map<DayOfWeek, OpeningTime> openingHours) {
+    private static String createJson(Map<DayOfWeek, TimeRange> openingHours) {
         ObjectMapper mapper = new ObjectMapper();
 
         List<Map<String, Object>> hours = new ArrayList<>();
         for (var e : openingHours.entrySet()) {
             Map<String, Object> obj = new HashMap<>();
             obj.put("dow", e.getKey().getValue());
-            obj.put("open", e.getValue().getOpen().toString());
-            obj.put("close", e.getValue().getClose().toString());
+            obj.put("open", e.getValue().start().toString());
+            obj.put("close", e.getValue().end().toString());
             hours.add(obj);
         }
 
@@ -92,7 +95,7 @@ public class FieldDatabaseDao implements FieldDao {
     }
 
     @Override
-    public List<Field> findFields(String manager) {
+    public List<Field> findFieldsByManager(String manager) {
         List<Field> fields = new ArrayList<>();
 
         Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -106,13 +109,83 @@ public class FieldDatabaseDao implements FieldDao {
                 String address = rs.getString("address");
                 String city = rs.getString("city");
                 SurfaceType surface = SurfaceType.valueOf(rs.getString("surface_type"));
+                boolean indoor = rs.getBoolean("indoor");
+                BigDecimal hourlyPrice = rs.getBigDecimal("hourly_price");
 
-                Field field = new Field(id, fieldName, address, city, surface);
+                Field field = new Field(id, fieldName, address, city, surface, indoor, hourlyPrice);
                 fields.add(field);
             }
         } catch (SQLException e) {
             throw new PersistenceException("Errore nella ricerca dei campi", e);
         }
         return fields;
+    }
+
+    @Override
+    public List<Field> searchFields(String fieldAddress, String fieldCity) {
+        List<Field> fields = new ArrayList<>();
+
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (CallableStatement stmt = conn.prepareCall(SEARCH_FIELDS)) {
+            stmt.setString(1, fieldAddress);
+            stmt.setString(2, fieldCity);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String fieldName = rs.getString("fieldName");
+                String address = rs.getString("address");
+                String city = rs.getString("city");
+                SurfaceType surface = SurfaceType.valueOf(rs.getString("surface_type"));
+                boolean indoor = rs.getBoolean("indoor");
+                BigDecimal hourlyPrice = rs.getBigDecimal("hourly_price");
+
+                Field field = new Field(id, fieldName, address, city, surface, indoor, hourlyPrice);
+                fields.add(field);
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nella ricerca dei campi desiderati", e);
+        }
+
+        return fields;
+    }
+
+    @Override
+    public Field findById(String id) {
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (CallableStatement stmt = conn.prepareCall(FIND_BY_ID)) {
+            stmt.setString(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (!rs.next()) {
+                throw new PersistenceException("Campo non trovato.");
+            }
+
+            String fieldName = rs.getString("fieldName");
+            String address = rs.getString("address");
+            String city = rs.getString("city");
+            SurfaceType surface = SurfaceType.valueOf(rs.getString("surface_type"));
+            boolean indoor = rs.getBoolean("indoor");
+            BigDecimal hourlyPrice = rs.getBigDecimal("hourly_price");
+            String manager = rs.getString("manager");
+
+            Map<DayOfWeek, TimeRange> openingHours = new EnumMap<>(DayOfWeek.class);
+
+            do {
+                int dowInt = rs.getInt("day_of_week");
+                DayOfWeek dow = DayOfWeek.of(dowInt);
+
+                LocalTime open = rs.getTime("opening_time").toLocalTime();
+                LocalTime close = rs.getTime("closing_time").toLocalTime();
+
+                openingHours.put(dow, new TimeRange(open, close));
+            } while (rs.next());
+
+            return new Field(id, fieldName, address, city, surface, openingHours, indoor, hourlyPrice, manager);
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nella ricerca del campo", e);
+        }
     }
 }

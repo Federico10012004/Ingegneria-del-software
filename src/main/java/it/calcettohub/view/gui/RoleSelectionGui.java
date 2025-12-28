@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import it.calcettohub.util.Navigator;
+import it.calcettohub.utils.Navigator;
 
 public class RoleSelectionGui extends BaseFormerGui {
 

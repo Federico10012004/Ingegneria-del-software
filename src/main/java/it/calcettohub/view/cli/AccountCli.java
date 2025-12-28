@@ -3,8 +3,8 @@ package it.calcettohub.view.cli;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.User;
-import it.calcettohub.util.PageManager;
-import it.calcettohub.util.SessionManager;
+import it.calcettohub.utils.PageManager;
+import it.calcettohub.utils.SessionManager;
 
 public class AccountCli extends CliContext {
 
@@ -41,6 +41,9 @@ public class AccountCli extends CliContext {
                             SessionManager.getInstance().closeSession();
                             clearScreen();
                             print("Logout effettuato");
+
+                            PageManager.clear();
+                            PageManager.pushSilent(() -> new RoleSelectionCli().start());
                             PageManager.push(() -> new LoginCli().login());
                             return;
                         }

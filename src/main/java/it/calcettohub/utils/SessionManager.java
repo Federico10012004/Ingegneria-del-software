@@ -1,4 +1,4 @@
-package it.calcettohub.util;
+package it.calcettohub.utils;
 
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.User;

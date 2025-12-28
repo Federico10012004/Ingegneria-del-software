@@ -4,7 +4,7 @@ import it.calcettohub.bean.FieldBean;
 import it.calcettohub.controller.FieldController;
 import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Field;
-import it.calcettohub.model.OpeningTime;
+import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.model.SurfaceType;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -327,7 +327,7 @@ public class FieldManagementGui extends BaseFormerGui {
 
     @FXML
     private void addField() {
-        EnumMap<DayOfWeek, OpeningTime> openingHours = new EnumMap<>(DayOfWeek.class);
+        EnumMap<DayOfWeek, TimeRange> openingHours = new EnumMap<>(DayOfWeek.class);
 
         addDayIfOpen(openingHours, DayOfWeek.MONDAY, mondayOpen, startMonday, endMonday);
         addDayIfOpen(openingHours, DayOfWeek.TUESDAY, tuesdayOpen, startTuesday, endTuesday);
@@ -352,13 +352,13 @@ public class FieldManagementGui extends BaseFormerGui {
         }
     }
 
-    private void addDayIfOpen(EnumMap<DayOfWeek, OpeningTime> map, DayOfWeek day, ToggleButton openToggle, Spinner<LocalTime> start, Spinner<LocalTime> end) {
+    private void addDayIfOpen(EnumMap<DayOfWeek, TimeRange> map, DayOfWeek day, ToggleButton openToggle, Spinner<LocalTime> start, Spinner<LocalTime> end) {
         if (!openToggle.isSelected()) return;
 
         LocalTime open = start.getValue();
         LocalTime close = end.getValue();
 
-        map.put(day, new OpeningTime(open, close));
+        map.put(day, new TimeRange(open, close));
     }
 
     @Override

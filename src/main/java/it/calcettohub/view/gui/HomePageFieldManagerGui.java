@@ -3,7 +3,7 @@ package it.calcettohub.view.gui;
 import it.calcettohub.bean.AccountBean;
 import it.calcettohub.bean.FieldManagerAccountBean;
 import it.calcettohub.model.FieldManager;
-import it.calcettohub.util.SessionManager;
+import it.calcettohub.utils.SessionManager;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

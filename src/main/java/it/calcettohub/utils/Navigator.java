@@ -1,4 +1,4 @@
-package it.calcettohub.util;
+package it.calcettohub.utils;
 
 import it.calcettohub.model.Role;
 import it.calcettohub.view.gui.BaseFormerGui;

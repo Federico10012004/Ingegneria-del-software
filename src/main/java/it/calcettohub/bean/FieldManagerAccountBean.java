@@ -1,6 +1,6 @@
 package it.calcettohub.bean;
 
-import it.calcettohub.util.ValidationUtils;
+import it.calcettohub.utils.ValidationUtils;
 
 public class FieldManagerAccountBean extends AccountBean {
     private String phoneNumber;

@@ -9,8 +9,8 @@ import it.calcettohub.dao.abstractfactory.DaoFactory;
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.User;
-import it.calcettohub.util.PasswordUtils;
-import it.calcettohub.util.SessionManager;
+import it.calcettohub.utils.PasswordUtils;
+import it.calcettohub.utils.SessionManager;
 
 public class AccountController {
 

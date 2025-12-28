@@ -1,7 +1,7 @@
 package it.calcettohub.bean;
 
 import it.calcettohub.model.PlayerPosition;
-import it.calcettohub.util.ValidationUtils;
+import it.calcettohub.utils.ValidationUtils;
 
 public class PlayerAccountBean extends AccountBean {
     private PlayerPosition position;

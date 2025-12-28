@@ -1,13 +1,11 @@
 package it.calcettohub.dao;
 
+import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.PlayerPosition;
-import it.calcettohub.util.DatabaseConnection;
+import it.calcettohub.utils.DatabaseConnection;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -41,12 +39,12 @@ public class PlayerDatabaseDao implements PlayerDao {
             stmt.setString(2, password);
             stmt.setString(3, name);
             stmt.setString(4, surname);
-            stmt.setDate(5, java.sql.Date.valueOf(dateOfBirth));
+            stmt.setDate(5, Date.valueOf(dateOfBirth));
             stmt.setString(6, position.name());
 
             stmt.execute();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'aggiunta del player", e);
         }
     }
 
@@ -65,8 +63,8 @@ public class PlayerDatabaseDao implements PlayerDao {
             stmt.setString(4, position.name());
 
             stmt.executeUpdate();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'update del player", e);
         }
     }
 
@@ -79,8 +77,8 @@ public class PlayerDatabaseDao implements PlayerDao {
             stmt.setString(2, newPassword);
 
             stmt.executeUpdate();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'aggiornamento della password", e);
         }
     }
 
@@ -92,8 +90,8 @@ public class PlayerDatabaseDao implements PlayerDao {
             stmt.setString(1, email);
 
             stmt.execute();
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nell'eliminazione del player", e);
         }
     }
 
@@ -116,8 +114,8 @@ public class PlayerDatabaseDao implements PlayerDao {
                 Player player = new Player(email, password, name, surname, dateOfBirth, position);
                 return Optional.of(player);
             }
-        } catch (SQLException _) {
-            // Eccezione da gestire
+        } catch (SQLException e) {
+            throw new PersistenceException("Errore nella ricerca del player", e);
         }
         return Optional.empty();
     }

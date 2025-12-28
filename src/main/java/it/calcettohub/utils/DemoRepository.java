@@ -1,4 +1,4 @@
-package it.calcettohub.util;
+package it.calcettohub.utils;
 
 import it.calcettohub.model.Field;
 import it.calcettohub.model.FieldManager;

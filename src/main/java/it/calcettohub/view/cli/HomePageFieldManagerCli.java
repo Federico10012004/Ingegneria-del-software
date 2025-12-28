@@ -1,6 +1,6 @@
 package it.calcettohub.view.cli;
 
-import it.calcettohub.util.PageManager;
+import it.calcettohub.utils.PageManager;
 
 public class HomePageFieldManagerCli extends AbstractHomePageCli {
 

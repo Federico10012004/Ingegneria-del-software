@@ -1,6 +1,6 @@
 package it.calcettohub.view.gui;
 
-import it.calcettohub.util.SessionManager;
+import it.calcettohub.utils.SessionManager;
 import javafx.application.Platform;
 import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import it.calcettohub.util.Navigator;
+import it.calcettohub.utils.Navigator;
 
 import java.util.Locale;
 import java.util.Optional;

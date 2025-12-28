@@ -1,5 +1,7 @@
 package it.calcettohub.view.cli;
 
+import it.calcettohub.utils.PageManager;
+
 public class HomePagePlayerCli extends AbstractHomePageCli {
 
     protected String getHomeTitle() {
@@ -14,7 +16,7 @@ public class HomePagePlayerCli extends AbstractHomePageCli {
     }
 
     protected void onFirstOption() {
-        System.out.println("Prenota campo");
+        PageManager.push(() -> new SearchFieldCli().search());
     }
 
     protected void onSecondOption() {

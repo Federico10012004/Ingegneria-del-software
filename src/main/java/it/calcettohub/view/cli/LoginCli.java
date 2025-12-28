@@ -6,10 +6,10 @@ import it.calcettohub.exceptions.EmailNotFoundException;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.InvalidPasswordException;
 import it.calcettohub.exceptions.UnexpectedRoleException;
-import it.calcettohub.util.AppContext;
-import it.calcettohub.util.PageManager;
-import it.calcettohub.util.Session;
-import it.calcettohub.util.SessionManager;
+import it.calcettohub.utils.AppContext;
+import it.calcettohub.utils.PageManager;
+import it.calcettohub.utils.Session;
+import it.calcettohub.utils.SessionManager;
 
 public class LoginCli extends CliContext {
     private final LoginController controller = new LoginController();

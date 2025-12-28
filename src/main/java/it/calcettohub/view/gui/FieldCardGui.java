@@ -10,6 +10,8 @@ public class FieldCardGui {
     @FXML private Label addressLabel;
     @FXML private Label cityLabel;
     @FXML private Label surfaceLabel;
+    @FXML private Label indoorLabel;
+    @FXML private Label priceLabel;
     @FXML private Button deleteButton;
 
     public void setData(Field field, Runnable onDelete) {
@@ -17,6 +19,8 @@ public class FieldCardGui {
         addressLabel.setText(field.getAddress());
         cityLabel.setText(field.getCity());
         surfaceLabel.setText(field.getSurfaceType().toString());
+        indoorLabel.setText(field.isIndoor() ? "Indoor: si" : "Indoor: no");
+        priceLabel.setText(field.getHourlyPrice().toString());
 
         deleteButton.setOnAction(_ -> onDelete.run());
     }

@@ -5,8 +5,8 @@ import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.model.PlayerPosition;
-import it.calcettohub.util.AppContext;
-import it.calcettohub.util.PageManager;
+import it.calcettohub.utils.AppContext;
+import it.calcettohub.utils.PageManager;
 
 public class PlayerRegistrationCli extends BaseRegistrationCli<RegisterPlayerBean> {
     private final RegistrationController registration = new RegistrationController();

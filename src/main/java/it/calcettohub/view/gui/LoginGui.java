@@ -5,7 +5,7 @@ import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;
 import it.calcettohub.exceptions.InvalidPasswordException;
 import it.calcettohub.exceptions.UnexpectedRoleException;
-import it.calcettohub.util.*;
+import it.calcettohub.utils.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;

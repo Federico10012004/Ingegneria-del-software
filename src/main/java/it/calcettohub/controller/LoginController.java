@@ -10,8 +10,8 @@ import it.calcettohub.exceptions.UnexpectedRoleException;
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.Role;
-import it.calcettohub.util.PasswordUtils;
-import it.calcettohub.util.SessionManager;
+import it.calcettohub.utils.PasswordUtils;
+import it.calcettohub.utils.SessionManager;
 
 import java.util.Optional;
 

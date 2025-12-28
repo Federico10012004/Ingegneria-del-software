@@ -9,7 +9,7 @@ import it.calcettohub.exceptions.EmailAlreadyExistsException;
 import it.calcettohub.model.FieldManager;
 import it.calcettohub.model.Player;
 import it.calcettohub.model.PlayerPosition;
-import it.calcettohub.util.PasswordUtils;
+import it.calcettohub.utils.PasswordUtils;
 
 import java.time.LocalDate;
 import java.util.Optional;

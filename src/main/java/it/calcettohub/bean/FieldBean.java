@@ -1,26 +1,23 @@
 package it.calcettohub.bean;
 
-import it.calcettohub.model.OpeningTime;
+import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.model.SurfaceType;
-import it.calcettohub.util.ValidationUtils;
+import it.calcettohub.utils.ValidationUtils;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class FieldBean {
     private String fieldName;
     private String address;
     private String city;
     private SurfaceType surface;
-    private Map<DayOfWeek, OpeningTime> openingHours;
+    private Map<DayOfWeek, TimeRange> openingHours;
     private boolean indoor;
     private BigDecimal hourlyPrice;
-
-    private static final Pattern ADDRESS_PATTERN = Pattern.compile("^[A-Za-z'. ]+\\s\\d+(/[A-Za-z])?$");
 
     public FieldBean() {
         //empty
@@ -43,7 +40,7 @@ public class FieldBean {
     }
 
     public void setAddress(String address) {
-        if (ValidationUtils.isNotNull(address) && ADDRESS_PATTERN.matcher(address).matches()) {
+        if (ValidationUtils.isValidAddress(address)) {
             this.address = address;
         } else {
             throw new IllegalArgumentException("Indirizzo non valido. Inserire via e numero civico.");
@@ -74,23 +71,23 @@ public class FieldBean {
         }
     }
 
-    public Map<DayOfWeek, OpeningTime> getOpeningHours() {
+    public Map<DayOfWeek, TimeRange> getOpeningHours() {
         return openingHours;
     }
 
-    public void setOpeningHours(Map<DayOfWeek, OpeningTime> openingHours) {
+    public void setOpeningHours(Map<DayOfWeek, TimeRange> openingHours) {
         if (openingHours == null || openingHours.isEmpty()) {
             throw new IllegalArgumentException("Inserisci almeno un giorno di apertura");
         }
         for (var entry : openingHours.entrySet()) {
-            OpeningTime ot = entry.getValue();
+            TimeRange tr = entry.getValue();
 
-            if (ot == null) {
+            if (tr == null) {
                 throw new IllegalArgumentException("Orari di apertura/chiusura campo non inseriti.");
             }
 
-            LocalTime open = ot.getOpen();
-            LocalTime close = ot.getClose();
+            LocalTime open = tr.start();
+            LocalTime close = tr.end();
 
             if (open == null || close == null) {
                 throw new IllegalArgumentException("Orari di apertura/chiusura mancanti.");
