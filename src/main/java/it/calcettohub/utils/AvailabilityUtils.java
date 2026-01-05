@@ -1,9 +1,11 @@
 package it.calcettohub.utils;
 
+import it.calcettohub.model.valueobject.DateTimeRange;
 import it.calcettohub.model.valueobject.TimeRange;
 
 import java.time.Duration;
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,41 +14,52 @@ public class AvailabilityUtils {
 
     private AvailabilityUtils() {}
 
-    private static List<TimeRange> buildSlots(TimeRange openingHours) {
-        List<TimeRange> slots = new ArrayList<>();
-        LocalTime open = openingHours.start();
+    public static LocalDateTime startDateTime(LocalDate date, TimeRange tr) {
+        return tr.onDate(date).start();
+    }
 
-        while(!open.plus(SLOT).isAfter(openingHours.end())) {
-            slots.add(new TimeRange(open, open.plus(SLOT)));
-            open = open.plus(SLOT);
+    private static List<DateTimeRange> buildSlots(LocalDate date, TimeRange openingHours) {
+        DateTimeRange oh = openingHours.onDate(date);
+
+        List<DateTimeRange> slots = new ArrayList<>();
+        LocalDateTime cursor = oh.start();
+
+        int safetyMax = 48; // utilizzato per lanciare un'eccezione prima di finire la memoria se qualcosa va storto
+        while (!cursor.plus(SLOT).isAfter(oh.end())) {
+            LocalDateTime next = cursor.plus(SLOT);
+            slots.add(new DateTimeRange(cursor, next));
+            cursor = next;
+
+            if (slots.size() > safetyMax) {
+                throw new IllegalStateException("Troppi slot generati: openingHours probabilmente non valido.");
+            }
         }
 
         return slots;
     }
 
-    private static List<TimeRange> filterAvailableSlots(List<TimeRange> allSlots, List<TimeRange> busyRange) {
-        List<TimeRange> availableSlot = new ArrayList<>();
+    public static List<TimeRange> getAvailableSlots(LocalDate date, TimeRange openingHours, List<TimeRange> busyRanges) {
+        List<DateTimeRange> allSlots = buildSlots(date, openingHours);
 
-        for (TimeRange slot : allSlots) {
-            boolean busy = false;
+        List<DateTimeRange> busy = busyRanges.stream()
+                .map(tr -> tr.onDate(date))
+                .toList();
 
-            for (TimeRange busySlot : busyRange) {
-                if (slot.overlaps(busySlot)) {
-                    busy = true;
+        List<TimeRange> available = new ArrayList<>();
+        for (DateTimeRange slot : allSlots) {
+            boolean isBusy = false;
+
+            for (DateTimeRange b : busy) {
+                if (slot.overlaps(b)) {
+                    isBusy = true;
                     break;
                 }
             }
-
-            if (!busy) {
-                availableSlot.add(slot);
+            if (!isBusy) {
+                available.add(new TimeRange(slot.start().toLocalTime(), slot.end().toLocalTime()));
             }
         }
 
-        return availableSlot;
-    }
-
-    public static List<TimeRange> getAvailableSlots(TimeRange openingHours, List<TimeRange> busyRanges) {
-        List<TimeRange> allSlots = buildSlots(openingHours);
-        return filterAvailableSlots(allSlots, busyRanges);
+        return available;
     }
 }

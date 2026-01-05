@@ -34,6 +34,7 @@ public abstract class BaseFormerGui implements Resettable {
             "-fx-font-size: %.1fpx; -fx-font-family: 'Tahoma'; -fx-font-weight: bold;";
 
     private boolean sessionCheckEnabled = false;
+    private boolean sessionFiltersInstalled = false;
 
     protected void enableSessionCheck() {
         sessionCheckEnabled = true;
@@ -43,24 +44,21 @@ public abstract class BaseFormerGui implements Resettable {
         sessionCheckEnabled = false;
     }
 
-    public void installSessionFilters(Scene scene) {
-        if (!sessionCheckEnabled) return;
+    public final void installSessionFilters(Scene scene) {
+        if (sessionFiltersInstalled) return;
 
         scene.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
-            if (checkSession()) {
-                e.consume();
-            }
+            if (sessionCheckEnabled && checkSession()) e.consume();
         });
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
-            if (checkSession()) {
-                e.consume();
-            }
+            if (sessionCheckEnabled && checkSession()) e.consume();
         });
+
+        sessionFiltersInstalled = true;
     }
 
     protected boolean checkSession() {
-        // Se la sessione è scaduta, SessionManager.getCurrentSession() restituisce null
         if (SessionManager.getInstance().getCurrentSession() == null) {
             showError("Sessione scaduta", "Verrai reindirizzato al login.");
             Navigator.show("Login");

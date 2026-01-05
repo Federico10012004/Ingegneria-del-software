@@ -36,7 +36,6 @@ public class PlayerDemoDao implements PlayerDao {
             return;
         }
 
-        // conserva la password hashata
         player.setPassword(existingPlayer.getPassword());
 
         players.put(email, player);

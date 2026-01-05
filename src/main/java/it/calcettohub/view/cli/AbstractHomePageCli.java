@@ -15,50 +15,41 @@ public abstract class AbstractHomePageCli extends CliContext {
 
     protected abstract String[] getSpecificOption();
 
-    protected abstract void onFirstOption();
-
-    protected abstract void onSecondOption();
+    protected abstract void onSpecificOption(int choice);
 
     public void start() {
-
         enableSessionCheck();
 
-        printTitle(getHomeTitle());
-        print("Benvenuto, cosa desideri fare?");
-
-        String[] specificOption = getSpecificOption();
-
-        showMenu(
-                specificOption[0],
-                specificOption[1],
-                "Gestisci il tuo account",
-                "Notifiche",
-                "Esci"
-        );
-
         while (true) {
-            try {
-                int choice = requestIntInRange("Selezione: ", 1, 5);
+            printTitle(getHomeTitle());
+            print("Benvenuto, cosa desideri fare?");
 
+            String[] specificOptions = getSpecificOption();
+            int n = specificOptions.length;
+
+            String[] menu = new String[n + 4];
+            System.arraycopy(specificOptions, 0, menu, 0, n);
+            menu[n] = "Gestisci prenotazioni";
+            menu[n + 1] = "Gestisci il tuo account";
+            menu[n + 2] = "Notifiche";
+            menu[n + 3] = "Esci";
+
+            showMenu(menu);
+
+            try {
+                int choice = requestIntInRange("Selezione: ", 1, menu.length);
                 clearScreen();
 
-                switch (choice) {
-                    case 1 -> onFirstOption();
-                    case 2 -> onSecondOption();
-                    case 3 -> PageManager.push(() -> new AccountCli().start());
-                    case 4 -> {
-                        printTitle("Notifiche");
-
-                        List<Notification> notifications = controller.getNotifications();
-                        for (Notification not : notifications) {
-                            print(not.message());
-                            System.out.println();
-                        }
-
-                        controller.markAsAlreadyRead();
+                if (choice <= n) {
+                    onSpecificOption(choice);
+                } else {
+                    switch (choice - n) {
+                        case 1 -> PageManager.push(() -> new ManageBookingsCli().start());
+                        case 2 -> PageManager.push(() -> new AccountCli().start());
+                        case 3 -> showNotifications();
+                        case 4 -> System.exit(0);
+                        default -> throw new IllegalStateException("Scelta non valida: " + choice);
                     }
-                    case 5 -> System.exit(0);
-                    default -> throw new IllegalStateException("Valore imprevisto: " + choice);
                 }
             } catch (EscPressedException _) {
                 showErrorMessage("Esc non disponibile in questa pagina.");
@@ -70,5 +61,23 @@ public abstract class AbstractHomePageCli extends CliContext {
                 showExceptionMessage(e);
             }
         }
+    }
+
+    private void showNotifications() {
+        printTitle("Notifiche");
+
+        List<Notification> notifications = controller.getNotifications();
+        for (Notification not : notifications) {
+            print(not.message());
+            System.out.println();
+        }
+
+        if (notifications.isEmpty()) {
+            print("Nessuna nuova notifica.");
+        } else {
+            controller.markAsAlreadyRead();
+        }
+
+        requestString("Premi INVIO per tornare alla Home");
     }
 }

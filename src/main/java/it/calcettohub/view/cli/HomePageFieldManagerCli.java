@@ -4,22 +4,20 @@ import it.calcettohub.utils.PageManager;
 
 public class HomePageFieldManagerCli extends AbstractHomePageCli {
 
+    @Override
     protected String getHomeTitle() {
         return "Home Field Manager";
     }
 
+    @Override
     protected String[] getSpecificOption() {
         return new String[] {
-                "Gestisci campi",
-                "Gestisci prenotazioni"
+                "Gestisci campi"
         };
     }
 
-    protected void onFirstOption() {
+    @Override
+    protected void onSpecificOption(int choice) {
         PageManager.push(() -> new FieldManagementCli().start());
-    }
-
-    protected void onSecondOption() {
-        System.out.println("Gestisci prenotazioni");
     }
 }

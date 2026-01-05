@@ -23,6 +23,7 @@ public enum PlayerPosition {
                 return pos;
             }
         }
+
         return null;
     }
 }

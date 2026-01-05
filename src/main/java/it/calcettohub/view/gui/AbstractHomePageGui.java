@@ -100,6 +100,8 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
     @FXML
     protected abstract void showAccount();
 
+    protected abstract void resetHomeContent();
+
     @FXML
     protected void showChangePassword() {
         setNodeVisibility(changePasswordPanel, true);
@@ -161,8 +163,12 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
         clearPasswordPanel();
 
         setNodeVisibility(errorLabel, false);
+        setNodeVisibility(confirmModifyButton, false);
+
         setNodeVisibility(accountPanel, false);
         setNodeVisibility(changePasswordPanel, false);
+
+        resetHomeContent();
 
         populateFields();
     }

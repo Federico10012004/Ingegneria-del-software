@@ -1,6 +1,9 @@
 package it.calcettohub.model;
 
+import it.calcettohub.model.valueobject.DateTimeRange;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -8,28 +11,23 @@ public class Booking {
     private final String code;
     private String fieldId;
     private String playerEmail;
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private String status;
+    private DateTimeRange slot;
+    private BookingStatus status;
 
-    public Booking (String fieldId, String playerEmail, LocalDate date, LocalTime startTime, LocalTime endTime) {
+    public Booking (String fieldId, String playerEmail, DateTimeRange slot) {
         this.code = UUID.randomUUID().toString();
         this.fieldId = fieldId;
         this.playerEmail = playerEmail;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.status = "APERTA";
+        this.slot = slot;
+        this.status = BookingStatus.CONFIRMED;
     }
 
-    public Booking (String code, String fieldId, String playerEmail, LocalDate date, LocalTime startTime, LocalTime endTime) {
+    public Booking (String code, String fieldId, String playerEmail, DateTimeRange slot, BookingStatus status) {
         this.code = code;
         this.fieldId = fieldId;
         this.playerEmail = playerEmail;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.slot = slot;
+        this.status = status;
     }
 
     public String getCode() {
@@ -53,34 +51,35 @@ public class Booking {
     }
 
     public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
+        return slot.start().toLocalDate();
     }
 
     public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
+        return slot.start().toLocalTime();
     }
 
     public LocalTime getEndTime() {
-        return endTime;
+        return slot.end().toLocalTime();
     }
 
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
+    public DateTimeRange getSlot() {
+        return slot;
     }
 
-    public String getStatus() {
+    public void setSlot(DateTimeRange slot) {
+        this.slot = slot;
+    }
+
+    public BookingStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BookingStatus status) {
         this.status = status;
+    }
+
+    public boolean isCancelable(LocalDateTime now) {
+        if (!status.allowsCancellation()) return false;
+        return now.isBefore(slot.end());
     }
 }

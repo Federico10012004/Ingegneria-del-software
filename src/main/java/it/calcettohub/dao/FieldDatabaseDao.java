@@ -2,6 +2,7 @@ package it.calcettohub.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.calcettohub.exceptions.ObjectNotFoundException;
 import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Field;
 import it.calcettohub.model.valueobject.TimeRange;
@@ -160,7 +161,7 @@ public class FieldDatabaseDao implements FieldDao {
             ResultSet rs = stmt.executeQuery();
 
             if (!rs.next()) {
-                throw new PersistenceException("Campo non trovato.");
+                throw new ObjectNotFoundException("Campo non trovato.");
             }
 
             String fieldName = rs.getString("fieldName");

@@ -1,14 +1,11 @@
 package it.calcettohub.bean;
 
-import it.calcettohub.model.valueobject.TimeRange;
+import it.calcettohub.model.valueobject.DateTimeRange;
 import it.calcettohub.utils.ValidationUtils;
-
-import java.time.LocalDate;
 
 public class BookingBean {
     private String fieldId;
-    private LocalDate date;
-    private TimeRange slot;
+    private DateTimeRange slot;
 
     public BookingBean() {
         // empty
@@ -26,27 +23,19 @@ public class BookingBean {
         }
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        if (ValidationUtils.isPastBookingDate(date)) {
-            throw new IllegalArgumentException("La data di prenotazione non può essere nel passato.");
-        }
-
-        this.date = date;
-    }
-
-    public TimeRange getSlot() {
+    public DateTimeRange getSlot() {
         return slot;
     }
 
-    public void setSlot(TimeRange slot) {
-        if (ValidationUtils.isNotNull(slot)) {
-            this.slot = slot;
-        } else {
+    public void setSlot(DateTimeRange slot) {
+        if (!ValidationUtils.isNotNull(slot)) {
             throw new IllegalArgumentException("Seleziona uno slot valido.");
         }
+
+        if (ValidationUtils.isPastBookingDate(slot.date())) {
+            throw new IllegalArgumentException("La data di prenotazione non può essere nel passato.");
+        }
+
+        this.slot = slot;
     }
 }

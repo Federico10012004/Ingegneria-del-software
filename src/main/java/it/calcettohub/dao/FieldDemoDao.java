@@ -1,5 +1,7 @@
 package it.calcettohub.dao;
 
+import it.calcettohub.exceptions.ObjectNotFoundException;
+import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Field;
 import it.calcettohub.utils.DemoRepository;
 
@@ -35,17 +37,36 @@ public class FieldDemoDao implements FieldDao {
     @Override
     public List<Field> findFieldsByManager(String manager) {
         return fields.values().stream()
-                .filter(f -> manager.equals(f.getManager()))
+                .filter(f -> manager.equalsIgnoreCase(f.getManager()))
                 .toList();
     }
 
     @Override
     public List<Field> searchFields(String fieldAddress, String fieldCity) {
-        return null;
+        if (fieldAddress == null) {
+            return fields.values().stream()
+                    .filter(f -> fieldCity.equalsIgnoreCase(f.getCity()))
+                    .toList();
+
+        } else if (fieldCity == null) {
+            return fields.values().stream()
+                    .filter(f -> fieldAddress.equalsIgnoreCase(f.getAddress()))
+                    .toList();
+
+        } else {
+            return fields.values().stream()
+                    .filter(f -> fieldCity.equalsIgnoreCase(f.getCity()) && fieldAddress.equals(f.getAddress()))
+                    .toList();
+        }
     }
 
     @Override
     public Field findById(String id) {
-        return null;
+        Field field = fields.get(id);
+        if (field == null) {
+            throw new ObjectNotFoundException("Campo non trovato.");
+        }
+
+        return field;
     }
 }

@@ -1,6 +1,7 @@
 package it.calcettohub.dao;
 
 import it.calcettohub.model.Booking;
+import it.calcettohub.model.valueobject.BookingView;
 import it.calcettohub.model.valueobject.TimeRange;
 
 import java.time.LocalDate;
@@ -11,4 +12,6 @@ public interface BookingDao {
     void add(Booking booking);
     public void cancellation(String code);
     public Booking findByCode(String code);
+    public List<BookingView> findPlayerBookings(String playerEmail);
+    public List<BookingView> findManagerBookings(String fieldManagerEmail);
 }

@@ -9,7 +9,7 @@ import it.calcettohub.utils.PageManager;
 import java.time.LocalDate;
 import java.util.List;
 
-public class FieldReservationCli extends CliContext {
+public class FieldBookingCli extends CliContext {
     private final BookingController controller = new BookingController();
 
     public void reservation(String fieldId) {
@@ -30,8 +30,7 @@ public class FieldReservationCli extends CliContext {
 
                 BookingBean bean = new BookingBean();
                 validateBeanField(() -> bean.setFieldId(fieldId));
-                validateBeanField(() -> bean.setDate(date));
-                validateBeanField(() -> bean.setSlot(selectedSlot));
+                validateBeanField(() -> bean.setSlot(selectedSlot.onDate(date)));
 
                 controller.fieldBooking(bean);
                 print("Prenotazione effettuata con successo.");

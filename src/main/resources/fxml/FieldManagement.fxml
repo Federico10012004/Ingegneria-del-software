@@ -70,7 +70,7 @@
                <VBox alignment="CENTER">
                   <HBox>
                      <StackPane HBox.hgrow="ALWAYS">
-                        <TextField fx:id="searchField" promptText="Cerca campo" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                        <TextField fx:id="searchField" promptText="Cerca campo per nome" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -109,7 +109,7 @@
                   <VBox fx:id="noFieldPresent" alignment="CENTER" styleClass="login-box" visible="false">
                      <Label alignment="CENTER" text="Nessun campo associato. Inserire nuovi campi">
                         <font>
-                           <Font name="Tahoma" size="20.0"/>
+                           <Font name="Tahoma" size="20.0" />
                         </font>
                      </Label>
                   </VBox>

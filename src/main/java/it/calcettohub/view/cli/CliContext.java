@@ -2,6 +2,7 @@ package it.calcettohub.view.cli;
 
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
+import it.calcettohub.utils.PageManager;
 import it.calcettohub.utils.Session;
 import it.calcettohub.utils.SessionManager;
 
@@ -152,6 +153,12 @@ public abstract class CliContext {
                 throw new SessionExpiredException();
             }
         }
+    }
+
+    protected void expiredSession() {
+        PageManager.clear();
+        PageManager.pushSilent(() -> new RoleSelectionCli().start());
+        PageManager.push(() -> new LoginCli().login());
     }
 
     protected void showMenu(String ... options) {

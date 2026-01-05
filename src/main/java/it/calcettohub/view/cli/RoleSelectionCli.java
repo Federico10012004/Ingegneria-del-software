@@ -1,6 +1,7 @@
 package it.calcettohub.view.cli;
 
 import it.calcettohub.exceptions.EscPressedException;
+import it.calcettohub.exceptions.UnexpectedRoleException;
 import it.calcettohub.model.Role;
 import it.calcettohub.utils.AppContext;
 import it.calcettohub.utils.PageManager;
@@ -16,31 +17,37 @@ public class RoleSelectionCli extends CliContext {
             System.exit(0);
         });
 
-        print("Benvenuto in CalcettoHub");
-        print("Scegli il tuo ruolo");
-        print("1) Giocatore");
-        print("2) Gestore campo");
-        print("Digita esc per uscire");
-
         while (true) {
+            print("Benvenuto in CalcettoHub");
+            showMenu("Giocatore",
+                    "Gestore Campo",
+                    "Arbitro");
+            print("Digita esc per uscire");
+
             try {
-                int role = requestIntInRange("Scelta: ", 1, 2);
+                int role = requestIntInRange("Scelta: ", 1, 3);
 
                 clearScreen();
                 boolean account = requestBoolean("Hai già un account (s/n)? ");
 
-                if (role == 1) {
-                    AppContext.setSelectedRole(Role.PLAYER);
-                } else {
-                    AppContext.setSelectedRole(Role.FIELDMANAGER);
+                switch (role) {
+                    case 1 -> AppContext.setSelectedRole(Role.PLAYER);
+                    case 2 -> AppContext.setSelectedRole(Role.FIELDMANAGER);
+                    case 3 -> {
+                        print("Funzionalità non ancora implementata.");
+                        requestString("Premi INVIO per tornare alla selezione ruolo");
+                        clearScreen();
+                        continue;
+                    }
+                    default -> throw new UnexpectedRoleException("Ruolo inatteso");
                 }
 
                 clearScreen();
                 if (!account) {
-                    if (role == 1) {
-                        PageManager.push(()->new PlayerRegistrationCli().playerRegistration());
-                    } else {
-                        PageManager.push(()->new FieldManagerRegistrationCli().fieldManagerRegistration());
+                    switch (role) {
+                        case 1 -> PageManager.push(()->new PlayerRegistrationCli().playerRegistration());
+                        case 2 -> PageManager.push(()->new FieldManagerRegistrationCli().fieldManagerRegistration());
+                        default -> throw new UnexpectedRoleException("Ruolo inatteso");
                     }
                 }
 

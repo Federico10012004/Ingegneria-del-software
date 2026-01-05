@@ -66,7 +66,7 @@ public class SearchFieldCli extends CliContext {
 
                 String fieldId = fields.get(choice-1).getId();
 
-                PageManager.push(() -> new FieldReservationCli().reservation(fieldId));
+                PageManager.push(() -> new FieldBookingCli().reservation(fieldId));
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);

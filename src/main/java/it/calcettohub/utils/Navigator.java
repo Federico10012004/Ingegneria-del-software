@@ -18,13 +18,8 @@ public class Navigator {
 
     private Navigator() {}
 
-    // Qui memorizzi lo stage passato dal Main, così ogni scena può essere mostrata da qui
     private static Stage mainStage;
-
-    // Questa mappa conserva le scene già caricate
     private static final Map<String, Scene> scenes = new HashMap<>();
-
-    // Mantiene il tipo di utentee la pagina precedente
     private static Role userType;
 
     public static void setStage(Stage stage) {
@@ -35,7 +30,6 @@ public class Navigator {
         return mainStage;
     }
 
-    // Tipo utente (gestore, giocatore, arbitro)
     public static void setUserType(Role type) {
         userType = type;
     }
@@ -55,7 +49,6 @@ public class Navigator {
         try {
             Scene scene = scenes.get(name);
 
-            // Lazy loading: se la scena non è ancora caricata, caricala ora
             if (scene == null) {
                 FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(getFXMLPath(name)));
                 Parent root = loader.load();
@@ -66,10 +59,9 @@ public class Navigator {
 
             BaseFormerGui controller = (BaseFormerGui) scene.getUserData();
 
-            // Installiamo i filtri di sessione
             controller.installSessionFilters(scene);
 
-            controller.reset(); // pulisci o reimposta la UI
+            controller.reset();
 
             mainStage.setScene(scene);
             mainStage.show();

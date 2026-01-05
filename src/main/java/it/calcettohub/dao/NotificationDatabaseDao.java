@@ -1,6 +1,7 @@
 package it.calcettohub.dao;
 
 import it.calcettohub.exceptions.PersistenceException;
+import it.calcettohub.model.Role;
 import it.calcettohub.model.valueobject.Notification;
 import it.calcettohub.utils.DatabaseConnection;
 
@@ -13,9 +14,9 @@ import java.util.List;
 
 public class NotificationDatabaseDao implements NotificationDao {
     private static NotificationDatabaseDao instance;
-    private static final String ADD_NOTIFICATION = "{call add_notification(?, ?, ?, ?)}";
-    private static final String FIND_UNREAD_NOTIFICATION = "{call find_unread_notifications(?)}";
-    private static final String MARK_ALL_READ = "{call mark_all_read(?)}";
+    private static final String ADD_NOTIFICATION = "{call add_notification(?, ?, ?, ?, ?)}";
+    private static final String FIND_UNREAD_NOTIFICATION = "{call find_unread_notifications(?, ?)}";
+    private static final String MARK_ALL_READ = "{call mark_all_read(?, ?)}";
 
     public static synchronized NotificationDatabaseDao getInstance() {
         if (instance== null) {
@@ -24,9 +25,11 @@ public class NotificationDatabaseDao implements NotificationDao {
         return instance;
     }
 
+    @Override
     public void add(Notification notification) {
         String id = notification.id();
         String userEmail = notification.userEmail();
+        Role userRole = notification.userRole();
         String message = notification.message();
         boolean is_read = notification.isRead();
 
@@ -34,8 +37,9 @@ public class NotificationDatabaseDao implements NotificationDao {
         try (CallableStatement stmt = conn.prepareCall(ADD_NOTIFICATION)) {
             stmt.setString(1, id);
             stmt.setString(2, userEmail);
-            stmt.setString(3, message);
-            stmt.setBoolean(4, is_read);
+            stmt.setString(3, userRole.name());
+            stmt.setString(4, message);
+            stmt.setBoolean(5, is_read);
 
             stmt.execute();
         } catch (SQLException e) {
@@ -43,12 +47,14 @@ public class NotificationDatabaseDao implements NotificationDao {
         }
     }
 
-    public List<Notification> findUnreadByUserEmail(String userEmail) {
+    @Override
+    public List<Notification> findUnreadNotification(String userEmail, Role userRole) {
         List<Notification> notifications = new ArrayList<>();
 
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (CallableStatement stmt = conn.prepareCall(FIND_UNREAD_NOTIFICATION)) {
             stmt.setString(1, userEmail);
+            stmt.setString(2, userRole.name());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -57,7 +63,7 @@ public class NotificationDatabaseDao implements NotificationDao {
                 String message = rs.getString("message");
                 boolean is_read = rs.getBoolean("is_read");
 
-                Notification not = new Notification(id, userEmail, message, is_read);
+                Notification not = new Notification(id, userEmail, userRole, message, is_read);
                 notifications.add(not);
             }
         } catch (SQLException e) {
@@ -67,10 +73,12 @@ public class NotificationDatabaseDao implements NotificationDao {
         return notifications;
     }
 
-    public void markAllRead(String userEmail) {
+    @Override
+    public void markAllRead(String userEmail, Role userRole) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (CallableStatement stmt = conn.prepareCall(MARK_ALL_READ)) {
             stmt.setString(1, userEmail);
+            stmt.setString(2, userRole.name());
 
             stmt.executeUpdate();
         } catch (SQLException e) {

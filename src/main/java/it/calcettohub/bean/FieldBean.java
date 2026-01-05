@@ -81,7 +81,6 @@ public class FieldBean {
         }
         for (var entry : openingHours.entrySet()) {
             TimeRange tr = entry.getValue();
-
             if (tr == null) {
                 throw new IllegalArgumentException("Orari di apertura/chiusura campo non inseriti.");
             }
@@ -93,8 +92,12 @@ public class FieldBean {
                 throw new IllegalArgumentException("Orari di apertura/chiusura mancanti.");
             }
 
-            if (!close.isAfter(open)) {
-                throw new IllegalArgumentException("La chiusura deve essere successiva all'apertura.");
+            if (open.equals(close)) {
+                throw new IllegalArgumentException("Apertura e chiusura non possono coincidere.");
+            }
+
+            if (open.getMinute() != 0 || close.getMinute() != 0) {
+                throw new IllegalArgumentException("Gli orari devono essere su minuti 00 (es. 09:00 - 20:00).");
             }
         }
 

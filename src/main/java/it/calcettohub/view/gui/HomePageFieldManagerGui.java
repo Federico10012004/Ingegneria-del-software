@@ -89,6 +89,12 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
     }
 
     @Override
+    protected void resetHomeContent() {
+        setNodeVisibility(reservation, true);
+        buttonBox.setMouseTransparent(false);
+    }
+
+    @Override
     protected boolean hasAccountChanges() {
         if (!nameField.getText().trim().equals(initialState.getName()))
             return true;

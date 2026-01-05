@@ -52,7 +52,7 @@ public class AccountCli extends CliContext {
                 }
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);
-                PageManager.push(() -> new LoginCli().login());
+                expiredSession();
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);

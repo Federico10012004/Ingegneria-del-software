@@ -36,7 +36,6 @@ public class FieldManagerDemoDao implements FieldManagerDao {
             return;
         }
 
-        // conserva la password hashata
         manager.setPassword(existingManager.getPassword());
 
         fieldManagers.put(email, manager);

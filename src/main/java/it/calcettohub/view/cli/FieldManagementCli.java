@@ -22,7 +22,8 @@ import java.util.Map;
 
 public class FieldManagementCli extends CliContext {
     private final FieldController controller = new FieldController();
-    private List<Field> fields;
+    private List<Field> filteredFields;
+    private String nameFilter = "";
 
     public void start() {
         enableSessionCheck();
@@ -32,33 +33,57 @@ public class FieldManagementCli extends CliContext {
             PageManager.pop();
         });
 
-        showFields();
-
         while (true) {
+            clearScreen();
+            printTitle("Gestione campi");
+
+            refreshFields();
+            showFields();
+
+            if (!nameFilter.isBlank()) {
+                print("Filtro attivo: \"" + nameFilter + "\"");
+            }
+
             print("Cosa desideri fare?");
             printEscInfo();
             System.out.println();
 
-            showMenu(
-                    "Aggiungi campo",
-                    "Elimina campo"
-            );
+            if (nameFilter.isBlank()) {
+                showMenu(
+                        "Aggiungi campo",
+                        "Elimina campo",
+                        "Cerca campo per nome"
+                );
+            } else {
+                showMenu(
+                        "Aggiungi campo",
+                        "Elimina campo",
+                        "Cerca campo per nome",
+                        "Rimuovi filtro"
+                );
+            }
 
             try {
-                int choice = requestIntInRange("Selezione: ", 1, 2);
+                int max = nameFilter.isBlank() ? 3 : 4;
+                int choice = requestIntInRange("Selezione: ", 1, max);
 
-                if (choice == 1) {
-                    addFields();
-                } else {
-                    if (fields.isEmpty()) {
-                        print("Nessun campo presente. Non è possibile effettuare l'operazione di eliminazione.");
-                    } else {
-                        deleteField();
+                switch (choice) {
+                    case 1 -> addFields();
+                    case 2 -> {
+                        if (filteredFields.isEmpty()) {
+                            print("Nessun campo presente. Non è possibile effettuare l'operazione di eliminazione.");
+                            requestString("Premi INVIO per tornare indietro");
+                        } else {
+                            deleteField();
+                        }
                     }
+                    case 3 -> searchByName();
+                    case 4 -> nameFilter = "";
+                    default -> throw new IllegalStateException("Scelta non valida" + choice);
                 }
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);
-                PageManager.pop();
+                expiredSession();
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
@@ -66,6 +91,30 @@ public class FieldManagementCli extends CliContext {
                 return;
             }
         }
+    }
+
+    private void refreshFields() {
+        List<Field> allFields = controller.getFields();
+        filteredFields = applyNameFilter(allFields, nameFilter);
+
+        if (allFields.isEmpty()) {
+            print("Nessun campo associato. Inserire nuovi campi.");
+            return;
+        }
+
+        if (filteredFields.isEmpty()) {
+            print("Nessun campo trovato con il nome inserito");
+        }
+    }
+
+    private List<Field> applyNameFilter(List<Field> base, String query) {
+        if (query == null || query.isBlank()) return base;
+
+        String lower = query.trim().toLowerCase();
+        return base.stream()
+                .filter(f -> f.getFieldName() != null &&
+                        f.getFieldName().toLowerCase().startsWith(lower))
+                .toList();
     }
 
     private void showFields() {
@@ -77,14 +126,8 @@ public class FieldManagementCli extends CliContext {
     }
 
     private void showFields(boolean numbered) {
-        fields = controller.getFields();
-
-        if (fields.isEmpty()) {
-            print("Nessun campo associato. Inserire nuovi campi.");
-        }
-
-        for (int i = 0; i < fields.size(); i++) {
-            Field f = fields.get(i);
+        for (int i = 0; i < filteredFields.size(); i++) {
+            Field f = filteredFields.get(i);
 
             if (numbered) {
                 print((i+1) + ") " + f.getFieldName());
@@ -125,7 +168,6 @@ public class FieldManagementCli extends CliContext {
 
                 clearScreen();
                 print("Campo aggiunto con successo.");
-                showFields();
 
                 return;
             } catch (NumberFormatException _) {
@@ -142,20 +184,25 @@ public class FieldManagementCli extends CliContext {
 
         while (true) {
             try {
-                int choice = requestIntInRange("Seleziona campo da eliminare: ", 1, fields.size());
-                Field selected = fields.get(choice - 1);
+                int choice = requestIntInRange("Seleziona campo da eliminare: ", 1, filteredFields.size());
+                Field selected = filteredFields.get(choice - 1);
 
                 controller.delete(selected.getId());
 
                 clearScreen();
                 print("Campo eliminato con successo.");
-                showFields();
 
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
             }
         }
+    }
+
+    private void searchByName() {
+        printTitle("Cerca campo");
+
+        nameFilter = requestString("Inserisci nome (o prefisso) da cercare: ").trim();
     }
 
     private Map<DayOfWeek, TimeRange> requestOpeningHours() {
