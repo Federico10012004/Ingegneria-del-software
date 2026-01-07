@@ -2,6 +2,7 @@ package it.calcettohub.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.calcettohub.dao.columns.FieldColumns;
 import it.calcettohub.exceptions.ObjectNotFoundException;
 import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Field;
@@ -36,7 +37,7 @@ public class FieldDatabaseDao implements FieldDao {
     @Override
     public void add(Field field) {
         String id = field.getId();
-        String fieldName = field.getFieldName();
+        String field_name = field.getFieldName();
         String address = field.getAddress();
         String city = field.getCity();
         SurfaceType surface = field.getSurfaceType();
@@ -49,7 +50,7 @@ public class FieldDatabaseDao implements FieldDao {
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (CallableStatement stmt = conn.prepareCall(ADD_FIELD)) {
             stmt.setString(1, id);
-            stmt.setString(2, fieldName);
+            stmt.setString(2, field_name);
             stmt.setString(3, address);
             stmt.setString(4, city);
             stmt.setString(5, surface.name());
@@ -105,15 +106,15 @@ public class FieldDatabaseDao implements FieldDao {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                String id = rs.getString("id");
-                String fieldName = rs.getString("fieldName");
-                String address = rs.getString("address");
-                String city = rs.getString("city");
-                SurfaceType surface = SurfaceType.valueOf(rs.getString("surface_type"));
-                boolean indoor = rs.getBoolean("indoor");
-                BigDecimal hourlyPrice = rs.getBigDecimal("hourly_price");
+                String id = rs.getString(FieldColumns.ID);
+                String field_name = rs.getString(FieldColumns.FIELD_NAME);
+                String address = rs.getString(FieldColumns.ADDRESS);
+                String city = rs.getString(FieldColumns.CITY);
+                SurfaceType surface = SurfaceType.valueOf(rs.getString(FieldColumns.SURFACE_TYPE));
+                boolean indoor = rs.getBoolean(FieldColumns.INDOOR);
+                BigDecimal hourlyPrice = rs.getBigDecimal(FieldColumns.HOURLY_PRICE);
 
-                Field field = new Field(id, fieldName, address, city, surface, indoor, hourlyPrice);
+                Field field = new Field(id, field_name, address, city, surface, indoor, hourlyPrice);
                 fields.add(field);
             }
         } catch (SQLException e) {
@@ -134,15 +135,15 @@ public class FieldDatabaseDao implements FieldDao {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                String id = rs.getString("id");
-                String fieldName = rs.getString("fieldName");
-                String address = rs.getString("address");
-                String city = rs.getString("city");
-                SurfaceType surface = SurfaceType.valueOf(rs.getString("surface_type"));
-                boolean indoor = rs.getBoolean("indoor");
-                BigDecimal hourlyPrice = rs.getBigDecimal("hourly_price");
+                String id = rs.getString(FieldColumns.ID);
+                String field_name = rs.getString(FieldColumns.FIELD_NAME);
+                String address = rs.getString(FieldColumns.ADDRESS);
+                String city = rs.getString(FieldColumns.CITY);
+                SurfaceType surface = SurfaceType.valueOf(rs.getString(FieldColumns.SURFACE_TYPE));
+                boolean indoor = rs.getBoolean(FieldColumns.INDOOR);
+                BigDecimal hourlyPrice = rs.getBigDecimal(FieldColumns.HOURLY_PRICE);
 
-                Field field = new Field(id, fieldName, address, city, surface, indoor, hourlyPrice);
+                Field field = new Field(id, field_name, address, city, surface, indoor, hourlyPrice);
                 fields.add(field);
             }
         } catch (SQLException e) {
@@ -164,27 +165,27 @@ public class FieldDatabaseDao implements FieldDao {
                 throw new ObjectNotFoundException("Campo non trovato.");
             }
 
-            String fieldName = rs.getString("fieldName");
-            String address = rs.getString("address");
-            String city = rs.getString("city");
-            SurfaceType surface = SurfaceType.valueOf(rs.getString("surface_type"));
-            boolean indoor = rs.getBoolean("indoor");
-            BigDecimal hourlyPrice = rs.getBigDecimal("hourly_price");
-            String manager = rs.getString("manager");
+            String field_name = rs.getString(FieldColumns.FIELD_NAME);
+            String address = rs.getString(FieldColumns.ADDRESS);
+            String city = rs.getString(FieldColumns.CITY);
+            SurfaceType surface = SurfaceType.valueOf(rs.getString(FieldColumns.SURFACE_TYPE));
+            boolean indoor = rs.getBoolean(FieldColumns.INDOOR);
+            BigDecimal hourlyPrice = rs.getBigDecimal(FieldColumns.HOURLY_PRICE);
+            String manager = rs.getString(FieldColumns.MANAGER);
 
             Map<DayOfWeek, TimeRange> openingHours = new EnumMap<>(DayOfWeek.class);
 
             do {
-                int dowInt = rs.getInt("day_of_week");
+                int dowInt = rs.getInt(FieldColumns.DAY_OF_WEEK);
                 DayOfWeek dow = DayOfWeek.of(dowInt);
 
-                LocalTime open = rs.getTime("opening_time").toLocalTime();
-                LocalTime close = rs.getTime("closing_time").toLocalTime();
+                LocalTime open = rs.getTime(FieldColumns.OPENING_TIME).toLocalTime();
+                LocalTime close = rs.getTime(FieldColumns.CLOSING_TIME).toLocalTime();
 
                 openingHours.put(dow, new TimeRange(open, close));
             } while (rs.next());
 
-            return new Field(id, fieldName, address, city, surface, openingHours, indoor, hourlyPrice, manager);
+            return new Field(id, field_name, address, city, surface, openingHours, indoor, hourlyPrice, manager);
         } catch (SQLException e) {
             throw new PersistenceException("Errore nella ricerca del campo", e);
         }

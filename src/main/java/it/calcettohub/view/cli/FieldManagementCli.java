@@ -179,7 +179,7 @@ public class FieldManagementCli extends CliContext {
     }
 
     private void deleteField() {
-        printTitle("Elimina campo");
+        printTitle("Eliminazione campo");
         showFieldsNumbered();
 
         while (true) {

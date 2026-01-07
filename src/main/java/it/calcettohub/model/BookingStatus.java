@@ -19,14 +19,4 @@ public enum BookingStatus {
     public String toString() {
         return italianName;
     }
-
-    /*public static BookingStatus fromString(String input) {
-        for (BookingStatus bs : values()) {
-            if (bs.toString().equalsIgnoreCase(input)) {
-                return bs;
-            }
-        }
-
-        return null;
-    }*/
 }

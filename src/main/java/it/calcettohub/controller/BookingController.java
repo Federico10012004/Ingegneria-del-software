@@ -15,6 +15,7 @@ import it.calcettohub.model.valueobject.DateTimeRange;
 import it.calcettohub.model.valueobject.Notification;
 import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.utils.AvailabilityUtils;
+import it.calcettohub.utils.NotificationMessages;
 import it.calcettohub.utils.SessionManager;
 import it.calcettohub.utils.ValidationUtils;
 
@@ -94,7 +95,8 @@ public class BookingController {
 
         Booking booking = new Booking(fieldId, playerEmail, slot);
         bookingDao.add(booking);
-        sendBookingNotification(field.getFieldName(), slot, playerEmail, managerEmail);
+        notificationDao.add(Notification.unread(managerEmail, Role.FIELDMANAGER,
+                NotificationMessages.bookingCreatedMessage(field.getFieldName(), slot, playerEmail)));
     }
 
     public List<BookingView> showBookings() {
@@ -124,34 +126,15 @@ public class BookingController {
         switch (user.getRole()) {
             case PLAYER -> {
                 bookingDao.cancellation(booking.getCode());
-                notifyManagerCancelByPlayer(field.getFieldName(), booking.getPlayerEmail(), field.getManager(), booking.getDate(), slot, bean.getReason());
+                notificationDao.add(Notification.unread(field.getManager(), Role.FIELDMANAGER,
+                        NotificationMessages.bookingCancelledByPlayerMessage(field.getFieldName(), booking.getPlayerEmail(), booking.getDate(), slot, bean.getReason())));
             }
             case FIELDMANAGER -> {
                 bookingDao.cancellation(booking.getCode());
-                notifyPlayerCancelByManager(field.getFieldName(), booking.getPlayerEmail(), booking.getDate(), slot, bean.getReason());
+                notificationDao.add(Notification.unread(booking.getPlayerEmail(), Role.PLAYER,
+                        NotificationMessages.bookingCancelledByManagerMessage(field.getFieldName(), booking.getDate(), slot, bean.getReason())));
             }
             default -> throw new UnexpectedRoleException("Ruolo inatteso.");
         }
-    }
-
-    private void sendBookingNotification(String fieldName, DateTimeRange slot, String playerEmail, String managerEmail) {
-        notificationDao.add(Notification.unread(managerEmail, Role.FIELDMANAGER,
-                "Nuova prenotazione effettuata da " + playerEmail + " per il campo " + fieldName +
-                        " in data " + slot.start().toLocalDate() + " alle ore " + slot.start().toLocalTime() +
-                        "-" + slot.end().toLocalTime()));
-    }
-
-    private void notifyManagerCancelByPlayer(String fieldName, String playerEmail, String managerEmail, LocalDate date, TimeRange slot, String reason) {
-        notificationDao.add(Notification.unread(managerEmail, Role.FIELDMANAGER,
-                "Disdetta: " + playerEmail + " ha disdetto la prenotazione per il campo " +
-                        fieldName + " in data " + date + " e ora " + slot.start() +
-                        "-" + slot.end() + ". Motivo: " + reason));
-    }
-
-    private void notifyPlayerCancelByManager(String fieldName, String playerEmail, LocalDate date, TimeRange slot, String reason) {
-        notificationDao.add(Notification.unread(playerEmail, Role.PLAYER,
-                "La tua prenotazione per il campo " + fieldName + " in data " + date +
-                        " e ora " + slot.start() + "-" + slot.end() +
-                        " è stata cancellata dal gestore. Motivo: " + reason));
     }
 }
