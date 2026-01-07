@@ -31,7 +31,7 @@ public class NotificationDatabaseDao implements NotificationDao {
         String userEmail = notification.userEmail();
         Role userRole = notification.userRole();
         String message = notification.message();
-        boolean is_read = notification.isRead();
+        boolean isRead = notification.isRead();
 
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (CallableStatement stmt = conn.prepareCall(ADD_NOTIFICATION)) {
@@ -39,7 +39,7 @@ public class NotificationDatabaseDao implements NotificationDao {
             stmt.setString(2, userEmail);
             stmt.setString(3, userRole.name());
             stmt.setString(4, message);
-            stmt.setBoolean(5, is_read);
+            stmt.setBoolean(5, isRead);
 
             stmt.execute();
         } catch (SQLException e) {
@@ -61,9 +61,9 @@ public class NotificationDatabaseDao implements NotificationDao {
             while (rs.next()) {
                 String id = rs.getString("id");
                 String message = rs.getString("message");
-                boolean is_read = rs.getBoolean("is_read");
+                boolean isRead = rs.getBoolean("is_read");
 
-                Notification not = new Notification(id, userEmail, userRole, message, is_read);
+                Notification not = new Notification(id, userEmail, userRole, message, isRead);
                 notifications.add(not);
             }
         } catch (SQLException e) {

@@ -108,11 +108,11 @@ public class BookingDatabaseDao implements BookingDao {
             String fieldId = rs.getString(BookingColumns.FIELD_ID);
             String playerEmail = rs.getString(BookingColumns.PLAYER_EMAIL);
             LocalDate date = rs.getDate(BookingColumns.BOOKING_DATE).toLocalDate();
-            LocalTime start_time = rs.getTime(BookingColumns.START_TIME).toLocalTime();
-            LocalTime end_time = rs.getTime(BookingColumns.END_TIME).toLocalTime();
+            LocalTime startTime = rs.getTime(BookingColumns.START_TIME).toLocalTime();
+            LocalTime endTime = rs.getTime(BookingColumns.END_TIME).toLocalTime();
             BookingStatus status = BookingStatus.valueOf(rs.getString(BookingColumns.STATUS));
 
-            return new Booking(code, fieldId, playerEmail, new TimeRange(start_time, end_time).onDate(date), status);
+            return new Booking(code, fieldId, playerEmail, new TimeRange(startTime, endTime).onDate(date), status);
         } catch (SQLException e) {
             throw new PersistenceException("Errore nella ricerca della prenotazione ", e);
         }
@@ -129,13 +129,13 @@ public class BookingDatabaseDao implements BookingDao {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String code = rs.getString(BookingColumns.CODE);
-                String field_name = rs.getString(FieldColumns.FIELD_NAME);
+                String fieldName = rs.getString(FieldColumns.FIELD_NAME);
                 LocalDate date = rs.getDate(BookingColumns.BOOKING_DATE).toLocalDate();
-                LocalTime start_time = rs.getTime(BookingColumns.START_TIME).toLocalTime();
-                LocalTime end_time = rs.getTime(BookingColumns.END_TIME).toLocalTime();
+                LocalTime startTime = rs.getTime(BookingColumns.START_TIME).toLocalTime();
+                LocalTime endTime = rs.getTime(BookingColumns.END_TIME).toLocalTime();
                 BookingStatus status = BookingStatus.valueOf(rs.getString(BookingColumns.STATUS));
 
-                BookingView booking = new BookingView(code, field_name, new TimeRange(start_time, end_time).onDate(date), status);
+                BookingView booking = new BookingView(code, fieldName, new TimeRange(startTime, endTime).onDate(date), status);
                 playerBookings.add(booking);
             }
         } catch (SQLException e) {
@@ -156,13 +156,13 @@ public class BookingDatabaseDao implements BookingDao {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String code = rs.getString(BookingColumns.CODE);
-                String field_name = rs.getString(FieldColumns.FIELD_NAME);
+                String fieldName = rs.getString(FieldColumns.FIELD_NAME);
                 LocalDate date = rs.getDate(BookingColumns.BOOKING_DATE).toLocalDate();
-                LocalTime start_time = rs.getTime(BookingColumns.START_TIME).toLocalTime();
-                LocalTime end_time = rs.getTime(BookingColumns.END_TIME).toLocalTime();
+                LocalTime startTime = rs.getTime(BookingColumns.START_TIME).toLocalTime();
+                LocalTime endTime = rs.getTime(BookingColumns.END_TIME).toLocalTime();
                 BookingStatus status = BookingStatus.valueOf(rs.getString(BookingColumns.STATUS));
 
-                BookingView booking = new BookingView(code, field_name, new TimeRange(start_time, end_time).onDate(date), status);
+                BookingView booking = new BookingView(code, fieldName, new TimeRange(startTime, endTime).onDate(date), status);
                 managerBookings.add(booking);
             }
         } catch (SQLException e) {

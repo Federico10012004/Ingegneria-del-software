@@ -37,7 +37,7 @@ public class FieldDatabaseDao implements FieldDao {
     @Override
     public void add(Field field) {
         String id = field.getId();
-        String field_name = field.getFieldName();
+        String fieldName = field.getFieldName();
         String address = field.getAddress();
         String city = field.getCity();
         SurfaceType surface = field.getSurfaceType();
@@ -50,7 +50,7 @@ public class FieldDatabaseDao implements FieldDao {
         Connection conn = DatabaseConnection.getInstance().getConnection();
         try (CallableStatement stmt = conn.prepareCall(ADD_FIELD)) {
             stmt.setString(1, id);
-            stmt.setString(2, field_name);
+            stmt.setString(2, fieldName);
             stmt.setString(3, address);
             stmt.setString(4, city);
             stmt.setString(5, surface.name());
@@ -107,14 +107,14 @@ public class FieldDatabaseDao implements FieldDao {
 
             while (rs.next()) {
                 String id = rs.getString(FieldColumns.ID);
-                String field_name = rs.getString(FieldColumns.FIELD_NAME);
+                String fieldName = rs.getString(FieldColumns.FIELD_NAME);
                 String address = rs.getString(FieldColumns.ADDRESS);
                 String city = rs.getString(FieldColumns.CITY);
                 SurfaceType surface = SurfaceType.valueOf(rs.getString(FieldColumns.SURFACE_TYPE));
                 boolean indoor = rs.getBoolean(FieldColumns.INDOOR);
                 BigDecimal hourlyPrice = rs.getBigDecimal(FieldColumns.HOURLY_PRICE);
 
-                Field field = new Field(id, field_name, address, city, surface, indoor, hourlyPrice);
+                Field field = new Field(id, fieldName, address, city, surface, indoor, hourlyPrice);
                 fields.add(field);
             }
         } catch (SQLException e) {
@@ -136,14 +136,14 @@ public class FieldDatabaseDao implements FieldDao {
 
             while (rs.next()) {
                 String id = rs.getString(FieldColumns.ID);
-                String field_name = rs.getString(FieldColumns.FIELD_NAME);
+                String fieldName = rs.getString(FieldColumns.FIELD_NAME);
                 String address = rs.getString(FieldColumns.ADDRESS);
                 String city = rs.getString(FieldColumns.CITY);
                 SurfaceType surface = SurfaceType.valueOf(rs.getString(FieldColumns.SURFACE_TYPE));
                 boolean indoor = rs.getBoolean(FieldColumns.INDOOR);
                 BigDecimal hourlyPrice = rs.getBigDecimal(FieldColumns.HOURLY_PRICE);
 
-                Field field = new Field(id, field_name, address, city, surface, indoor, hourlyPrice);
+                Field field = new Field(id, fieldName, address, city, surface, indoor, hourlyPrice);
                 fields.add(field);
             }
         } catch (SQLException e) {
@@ -165,7 +165,7 @@ public class FieldDatabaseDao implements FieldDao {
                 throw new ObjectNotFoundException("Campo non trovato.");
             }
 
-            String field_name = rs.getString(FieldColumns.FIELD_NAME);
+            String fieldName = rs.getString(FieldColumns.FIELD_NAME);
             String address = rs.getString(FieldColumns.ADDRESS);
             String city = rs.getString(FieldColumns.CITY);
             SurfaceType surface = SurfaceType.valueOf(rs.getString(FieldColumns.SURFACE_TYPE));
@@ -185,7 +185,7 @@ public class FieldDatabaseDao implements FieldDao {
                 openingHours.put(dow, new TimeRange(open, close));
             } while (rs.next());
 
-            return new Field(id, field_name, address, city, surface, openingHours, indoor, hourlyPrice, manager);
+            return new Field(id, fieldName, address, city, surface, openingHours, indoor, hourlyPrice, manager);
         } catch (SQLException e) {
             throw new PersistenceException("Errore nella ricerca del campo", e);
         }

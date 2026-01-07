@@ -1,7 +1,6 @@
 package it.calcettohub.dao;
 
 import it.calcettohub.exceptions.ObjectNotFoundException;
-import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Field;
 import it.calcettohub.utils.DemoRepository;
 
