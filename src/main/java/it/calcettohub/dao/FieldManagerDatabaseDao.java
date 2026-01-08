@@ -13,7 +13,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
     private static final String ADD_MANAGER = "{call add_manager(?, ?, ?, ?, ?, ?, ?)}";
     private static final String DELETE_MANAGER = "{call delete_manager(?)}";
     private static final String VIEW_MANAGER = "{call find_manager(?)}";
-    private static final String UPDATE_MANAGER = "{call update_manager(?, ?, ?, ?, ?)}";
+    private static final String UPDATE_MANAGER = "{call update_manager(?, ?, ?, ?)}";
     private static final String UPDATE_PASSWORD_MANAGER = "{call update_password_manager(?, ?)}";
 
     public static synchronized FieldManagerDatabaseDao getInstance() {
@@ -61,7 +61,7 @@ public class FieldManagerDatabaseDao implements FieldManagerDao {
             stmt.setString(1, email);
             stmt.setString(2, name);
             stmt.setString(3, surname);
-            stmt.setString(5, phone);
+            stmt.setString(4, phone);
 
             stmt.executeUpdate();
         } catch (SQLException e) {

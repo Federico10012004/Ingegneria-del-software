@@ -32,6 +32,8 @@ public class LoginGui extends BaseFormerGui {
         bindResponsiveLogo(logoGroup, 900.0);
         setupResponsiveLabel(sloganLabel, root, 60.0, FONT_STYLE_SLOGAN);
         setupResponsiveLabel(welcomeLabel, root, 30.0, FONT_STYLE_TAHOMA);
+
+        emailField.requestFocus();
     }
 
     private void setEyeIcon() {
@@ -59,7 +61,7 @@ public class LoginGui extends BaseFormerGui {
 
             if (session == null) {
                 setErrorMessage(errorLabel, "Errore: impossibile creare la sessione");
-                showError(errorLabel);
+                showErrorLabel(errorLabel);
                 return;
             }
 
@@ -70,7 +72,7 @@ public class LoginGui extends BaseFormerGui {
             }
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
         } catch (UnexpectedRoleException _) {
             System.exit(1);
         }
@@ -87,6 +89,8 @@ public class LoginGui extends BaseFormerGui {
         setNodeVisibility(textField, false);
         setNodeVisibility(passwordField, true);
         setEyeIcon();
+
+        emailField.requestFocus();
     }
 
     @FXML

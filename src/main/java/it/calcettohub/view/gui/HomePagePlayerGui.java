@@ -16,6 +16,7 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
     @FXML private Label matchLabel;
     @FXML private TextField positionField;
     @FXML private VBox organizeMatch;
+    @FXML private VBox fieldBooking;
 
     private Player currentPlayer;
     private PlayerAccountBean initialState;
@@ -24,17 +25,23 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
     private void initialize() {
         initializeCommon();
 
-        setupResponsiveLabel(matchLabel, root, 30.0, FONT_STYLE_TAHOMA);
-        setUpResponsiveIcon(matchIcon, root, 0.075);
+        setupResponsiveLabel(matchLabel, root, 40.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(fieldLabel, root, 40.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(reservationLabel, root, 40.0, FONT_STYLE_TAHOMA);
 
-        currentPlayer = (Player) SessionManager.getInstance().getLoggedUser();
-        helloLabel.setText("Ciao " + currentPlayer.getEmail());
+        setUpResponsiveIcon(matchIcon, root, 0.065);
+        setUpResponsiveIcon(fieldIcon, root, 0.065);
+        setUpResponsiveIcon(reservationIcon, root, 0.065);
+
         populateFields();
         setupAccountChangeListeners();
     }
 
     @Override
     protected void populateFields() {
+        currentPlayer = (Player) SessionManager.getInstance().getLoggedUser();
+        helloLabel.setText("Ciao " + currentPlayer.getEmail());
+
         nameField.setText(currentPlayer.getName());
         surnameField.setText(currentPlayer.getSurname());
         positionField.setText(currentPlayer.getPreferredPosition().toString());
@@ -59,8 +66,27 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
     protected void showAccount() {
         setNodeVisibility(accountPanel, true);
         setNodeVisibility(changePasswordPanel, false);
-        organizeMatch.setVisible(false);
+        reservation.setVisible(false);
         buttonBox.setMouseTransparent(true);
+    }
+
+    @Override
+    protected void showNotifications() {
+        setNodeVisibility(notificationPanel, true);
+        fieldBooking.setVisible(false);
+        buttonBox.setMouseTransparent(true);
+
+        int count = loadNotifications();
+        if (count > 0) {
+            notificationController.markAsAlreadyRead();
+        }
+    }
+
+    @Override
+    protected void closeNotificationBox() {
+        setNodeVisibility(notificationPanel, false);
+        fieldBooking.setVisible(true);
+        buttonBox.setMouseTransparent(false);
     }
 
     @Override
@@ -90,7 +116,8 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
 
     @Override
     protected void resetHomeContent() {
-        setNodeVisibility(organizeMatch, true);
+        setNodeVisibility(reservation, true);
+        setNodeVisibility(fieldBooking, true);
         buttonBox.setMouseTransparent(false);
     }
 
@@ -116,7 +143,7 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
         }
 
         setNodeVisibility(accountPanel, false);
-        organizeMatch.setVisible(true);
+        reservation.setVisible(true);
         buttonBox.setMouseTransparent(false);
         reset();
     }
@@ -129,9 +156,16 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
 
         if (!confirm) return;
 
+        SessionManager.getInstance().closeSession();
+
         organizeMatch.setVisible(true);
         buttonBox.setMouseTransparent(false);
 
         switchTo("Login");
+    }
+
+    @FXML
+    private void goToOrganizeMatch() {
+        showInfo("Funzionalità non implementata");
     }
 }

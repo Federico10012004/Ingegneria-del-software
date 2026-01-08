@@ -41,7 +41,6 @@ public class FieldManagementGui extends BaseFormerGui {
     @FXML ImageView homeIcon;
     @FXML Button addFieldButton;
     @FXML Button homeButton;
-    @FXML Button searchButton;
     @FXML Button confirmButton;
     @FXML Button backButton;
     @FXML Button backButton1;
@@ -137,14 +136,14 @@ public class FieldManagementGui extends BaseFormerGui {
         try {
             fields = controller.getFields();
         } catch (PersistenceException e) {
-            showError("Errore", e.getMessage());
+            showErrorLabel("Errore", e.getMessage());
+            return;
         }
 
         boolean empty = fields.isEmpty();
 
         setNodeVisibility(noFieldPresent, empty);
         setNodeVisibility(scrollPane, !empty);
-
 
         if (!empty) {
             showFields(fields);
@@ -158,7 +157,9 @@ public class FieldManagementGui extends BaseFormerGui {
 
         for (Field field : fields) {
             Node fieldCard = createFieldCard(field);
-            fieldsContainer.getChildren().add(fieldCard);
+            if (fieldCard != null) {
+                fieldsContainer.getChildren().add(fieldCard);
+            }
         }
     }
 
@@ -169,7 +170,6 @@ public class FieldManagementGui extends BaseFormerGui {
             Node fieldCardNode = loader.load();
 
             FieldCardGui fxmlController = loader.getController();
-
             fxmlController.setData(field, () -> deleteField(field));
 
             return fieldCardNode;
@@ -236,6 +236,8 @@ public class FieldManagementGui extends BaseFormerGui {
 
         setNodeVisibility(fieldView, false);
         setNodeVisibility(fieldInformation, true);
+
+        fieldName.requestFocus();
     }
 
     @FXML
@@ -255,17 +257,17 @@ public class FieldManagementGui extends BaseFormerGui {
                 validateField(() -> bean.setIndoor(indoorYes.isSelected()));
             } else {
                 setErrorMessage(errorLabel, "Campo indoor non selezionato.");
-                showError(errorLabel);
+                showErrorLabel(errorLabel);
                 return;
             }
 
         } catch (NumberFormatException _) {
             setErrorMessage(errorLabel, "Prezzo orario non valido.");
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
             return;
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
             return;
         }
 
@@ -348,7 +350,7 @@ public class FieldManagementGui extends BaseFormerGui {
             reset();
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel1, e.getMessage());
-            showError(errorLabel1);
+            showErrorLabel(errorLabel1);
         }
     }
 
@@ -368,6 +370,7 @@ public class FieldManagementGui extends BaseFormerGui {
         fieldCity.clear();
         fieldSurface.clear();
         fieldPrice.clear();
+        searchField.clear();
         indoorYes.setSelected(false);
         indoorNo.setSelected(false);
 

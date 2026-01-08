@@ -6,16 +6,12 @@ import it.calcettohub.model.FieldManager;
 import it.calcettohub.utils.SessionManager;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class HomePageFieldManagerGui extends AbstractHomePageGui {
-    @FXML private ImageView reservationIcon;
-    @FXML private Label reservationLabel;
     @FXML private TextField phoneField;
-    @FXML private VBox reservation;
+    @FXML private VBox fieldManagement;
 
     private FieldManager currentManager;
     private FieldManagerAccountBean initialState;
@@ -24,17 +20,21 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
     private void initialize() {
         initializeCommon();
 
+        setupResponsiveLabel(fieldLabel, root, 30.0, FONT_STYLE_TAHOMA);
         setupResponsiveLabel(reservationLabel, root, 30.0, FONT_STYLE_TAHOMA);
+
+        setUpResponsiveIcon(fieldIcon, root, 0.075);
         setUpResponsiveIcon(reservationIcon, root, 0.075);
 
-        currentManager = (FieldManager) SessionManager.getInstance().getLoggedUser();
-        helloLabel.setText("Ciao " + currentManager.getEmail());
         populateFields();
         setupAccountChangeListeners();
     }
 
     @Override
     protected void populateFields() {
+        currentManager = (FieldManager) SessionManager.getInstance().getLoggedUser();
+        helloLabel.setText("Ciao " + currentManager.getEmail());
+
         nameField.setText(currentManager.getName());
         surnameField.setText(currentManager.getSurname());
         phoneField.setText(currentManager.getPhoneNumber());
@@ -61,6 +61,25 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
         setNodeVisibility(changePasswordPanel, false);
         reservation.setVisible(false);
         buttonBox.setMouseTransparent(true);
+    }
+
+    @Override
+    protected void showNotifications() {
+        setNodeVisibility(notificationPanel, true);
+        fieldManagement.setVisible(false);
+        buttonBox.setMouseTransparent(true);
+
+        int count = loadNotifications();
+        if (count > 0) {
+            notificationController.markAsAlreadyRead();
+        }
+    }
+
+    @Override
+    protected void closeNotificationBox() {
+        setNodeVisibility(notificationPanel, false);
+        fieldManagement.setVisible(true);
+        buttonBox.setMouseTransparent(false);
     }
 
     @Override
@@ -91,6 +110,7 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
     @Override
     protected void resetHomeContent() {
         setNodeVisibility(reservation, true);
+        setNodeVisibility(fieldManagement, true);
         buttonBox.setMouseTransparent(false);
     }
 
@@ -128,6 +148,8 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
                 "Verrai reindirizzato alla pagina di login");
 
         if (!confirm) return;
+
+        SessionManager.getInstance().closeSession();
 
         reservation.setVisible(true);
         buttonBox.setMouseTransparent(false);

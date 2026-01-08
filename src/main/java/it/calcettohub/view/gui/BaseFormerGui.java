@@ -60,7 +60,7 @@ public abstract class BaseFormerGui implements Resettable {
 
     protected boolean checkSession() {
         if (SessionManager.getInstance().getCurrentSession() == null) {
-            showError("Sessione scaduta", "Verrai reindirizzato al login.");
+            showErrorLabel("Sessione scaduta", "Verrai reindirizzato al login.");
             Navigator.show("Login");
             return true;
         }
@@ -75,7 +75,7 @@ public abstract class BaseFormerGui implements Resettable {
         label.setText(message);
     }
 
-    protected void showError(Label label) {
+    protected void showErrorLabel(Label label) {
         label.setVisible(true);
         label.setManaged(true);
     }
@@ -128,7 +128,7 @@ public abstract class BaseFormerGui implements Resettable {
         alert.showAndWait();
     }
 
-    protected void showError(String title, String message) {
+    protected void showErrorLabel(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

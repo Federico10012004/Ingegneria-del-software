@@ -14,7 +14,7 @@ public class PlayerDatabaseDao implements PlayerDao {
     private static final String ADD_PLAYER = "{call add_player(?, ?, ?, ?, ?, ?)}";
     private static final String DELETE_PLAYER = "{call delete_player(?)}";
     private static final String FIND_PLAYER = "{call find_player(?)}";
-    private static final String UPDATE_PLAYER = "{call update_player(?, ?, ?, ?, ?)}";
+    private static final String UPDATE_PLAYER = "{call update_player(?, ?, ?, ?)}";
     private static final String UPDATE_PASSWORD = "{call update_password_player(?, ?)}";
 
     public static synchronized PlayerDatabaseDao getInstance() {

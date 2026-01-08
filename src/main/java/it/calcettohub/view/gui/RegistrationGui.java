@@ -55,6 +55,8 @@ public class RegistrationGui extends BaseFormerGui {
         setupResponsiveLabel(sloganLabel, root, 60.0, FONT_STYLE_SLOGAN);
         setupResponsiveLabel(welcomeLabel, root, 40.0, FONT_STYLE_TAHOMA);
 
+        nameField.requestFocus();
+
         setUpRoleVisibility();
     }
 
@@ -101,7 +103,7 @@ public class RegistrationGui extends BaseFormerGui {
             goToLogin();
         } catch (EmailAlreadyExistsException | IllegalArgumentException | DateTimeParseException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
         }
     }
 

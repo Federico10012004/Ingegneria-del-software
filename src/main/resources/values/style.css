@@ -196,3 +196,9 @@
     -fx-border-color: #66bb6a;
     -fx-text-fill: #2e7d32;
 }
+
+.notification-item {
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-family: "Tahoma";
+}

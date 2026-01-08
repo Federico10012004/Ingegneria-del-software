@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="700.0" prefWidth="900.0" styleClass="field_management" stylesheets="@../values/style.css"
+          xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="it.calcettohub.view.gui.ManageBookingsGui">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+   </rowConstraints>
+   <BorderPane>
+      <top>
+         <StackPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+            <padding>
+               <Insets top="10.0"/>
+            </padding>
+            <Group fx:id="logoGroup" StackPane.alignment="TOP_CENTER">
+               <Label text="Calcett  Hub" textFill="WHITE">
+                  <font>
+                     <Font name="Tahoma Bold" size="40.0"/>
+                  </font>
+               </Label>
+               <ImageView accessibleRole="TEXT" fitHeight="26.0" fitWidth="26.0" layoutX="141.0" layoutY="17.0"
+                          pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/Soccer-Ball.png"/>
+               </ImageView>
+            </Group>
+            <Button fx:id="homeButton" alignment="CENTER" mnemonicParsing="false" onAction="#backToHome"
+                    style="-fx-background-color: transparent;" StackPane.alignment="TOP_LEFT">
+               <graphic>
+                  <ImageView fx:id="homeIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true"
+                             preserveRatio="true">
+                     <Image url="@../img/homepage-white.png"/>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND"/>
+               </cursor>
+               <padding>
+                  <Insets left="30.0" top="7.0"/>
+               </padding>
+            </Button>
+         </StackPane>
+      </top>
+      <center>
+         <StackPane fx:id="containerPane" maxHeight="500.0" maxWidth="600.0" BorderPane.alignment="CENTER">
+            <StackPane fx:id="bookingView">
+               <VBox alignment="CENTER">
+                  <HBox fx:id="searchBox">
+                     <StackPane HBox.hgrow="ALWAYS">
+                        <TextField fx:id="searchField" promptText="Cerca prenotazione per nome del campo"
+                                   style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                           <font>
+                              <Font size="14.0"/>
+                           </font>
+                        </TextField>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true"
+                                   preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                           <StackPane.margin>
+                              <Insets right="10.0"/>
+                           </StackPane.margin>
+                           <Image url="@../img/search.png"/>
+                        </ImageView>
+                     </StackPane>
+                  </HBox>
+                  <VBox fx:id="noBookingPresent" alignment="CENTER" styleClass="login-box" visible="false">
+                     <Label alignment="CENTER" text="Nessuna prenotazione associata.">
+                        <font>
+                           <Font name="Tahoma" size="20.0"/>
+                        </font>
+                     </Label>
+                  </VBox>
+                  <ScrollPane fx:id="scrollPane" fitToWidth="true"
+                              style="-fx-background-color: transparent;" styleClass="transparent-scrollpane"
+                              VBox.vgrow="ALWAYS">
+                     <VBox fx:id="bookingsContainer" alignment="CENTER" styleClass="login-box"/>
+                  </ScrollPane>
+                  <VBox fx:id="cancelReason" alignment="CENTER" prefHeight="250.0" spacing="25.0"
+                        styleClass="login-box" visible="false">
+                     <Label text="Disdetta">
+                        <font>
+                           <Font name="Tahoma Bold" size="24.0"/>
+                        </font>
+                     </Label>
+                     <Label fx:id="errorLabel" text="Label" textFill="RED" visible="false">
+                        <font>
+                           <Font size="14.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="reasonTextField" promptText="Motivazione disdetta"
+                                style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #cccccc;">
+                        <font>
+                           <Font size="14.0"/>
+                        </font>
+                        <VBox.margin>
+                           <Insets left="20.0" right="20.0"/>
+                        </VBox.margin>
+                     </TextField>
+                     <HBox alignment="CENTER" spacing="100.0">
+                        <Button mnemonicParsing="false" onAction="#confirmCancelBooking"
+                                prefWidth="150.0"
+                                style="-fx-background-color: #016326; -fx-border-color: #016326; -fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10 10 10 10;"
+                                styleClass="login-button" text="Conferma" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="14.0"/>
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND"/>
+                           </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#refreshUi" prefWidth="150.0"
+                                style="-fx-background-color: red; -fx-border-color: red; -fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10 10 10 10;"
+                                styleClass="logout-button" text="Annulla" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="14.0"/>
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND"/>
+                           </cursor>
+                        </Button>
+                     </HBox>
+                  </VBox>
+               </VBox>
+            </StackPane>
+         </StackPane>
+      </center>
+   </BorderPane>
+</GridPane>

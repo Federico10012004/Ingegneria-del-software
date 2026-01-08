@@ -2,30 +2,39 @@ package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.AccountBean;
 import it.calcettohub.controller.AccountController;
+import it.calcettohub.controller.NotificationController;
+import it.calcettohub.model.valueobject.Notification;
 import it.calcettohub.utils.PasswordUtils;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+
+import java.util.List;
 
 public abstract class AbstractHomePageGui extends BaseFormerGui {
     @FXML protected ImageView eyeIcon;
     @FXML protected ImageView eyeConfirmIcon;
     @FXML protected ImageView fieldIcon;
     @FXML protected ImageView accountIcon;
+    @FXML protected ImageView notificationIcon;
     @FXML protected ImageView backIcon;
     @FXML protected ImageView backIcon1;
+    @FXML protected ImageView backIcon2;
+    @FXML protected ImageView reservationIcon;
     @FXML protected Label errorLabel;
     @FXML protected Label errorLabel1;
     @FXML protected Label accountLabel;
     @FXML protected Label passwordLabel;
     @FXML protected Label fieldLabel;
     @FXML protected Label helloLabel;
+    @FXML protected Label reservationLabel;
+    @FXML protected Label notificationLabel;
     @FXML protected TextField nameField;
     @FXML protected TextField surnameField;
     @FXML protected TextField passwordTextField;
@@ -34,12 +43,17 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
     @FXML protected PasswordField confirmPasswordField;
     @FXML protected Button confirmModifyButton;
     @FXML protected VBox accountPanel;
+    @FXML protected VBox reservation;
     @FXML protected VBox changePasswordPanel;
+    @FXML protected VBox notificationBox;
+    @FXML protected VBox notificationPanel;
     @FXML protected HBox buttonBox;
 
     protected boolean isVisible = false;
     protected boolean isConfirmPasswordVisible = false;
-    protected final AccountController controller = new AccountController();
+    protected boolean suppressAccountChangeEvents = false;
+    protected final AccountController AccountController = new AccountController();
+    protected final NotificationController notificationController = new NotificationController();
 
     @FXML
     protected void initializeCommon() {
@@ -54,18 +68,20 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
         setNodeVisibility(errorLabel1, false);
 
         bindResponsiveLogo(logoGroup, 1000.0);
-        setupResponsiveLabel(fieldLabel, root, 30.0, FONT_STYLE_TAHOMA);
         setupResponsiveLabel(accountLabel, root, 35.0, FONT_STYLE_TAHOMA);
         setupResponsiveLabel(passwordLabel, root, 35.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(notificationLabel, root, 35.0, FONT_STYLE_TAHOMA);
         setupResponsiveLabel(helloLabel, root, 45.0, FONT_STYLE_TAHOMA);
 
         setUpResponsiveNode(accountPanel, root, 0.40);
         setUpResponsiveNode(changePasswordPanel, root, 0.40);
+        setUpResponsiveNode(notificationPanel, root, 0.40);
 
-        setUpResponsiveIcon(fieldIcon, root, 0.075);
         setUpResponsiveIcon(backIcon, root, 0.02);
         setUpResponsiveIcon(backIcon1, root, 0.02);
+        setUpResponsiveIcon(backIcon2, root, 0.02);
         setUpResponsiveIcon(accountIcon, root, 0.03);
+        setUpResponsiveIcon(notificationIcon, root, 0.03);
     }
 
     protected abstract void populateFields();
@@ -73,8 +89,8 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
     protected abstract void setupAccountChangeListeners();
 
     protected void updateConfirmButtonVisibility() {
-        boolean changed = hasAccountChanges();
-        setNodeVisibility(confirmModifyButton, changed);
+        if (suppressAccountChangeEvents) return;
+        setNodeVisibility(confirmModifyButton, hasAccountChanges());
     }
 
     protected abstract boolean hasAccountChanges();
@@ -100,6 +116,45 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
     @FXML
     protected abstract void showAccount();
 
+    @FXML
+    protected abstract void showNotifications();
+
+    protected int loadNotifications() {
+        notificationBox.getChildren().clear();
+
+        List<Notification> notifications = notificationController.getNotifications();
+        if (notifications.isEmpty()) {
+            notificationBox.setAlignment(Pos.CENTER);
+
+            Label empty = new Label("Nessuna nuova notifica");
+            empty.getStyleClass().add("notification-item");
+            empty.setWrapText(true);
+            empty.setTextAlignment(TextAlignment.CENTER);
+            empty.setAlignment(Pos.CENTER);
+            empty.setMaxWidth(Double.MAX_VALUE);
+
+            notificationBox.getChildren().add(empty);
+            return 0;
+        }
+
+        notificationBox.setAlignment(Pos.TOP_LEFT);
+
+        for (Notification not : notifications) {
+            Label label = new Label(not.message());
+            label.getStyleClass().add("notification-item");
+            label.setWrapText(true);
+
+            label.setMaxWidth(Double.MAX_VALUE);
+            label.setMinHeight(Region.USE_PREF_SIZE);
+
+            notificationBox.getChildren().add(label);
+        }
+
+        return notifications.size();
+    }
+
+    @FXML protected abstract void closeNotificationBox();
+
     protected abstract void resetHomeContent();
 
     @FXML
@@ -116,16 +171,16 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             validateField(()-> bean.setPassword(isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim()));
             validateField(()-> bean.setConfirmPassword(isConfirmPasswordVisible ? confirmPasswordTextField.getText().trim() : confirmPasswordField.getText().trim()));
 
-            controller.updateUserPassword(bean);
+            AccountController.updateUserPassword(bean);
 
             showInfo("Password modificata con successo.");
 
-            reset();
+            clearPasswordPanel();
             setNodeVisibility(accountPanel, true);
             setNodeVisibility(changePasswordPanel, false);
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel1, e.getMessage());
-            showError(errorLabel1);
+            showErrorLabel(errorLabel1);
         }
     }
 
@@ -145,7 +200,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
         try {
             fillAccountBean(bean);
-            controller.updateUserData(bean);
+            AccountController.updateUserData(bean);
             applyChanges(bean);
 
             showInfo("Modifiche applicate con successo.");
@@ -154,7 +209,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             populateFields();
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
         }
     }
 
@@ -167,10 +222,13 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
         setNodeVisibility(accountPanel, false);
         setNodeVisibility(changePasswordPanel, false);
+        setNodeVisibility(notificationPanel, false);
 
         resetHomeContent();
 
+        suppressAccountChangeEvents = true;
         populateFields();
+        suppressAccountChangeEvents = false;
     }
 
     protected void clearPasswordPanel() {
@@ -207,4 +265,9 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
     @FXML
     protected abstract void logout();
+
+    @FXML
+    protected void goToManageBookings() {
+        switchTo("Manage Bookings");
+    }
 }

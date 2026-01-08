@@ -75,22 +75,12 @@
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="searchButton" mnemonicParsing="false" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="1.0" />
-                           </font>
-                           <padding>
-                              <Insets right="10.0" />
-                           </padding>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                           <Image url="@../img/search.png" />
                            <StackPane.margin>
-                              <Insets />
+                              <Insets right="10.0" />
                            </StackPane.margin>
-                           <graphic>
-                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                 <Image url="@../img/search.png" />
-                              </ImageView>
-                           </graphic>
-                        </Button>
+                        </ImageView>
                      </StackPane>
                      <Button fx:id="addFieldButton" mnemonicParsing="false" onAction="#showAddField" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="register-button" text="Aggiungi campo">
                         <font>

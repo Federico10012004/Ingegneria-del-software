@@ -298,7 +298,7 @@
                   <Image url="@../img/Soccer-Ball.png" />
                </ImageView>
             </Group>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAccount" style="-fx-background-color: transparent;" StackPane.alignment="TOP_RIGHT">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#showAccount" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
                <graphic>
                   <ImageView fx:id="accountIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <Image url="@../img/account.png" />
@@ -311,18 +311,67 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <padding>
-                  <Insets right="30.0" top="7.0" />
+                  <Insets right="30.0" />
                </padding>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#showNotifications" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_LEFT">
+               <graphic>
+                  <ImageView fx:id="notificationIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@../img/notification.png" />
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <padding>
                <Insets top="10.0" />
             </padding>
          </StackPane>
       </top>
+      <left>
+         <StackPane BorderPane.alignment="CENTER">
+            <VBox fx:id="notificationPanel" prefWidth="325.0" styleClass="login-box" visible="false">
+               <StackPane alignment="TOP_LEFT">
+                  <VBox.margin>
+                     <Insets left="5.0" top="10.0" />
+                  </VBox.margin>
+                  <Button mnemonicParsing="false" onAction="#closeNotificationBox" style="-fx-background-color: transparent;">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="backIcon2" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@../img/back-button.png" />
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Label fx:id="notificationLabel" text="Notifiche" StackPane.alignment="CENTER">
+                     <StackPane.margin>
+                        <Insets top="15.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font name="Tahoma Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </StackPane>
+               <VBox fx:id="notificationBox" alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS" />
+            </VBox>
+         </StackPane>
+      </left>
    </BorderPane>
    <AnchorPane pickOnBounds="false">
       <HBox fx:id="buttonBox" alignment="CENTER" spacing="250.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
-         <VBox alignment="CENTER">
+         <VBox fx:id="fieldManagement" alignment="CENTER">
             <Button mnemonicParsing="false" onAction="#goToFieldManagement">
                <graphic>
                   <ImageView fx:id="fieldIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -344,7 +393,7 @@
             </Label>
          </VBox>
          <VBox fx:id="reservation" alignment="CENTER">
-            <Button mnemonicParsing="false">
+            <Button mnemonicParsing="false" onAction="#goToManageBookings">
                <graphic>
                   <ImageView fx:id="reservationIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <Image url="@../img/reservation.png" />

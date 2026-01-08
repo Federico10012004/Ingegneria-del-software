@@ -19,7 +19,7 @@ public class Main extends Application {
         while (true) {
             System.out.println("Seleziona interfaccia: ");
             System.out.println("1) CLI");
-            System.out.println("2) GUI (JavaFX)");
+            System.out.println("2) GUI");
 
             try {
                 System.out.print("Selezione: ");
@@ -51,11 +51,12 @@ public class Main extends Application {
         Navigator.setStage(stage);
         Navigator.show("Role Selection");
 
+        stage.setTitle("Calcetto Hub");
+
         stage.setWidth(1000);
         stage.setHeight(700);
         stage.centerOnScreen();
 
-        stage.setTitle("Calcetto Hub");
         stage.show();
     }
 }
