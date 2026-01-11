@@ -103,7 +103,7 @@ public class RegistrationGui extends BaseFormerGui {
             goToLogin();
         } catch (EmailAlreadyExistsException | IllegalArgumentException | DateTimeParseException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showErrorLabel(errorLabel);
+            showError(errorLabel);
         }
     }
 

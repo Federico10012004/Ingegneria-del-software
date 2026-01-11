@@ -378,7 +378,7 @@
    <AnchorPane pickOnBounds="false">
       <HBox fx:id="buttonBox" alignment="CENTER" spacing="140.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
          <VBox fx:id="fieldBooking" alignment="CENTER">
-            <Button mnemonicParsing="false">
+            <Button mnemonicParsing="false" onAction="#goToSearchField">
                <graphic>
                   <ImageView fx:id="fieldIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <Image url="@../img/football-field.png" />

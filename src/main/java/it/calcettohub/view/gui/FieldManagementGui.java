@@ -136,7 +136,7 @@ public class FieldManagementGui extends BaseFormerGui {
         try {
             fields = controller.getFields();
         } catch (PersistenceException e) {
-            showErrorLabel("Errore", e.getMessage());
+            showError("Errore", e.getMessage());
             return;
         }
 
@@ -257,17 +257,17 @@ public class FieldManagementGui extends BaseFormerGui {
                 validateField(() -> bean.setIndoor(indoorYes.isSelected()));
             } else {
                 setErrorMessage(errorLabel, "Campo indoor non selezionato.");
-                showErrorLabel(errorLabel);
+                showError(errorLabel);
                 return;
             }
 
         } catch (NumberFormatException _) {
             setErrorMessage(errorLabel, "Prezzo orario non valido.");
-            showErrorLabel(errorLabel);
+            showError(errorLabel);
             return;
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showErrorLabel(errorLabel);
+            showError(errorLabel);
             return;
         }
 
@@ -350,7 +350,7 @@ public class FieldManagementGui extends BaseFormerGui {
             reset();
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel1, e.getMessage());
-            showErrorLabel(errorLabel1);
+            showError(errorLabel1);
         }
     }
 

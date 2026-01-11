@@ -61,7 +61,7 @@ public class LoginGui extends BaseFormerGui {
 
             if (session == null) {
                 setErrorMessage(errorLabel, "Errore: impossibile creare la sessione");
-                showErrorLabel(errorLabel);
+                showError(errorLabel);
                 return;
             }
 
@@ -72,7 +72,7 @@ public class LoginGui extends BaseFormerGui {
             }
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showErrorLabel(errorLabel);
+            showError(errorLabel);
         } catch (UnexpectedRoleException _) {
             System.exit(1);
         }

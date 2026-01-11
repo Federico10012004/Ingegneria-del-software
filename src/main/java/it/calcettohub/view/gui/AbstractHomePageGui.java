@@ -52,7 +52,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
     protected boolean isVisible = false;
     protected boolean isConfirmPasswordVisible = false;
     protected boolean suppressAccountChangeEvents = false;
-    protected final AccountController AccountController = new AccountController();
+    protected final AccountController accountController = new AccountController();
     protected final NotificationController notificationController = new NotificationController();
 
     @FXML
@@ -171,7 +171,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             validateField(()-> bean.setPassword(isVisible ? passwordTextField.getText().trim() : passwordField.getText().trim()));
             validateField(()-> bean.setConfirmPassword(isConfirmPasswordVisible ? confirmPasswordTextField.getText().trim() : confirmPasswordField.getText().trim()));
 
-            AccountController.updateUserPassword(bean);
+            accountController.updateUserPassword(bean);
 
             showInfo("Password modificata con successo.");
 
@@ -180,7 +180,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             setNodeVisibility(changePasswordPanel, false);
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel1, e.getMessage());
-            showErrorLabel(errorLabel1);
+            showError(errorLabel1);
         }
     }
 
@@ -200,7 +200,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
         try {
             fillAccountBean(bean);
-            AccountController.updateUserData(bean);
+            accountController.updateUserData(bean);
             applyChanges(bean);
 
             showInfo("Modifiche applicate con successo.");
@@ -209,7 +209,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             populateFields();
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showErrorLabel(errorLabel);
+            showError(errorLabel);
         }
     }
 

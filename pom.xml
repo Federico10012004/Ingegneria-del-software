@@ -11,6 +11,7 @@
         <javafx.platform>win</javafx.platform>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>federico10012004</sonar.organization>
+        <attach.version>4.0.11</attach.version>
     </properties>
     <dependencies>
         <dependency>
@@ -58,10 +59,27 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.20.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>maps</artifactId>
+            <version>2.0.0-ea+6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.gluonhq.attach</groupId>
+                    <artifactId>storage</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gluonhq.attach</groupId>
+            <artifactId>storage</artifactId>
+            <version>${attach.version}</version>
+            <classifier>desktop</classifier>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
-            <!-- 🔹 Plugin per compilare con Java 23 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -71,7 +89,6 @@
                 </configuration>
             </plugin>
 
-            <!-- 🔹 Plugin per eseguire classi con il metodo main -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -81,7 +98,6 @@
                 </configuration>
             </plugin>
 
-            <!-- 🔹 Plugin JavaFX (fondamentale per i moduli javafx.*) -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>

@@ -84,6 +84,8 @@ public class Navigator {
             case "Home Field Manager" -> "/fxml/HomePageFieldManager.fxml";
             case "Field Management" -> "/fxml/FieldManagement.fxml";
             case "Manage Bookings" -> "/fxml/ManageBookings.fxml";
+            case "Search Field" -> "/fxml/SearchField.fxml";
+            case "Field Booking" -> "/fxml/FieldBooking.fxml";
             default -> throw new IllegalArgumentException("Percorso FXML non definito per: " + name);
         };
     }

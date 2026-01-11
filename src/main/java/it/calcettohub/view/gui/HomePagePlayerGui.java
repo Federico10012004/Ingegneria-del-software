@@ -168,4 +168,9 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
     private void goToOrganizeMatch() {
         showInfo("Funzionalità non implementata");
     }
+
+    @FXML
+    private void goToSearchField() {
+        switchTo("Search Field");
+    }
 }

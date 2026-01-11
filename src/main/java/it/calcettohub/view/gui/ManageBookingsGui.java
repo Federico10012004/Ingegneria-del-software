@@ -66,7 +66,7 @@ public class ManageBookingsGui extends BaseFormerGui {
         try {
             bookings = controller.showBookings();
         } catch (PersistenceException | UnexpectedRoleException e) {
-            showErrorLabel("Errore", e.getMessage());
+            showError("Errore", e.getMessage());
             return;
         }
 
@@ -149,9 +149,9 @@ public class ManageBookingsGui extends BaseFormerGui {
             controller.cancelBooking(bean);
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showErrorLabel(errorLabel);
+            showError(errorLabel);
         } catch (BookingNotCancelableException | UnexpectedRoleException e) {
-            showErrorLabel("Errore", e.getMessage());
+            showError("Errore", e.getMessage());
             refreshUi();
             return;
         }

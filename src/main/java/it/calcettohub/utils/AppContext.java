@@ -4,6 +4,7 @@ import it.calcettohub.model.Role;
 
 public class AppContext {
     private static Role selectedRole;
+    private static String fieldId;
 
     private AppContext() {}
 
@@ -11,7 +12,15 @@ public class AppContext {
         return selectedRole;
     }
 
-    public static void setSelectedRole(Role role) {
-        selectedRole = role;
+    public static void setSelectedRole(Role selectedRole) {
+        AppContext.selectedRole = selectedRole;
+    }
+
+    public static String getFieldId() {
+        return fieldId;
+    }
+
+    public static void setFieldId(String fieldId) {
+        AppContext.fieldId = fieldId;
     }
 }
