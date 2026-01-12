@@ -261,7 +261,20 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
     }
 
     @FXML
-    protected abstract void backToHome();
+    protected void backToHome() {
+        if (hasAccountChanges()) {
+            boolean confirm = showConfirmation(
+                    "Sei sicuro di voler tornare indietro?",
+                    "Le modifiche andranno perse.");
+
+            if (!confirm) return;
+        }
+
+        setNodeVisibility(accountPanel, false);
+        reservation.setVisible(true);
+        buttonBox.setMouseTransparent(false);
+        reset();
+    }
 
     @FXML
     protected abstract void logout();

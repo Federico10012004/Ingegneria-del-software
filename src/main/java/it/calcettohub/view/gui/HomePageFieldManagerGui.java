@@ -20,11 +20,11 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
     private void initialize() {
         initializeCommon();
 
-        setupResponsiveLabel(fieldLabel, root, 30.0, FONT_STYLE_TAHOMA);
-        setupResponsiveLabel(reservationLabel, root, 30.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(fieldLabel, root, 40.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(reservationLabel, root, 40.0, FONT_STYLE_TAHOMA);
 
-        setUpResponsiveIcon(fieldIcon, root, 0.075);
-        setUpResponsiveIcon(reservationIcon, root, 0.075);
+        setUpResponsiveIcon(fieldIcon, root, 0.070);
+        setUpResponsiveIcon(reservationIcon, root, 0.070);
 
         populateFields();
         setupAccountChangeListeners();
@@ -123,22 +123,6 @@ public class HomePageFieldManagerGui extends AbstractHomePageGui {
             return true;
 
         return !phoneField.getText().trim().equals(initialState.getPhoneNumber());
-    }
-
-    @Override
-    protected void backToHome() {
-        if (hasAccountChanges()) {
-            boolean confirm = showConfirmation(
-                    "Sei sicuro di voler tornare indietro?",
-                    "Le modifiche andranno perse.");
-
-            if (!confirm) return;
-        }
-
-        setNodeVisibility(accountPanel, false);
-        reservation.setVisible(true);
-        buttonBox.setMouseTransparent(false);
-        reset();
     }
 
     @Override

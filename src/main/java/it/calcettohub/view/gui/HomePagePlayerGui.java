@@ -133,22 +133,6 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
     }
 
     @Override
-    protected void backToHome() {
-        if (hasAccountChanges()) {
-            boolean confirm = showConfirmation(
-                    "Sei sicuro di voler tornare indietro?",
-                    "Le modifiche andranno perse.");
-
-            if (!confirm) return;
-        }
-
-        setNodeVisibility(accountPanel, false);
-        reservation.setVisible(true);
-        buttonBox.setMouseTransparent(false);
-        reset();
-    }
-
-    @Override
     protected void logout() {
         boolean confirm = showConfirmation(
                 "Vuoi effettuare il logut?",
