@@ -103,7 +103,13 @@ public class GeocodingClient {
 
     private void pause(long millis) throws InterruptedException {
         synchronized (rateLock) {
-            rateLock.wait(millis);
+            long end = System.currentTimeMillis() + millis;
+            long remaining = millis;
+
+            while (remaining > 0) {
+                rateLock.wait(remaining);
+                remaining = end - System.currentTimeMillis();
+            }
         }
     }
 }
