@@ -14,6 +14,9 @@ public class ManageBookingsCli extends CliContext {
     private final BookingController controller = new BookingController();
     private List<BookingView> filteredBookings;
     private String fieldFilter = "";
+    private static final String MENU_CANCEL_BOOKING = "Disdici prenotazione";
+    private static final String MENU_SEARCH_BY_FIELD = "Cerca prenotazione per nome del campo";
+    private static final String MENU_CLEAR_FILTER = "Rimuovi filtro";
 
 
     public void start() {
@@ -41,14 +44,14 @@ public class ManageBookingsCli extends CliContext {
 
             if (fieldFilter.isBlank()) {
                 showMenu(
-                        "Disdici prenotazione",
-                        "Cerca prenotazione per nome del campo"
+                        MENU_CANCEL_BOOKING,
+                        MENU_SEARCH_BY_FIELD
                 );
             } else {
                 showMenu(
-                        "Disdici prenotazione",
-                        "Cerca prenotazione per nome del campo",
-                        "Rimuovi filtro"
+                        MENU_CANCEL_BOOKING,
+                        MENU_SEARCH_BY_FIELD,
+                        MENU_CLEAR_FILTER
                 );
             }
 
@@ -131,7 +134,7 @@ public class ManageBookingsCli extends CliContext {
     }
 
     private void cancelBooking() {
-        printTitle("Disdici prenotazione");
+        printTitle(MENU_CANCEL_BOOKING);
         showNumberedBookings();
 
         while (true) {

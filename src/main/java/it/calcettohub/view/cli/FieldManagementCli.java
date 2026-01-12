@@ -48,20 +48,7 @@ public class FieldManagementCli extends CliContext {
             printEscInfo();
             System.out.println();
 
-            if (nameFilter.isBlank()) {
-                showMenu(
-                        "Aggiungi campo",
-                        "Elimina campo",
-                        "Cerca campo per nome"
-                );
-            } else {
-                showMenu(
-                        "Aggiungi campo",
-                        "Elimina campo",
-                        "Cerca campo per nome",
-                        "Rimuovi filtro"
-                );
-            }
+            showAction();
 
             try {
                 int max = nameFilter.isBlank() ? 3 : 4;
@@ -69,14 +56,7 @@ public class FieldManagementCli extends CliContext {
 
                 switch (choice) {
                     case 1 -> addFields();
-                    case 2 -> {
-                        if (filteredFields.isEmpty()) {
-                            print("Nessun campo presente. Non è possibile effettuare l'operazione di eliminazione.");
-                            requestString("Premi INVIO per tornare indietro");
-                        } else {
-                            deleteField();
-                        }
-                    }
+                    case 2 -> deleteField();
                     case 3 -> searchByName();
                     case 4 -> nameFilter = "";
                     default -> throw new IllegalStateException("Scelta non valida" + choice);
@@ -90,6 +70,23 @@ public class FieldManagementCli extends CliContext {
             } catch (EscPressedException _) {
                 return;
             }
+        }
+    }
+
+    private void showAction() {
+        if (nameFilter.isBlank()) {
+            showMenu(
+                    "Aggiungi campo",
+                    "Elimina campo",
+                    "Cerca campo per nome"
+            );
+        } else {
+            showMenu(
+                    "Aggiungi campo",
+                    "Elimina campo",
+                    "Cerca campo per nome",
+                    "Rimuovi filtro"
+            );
         }
     }
 
@@ -179,22 +176,27 @@ public class FieldManagementCli extends CliContext {
     }
 
     private void deleteField() {
-        printTitle("Eliminazione campo");
-        showFieldsNumbered();
+        if (filteredFields.isEmpty()) {
+            print("Nessun campo presente. Non è possibile effettuare l'operazione di eliminazione.");
+            requestString("Premi INVIO per tornare indietro");
+        } else {
+            printTitle("Eliminazione campo");
+            showFieldsNumbered();
 
-        while (true) {
-            try {
-                int choice = requestIntInRange("Seleziona campo da eliminare: ", 1, filteredFields.size());
-                Field selected = filteredFields.get(choice - 1);
+            while (true) {
+                try {
+                    int choice = requestIntInRange("Seleziona campo da eliminare: ", 1, filteredFields.size());
+                    Field selected = filteredFields.get(choice - 1);
 
-                controller.delete(selected.getId());
+                    controller.delete(selected.getId());
 
-                clearScreen();
-                print("Campo eliminato con successo.");
+                    clearScreen();
+                    print("Campo eliminato con successo.");
 
-                return;
-            } catch (IllegalArgumentException e) {
-                showExceptionMessage(e);
+                    return;
+                } catch (IllegalArgumentException e) {
+                    showExceptionMessage(e);
+                }
             }
         }
     }
