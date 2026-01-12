@@ -53,7 +53,7 @@ public class GeocodingClient {
             HttpResponse<String> resp = sendWithThrottle(req);
 
             if (resp.statusCode() == 429 || resp.statusCode() >= 500) {
-                Thread.sleep(1200);
+                pause(1200);
                 resp = sendWithThrottle(req);
             }
 
@@ -72,6 +72,9 @@ public class GeocodingClient {
             double lon = first.get("lon").asDouble();
 
             return Optional.of(new double[]{lat, lon});
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+            return Optional.empty();
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -84,10 +87,23 @@ public class GeocodingClient {
 
     private void throttle() throws InterruptedException {
         synchronized (rateLock) {
-            long now = System.currentTimeMillis();
-            long wait = 1100 - (now - lastCallMillis);
-            if (wait > 0) Thread.sleep(wait);
-            lastCallMillis = System.currentTimeMillis();
+            while (true) {
+                long now = System.currentTimeMillis();
+                long waitMs = 1100 - (now - lastCallMillis);
+
+                if (waitMs <= 0) {
+                    lastCallMillis = now;
+                    return;
+                }
+
+                rateLock.wait(waitMs);
+            }
+        }
+    }
+
+    private void pause(long millis) throws InterruptedException {
+        synchronized (rateLock) {
+            rateLock.wait(millis);
         }
     }
 }
