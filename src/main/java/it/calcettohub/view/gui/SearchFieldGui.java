@@ -6,6 +6,7 @@ import it.calcettohub.bean.SearchFieldBean;
 import it.calcettohub.controller.FieldController;
 import it.calcettohub.model.Field;
 import it.calcettohub.model.valueobject.FieldMapItem;
+import it.calcettohub.utils.AppContext;
 import it.calcettohub.utils.GeocodingClient;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -109,7 +110,7 @@ public class SearchFieldGui extends BaseFormerGui {
             bean.validate();
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
             setLoading(false);
             return;
         }
@@ -294,13 +295,30 @@ public class SearchFieldGui extends BaseFormerGui {
         switchTo("Home Player");
     }
 
+    @FXML
+    private void goToFieldBooking() {
+        String fieldId = selectedFieldId.get();
+        if (fieldId == null) {
+            showInfo("Seleziona un campo prima di andare avanti.");
+            return;
+        }
+
+        AppContext.setFieldId(fieldId);
+        switchTo("Field Booking");
+    }
+
     @Override
     public void reset() {
         addressField.clear();
         cityField.clear();
-
+        cardCtrlById.clear();
         fieldsList.getChildren().clear();
+
         clearMapMarkers();
+
+        setLoading(false);
+
+        selectedFieldId.set(null);
 
         setNodeVisibility(errorLabel, false);
     }

@@ -75,7 +75,7 @@ public abstract class BaseFormerGui implements Resettable {
         label.setText(message);
     }
 
-    protected void showError(Label label) {
+    protected void showErrorLabel(Label label) {
         label.setVisible(true);
         label.setManaged(true);
     }

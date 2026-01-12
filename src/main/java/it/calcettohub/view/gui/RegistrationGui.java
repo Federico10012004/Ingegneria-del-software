@@ -7,7 +7,7 @@ import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.exceptions.EmailAlreadyExistsException;
 import it.calcettohub.model.PlayerPosition;
 import it.calcettohub.model.Role;
-import it.calcettohub.utils.Navigator;
+import it.calcettohub.utils.AppContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -82,7 +82,7 @@ public class RegistrationGui extends BaseFormerGui {
     @FXML
     private void handleRegister() {
         try {
-            if (Navigator.getUserType() == Role.PLAYER) {
+            if (AppContext.getSelectedRole() == Role.PLAYER) {
                 RegisterPlayerBean bean = new RegisterPlayerBean();
 
                 validateCommonFields(bean);
@@ -103,7 +103,7 @@ public class RegistrationGui extends BaseFormerGui {
             goToLogin();
         } catch (EmailAlreadyExistsException | IllegalArgumentException | DateTimeParseException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
         }
     }
 
@@ -117,7 +117,7 @@ public class RegistrationGui extends BaseFormerGui {
     }
 
     private void setUpRoleVisibility() {
-        if (Navigator.getUserType() == Role.PLAYER) {
+        if (AppContext.getSelectedRole() == Role.PLAYER) {
             setNodeVisibility(positionField, true);
             setNodeVisibility(positionImageView, true);
 

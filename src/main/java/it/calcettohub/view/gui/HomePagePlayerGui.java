@@ -25,9 +25,9 @@ public class HomePagePlayerGui extends AbstractHomePageGui {
     private void initialize() {
         initializeCommon();
 
-        setupResponsiveLabel(matchLabel, root, 40.0, FONT_STYLE_TAHOMA);
-        setupResponsiveLabel(fieldLabel, root, 40.0, FONT_STYLE_TAHOMA);
-        setupResponsiveLabel(reservationLabel, root, 40.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(matchLabel, root, 45.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(fieldLabel, root, 45.0, FONT_STYLE_TAHOMA);
+        setupResponsiveLabel(reservationLabel, root, 45.0, FONT_STYLE_TAHOMA);
 
         setUpResponsiveIcon(matchIcon, root, 0.065);
         setUpResponsiveIcon(fieldIcon, root, 0.065);

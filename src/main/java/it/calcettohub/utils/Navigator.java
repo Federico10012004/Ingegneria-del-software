@@ -1,6 +1,5 @@
 package it.calcettohub.utils;
 
-import it.calcettohub.model.Role;
 import it.calcettohub.view.gui.BaseFormerGui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +19,6 @@ public class Navigator {
 
     private static Stage mainStage;
     private static final Map<String, Scene> scenes = new HashMap<>();
-    private static Role userType;
 
     public static void setStage(Stage stage) {
         mainStage = stage;
@@ -28,18 +26,6 @@ public class Navigator {
 
     public static Stage getMainStage() {
         return mainStage;
-    }
-
-    public static void setUserType(Role type) {
-        userType = type;
-    }
-
-    public static Role getUserType() {
-        return userType;
-    }
-
-    public static void resetUserType() {
-        userType = null;
     }
 
     /**

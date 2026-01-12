@@ -180,7 +180,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             setNodeVisibility(changePasswordPanel, false);
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel1, e.getMessage());
-            showError(errorLabel1);
+            showErrorLabel(errorLabel1);
         }
     }
 
@@ -209,7 +209,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
             populateFields();
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
         }
     }
 

@@ -179,7 +179,7 @@
     -fx-border-width: 0 0 1 0;
 }
 
-.toggle-button {
+.open-close-button {
     -fx-background-color: white;
     -fx-border-color: #cfcfcf;
     -fx-border-width: 1;
@@ -191,8 +191,8 @@
     -fx-text-fill: #444;
 }
 
-.toggle-button:selected {
-    -fx-background-color: #016326;   /* verde chiarissimo */
+.open-close-button:selected {
+    -fx-background-color: #016326;
     -fx-border-color: #66bb6a;
     -fx-text-fill: #2e7d32;
 }
@@ -230,4 +230,35 @@
 
 .marker-selected {
     -fx-stroke-width: 3;
+}
+
+.slot-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+
+    -fx-padding: 6 12;
+    -fx-font-size: 16px;
+    -fx-text-fill: #111827;
+    -fx-cursor: hand;
+}
+
+.slot-button:hover {
+    -fx-background-color: #1F7A3A;
+    -fx-border-color: #66bb6a;
+    -fx-text-fill: white;
+}
+
+.slot-button:selected {
+    -fx-background-color: #016326;
+    -fx-border-color: #66bb6a;
+    -fx-text-fill: white;
+}
+
+.slot-button:selected:hover {
+    -fx-background-color: #016326;
+    -fx-border-color: #66bb6a;
+    -fx-text-fill: white;
 }

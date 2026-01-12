@@ -216,8 +216,14 @@
                               <toggleGroup>
                                  <ToggleGroup fx:id="indoorGroup" />
                               </toggleGroup>
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
                            </RadioButton>
-                           <RadioButton fx:id="indoorNo" mnemonicParsing="false" text="No" toggleGroup="$indoorGroup" />
+                           <RadioButton fx:id="indoorNo" mnemonicParsing="false" text="No" toggleGroup="$indoorGroup">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor></RadioButton>
                         </HBox>
                      </StackPane>
                   </VBox>
@@ -289,7 +295,7 @@
                               <Font name="Tahoma" size="18.0" />
                            </font>
                         </Label>
-                        <ToggleButton fx:id="mondayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                        <ToggleButton fx:id="mondayOpen" mnemonicParsing="false" styleClass="open-close-button" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
                         <Label text="Sabato" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font name="Tahoma" size="18.0" />
@@ -320,12 +326,12 @@
                               <Font name="Tahoma" size="18.0" />
                            </font>
                         </Label>
-                        <ToggleButton fx:id="tuesdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ToggleButton fx:id="wednesdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ToggleButton fx:id="thursdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ToggleButton fx:id="fridayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <ToggleButton fx:id="saturdayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <ToggleButton fx:id="sundayOpen" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <ToggleButton fx:id="tuesdayOpen" mnemonicParsing="false" styleClass="open-close-button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ToggleButton fx:id="wednesdayOpen" mnemonicParsing="false" styleClass="open-close-button" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ToggleButton fx:id="thursdayOpen" mnemonicParsing="false" styleClass="open-close-button" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ToggleButton fx:id="fridayOpen" mnemonicParsing="false" styleClass="open-close-button" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ToggleButton fx:id="saturdayOpen" mnemonicParsing="false" styleClass="open-close-button" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ToggleButton fx:id="sundayOpen" mnemonicParsing="false" styleClass="open-close-button" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <Label fx:id="mondayStatusLabel" text="Aperto" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                            <font>
                               <Font name="Tahoma" size="18.0" />

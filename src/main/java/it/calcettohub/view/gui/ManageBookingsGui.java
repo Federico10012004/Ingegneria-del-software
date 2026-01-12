@@ -149,7 +149,7 @@ public class ManageBookingsGui extends BaseFormerGui {
             controller.cancelBooking(bean);
         } catch (IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
         } catch (BookingNotCancelableException | UnexpectedRoleException e) {
             showError("Errore", e.getMessage());
             refreshUi();

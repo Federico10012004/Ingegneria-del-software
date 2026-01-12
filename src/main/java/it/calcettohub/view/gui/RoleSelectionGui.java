@@ -1,11 +1,11 @@
 package it.calcettohub.view.gui;
 
 import it.calcettohub.model.Role;
+import it.calcettohub.utils.AppContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import it.calcettohub.utils.Navigator;
 
 public class RoleSelectionGui extends BaseFormerGui {
 
@@ -29,7 +29,7 @@ public class RoleSelectionGui extends BaseFormerGui {
 
     @Override
     public void reset() {
-        Navigator.resetUserType();
+        AppContext.resetUserRole();
     }
 
     @FXML
@@ -42,7 +42,7 @@ public class RoleSelectionGui extends BaseFormerGui {
             return;
         }
 
-        Navigator.setUserType(selectedRole);
+        AppContext.setSelectedRole(selectedRole);
         switchTo("Login");
     }
 }

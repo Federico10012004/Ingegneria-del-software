@@ -49,7 +49,7 @@ public class LoginGui extends BaseFormerGui {
     @FXML
     private void handleLogin() {
         LoginBean bean = new LoginBean();
-        bean.setRole(Navigator.getUserType());
+        bean.setRole(AppContext.getSelectedRole());
 
         try {
             validateField(()-> bean.setEmail(emailField.getText().trim()));
@@ -61,18 +61,18 @@ public class LoginGui extends BaseFormerGui {
 
             if (session == null) {
                 setErrorMessage(errorLabel, "Errore: impossibile creare la sessione");
-                showError(errorLabel);
+                showErrorLabel(errorLabel);
                 return;
             }
 
-            switch (Navigator.getUserType()) {
+            switch (AppContext.getSelectedRole()) {
                 case PLAYER -> switchTo("Home Player");
                 case FIELDMANAGER -> switchTo("Home Field Manager");
                 default -> throw new UnexpectedRoleException("Ruolo inatteso, errore nel caricamento della nuova scheramta.");
             }
         } catch (EmailNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             setErrorMessage(errorLabel, e.getMessage());
-            showError(errorLabel);
+            showErrorLabel(errorLabel);
         } catch (UnexpectedRoleException _) {
             System.exit(1);
         }

@@ -130,7 +130,7 @@
                      <VBox fx:id="fieldsList" alignment="CENTER" styleClass="login-box" />
                   </ScrollPane>
                </SplitPane>
-               <Button fx:id="goForwardButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#onSearch" prefHeight="42.4" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" styleClass="login-button" text="Avanti" textFill="WHITE">
+               <Button fx:id="goForwardButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#goToFieldBooking" prefHeight="42.4" style="-fx-padding: 10 10 10 10; -fx-background-radius: 8; -fx-border-radius: 8; -fx-background-color: #016326; -fx-border-color: #016326;" styleClass="login-button" text="Avanti" textFill="WHITE">
                   <font>
                      <Font name="Tahoma Bold" size="14.0" />
                   </font>
