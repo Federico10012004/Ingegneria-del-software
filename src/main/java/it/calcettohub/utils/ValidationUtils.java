@@ -9,7 +9,6 @@ public class ValidationUtils {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\+39)?\\s?(\\d\\s?){9,10}$");
-    private static final Pattern ADDRESS_PATTERN = Pattern.compile("^(?>[\\p{L}.'-]+(?:\\s+[\\p{L}.'-]+)*)\\s*,?\\s*\\d+(?:\\s*/\\s*\\p{L})?$");
 
     public static boolean isValidEmail(String email) {
         return isNotNull(email) && EMAIL_PATTERN.matcher(email).matches();
@@ -40,7 +39,60 @@ public class ValidationUtils {
     }
 
     public static boolean isValidAddress(String address) {
-        return isNotNull(address) && ADDRESS_PATTERN.matcher(address).matches();
+        if (!isNotEmpty(address)) return false;
+
+        String s = address.trim();
+        if (s.length() > 200) return false;
+
+        int lastSpace = s.lastIndexOf(' ');
+        if (lastSpace <= 0 || lastSpace == s.length() - 1) return false;
+
+        String street = s.substring(0, lastSpace).trim();
+        String civic = s.substring(lastSpace + 1).trim();
+
+        if (street.endsWith(",")) {
+            street = street.substring(0, street.length() - 1).trim();
+        }
+
+        if (street.isEmpty() || civic.isEmpty()) return false;
+
+        boolean hasLetter = false;
+        for (int i = 0; i < street.length(); i++) {
+            char c = street.charAt(i);
+            if (Character.isLetter(c)) { hasLetter = true; continue; }
+            if (c == ' ' || c == '.' || c == '\'' || c == '-') continue;
+            return false;
+        }
+        if (!hasLetter) return false;
+
+        return isValidCivic(civic);
+    }
+
+    private static boolean isValidCivic(String civic) {
+        int n = civic.length();
+        int i = 0;
+
+        while (i < n && Character.isDigit(civic.charAt(i))) i++;
+        if (i == 0) return false;
+
+        if (i == n) return true;
+
+        char c = civic.charAt(i);
+
+        if (Character.isLetter(c)) {
+            i++;
+            return i == n;
+        }
+
+        if (c == '/') {
+            i++;
+            if (i >= n) return false;
+            if (!Character.isLetter(civic.charAt(i))) return false;
+            i++;
+            return i == n;
+        }
+
+        return false;
     }
 
     public static boolean isPastBookingDate(LocalDate date) {
