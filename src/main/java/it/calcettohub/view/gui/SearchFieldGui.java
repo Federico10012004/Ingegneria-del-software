@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -55,6 +57,10 @@ public class SearchFieldGui extends BaseFormerGui {
         fieldsLayer = new FieldsLayer(selectedFieldId::set);
         mapView.addLayer(fieldsLayer);
         mapView.setZoom(6);
+
+        mapView.addEventFilter(MouseEvent.MOUSE_DRAGGED, _ -> fieldsLayer.refresh());
+        mapView.addEventFilter(MouseEvent.MOUSE_RELEASED, _ -> fieldsLayer.refresh());
+        mapView.addEventFilter(ScrollEvent.SCROLL, _ -> fieldsLayer.refresh());
 
         mapView.setCenter(new MapPoint(41.9028, 12.4964));
 

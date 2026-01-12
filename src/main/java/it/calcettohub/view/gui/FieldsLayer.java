@@ -21,15 +21,22 @@ public class FieldsLayer extends MapLayer {
         this.onSelect = onSelect;
     }
 
+    public void refresh() {
+        markDirty();
+    }
+
     public void clear() {
         getChildren().clear();
         itemById.clear();
         markerById.clear();
-        requestLayout();
+        markDirty();
     }
 
     public void setItems(List<FieldMapItem> items) {
-        clear();
+        getChildren().clear();
+        itemById.clear();
+        markerById.clear();
+
         for (FieldMapItem it : items) {
             if (it.lat() == null || it.lon() == null) continue;
 
@@ -42,7 +49,8 @@ public class FieldsLayer extends MapLayer {
             markerById.put(it.id(), marker);
             getChildren().add(marker);
         }
-        requestLayout();
+
+        markDirty();
     }
 
     public Node getMarker(String fieldId) {
@@ -61,16 +69,8 @@ public class FieldsLayer extends MapLayer {
 
             Point2D p = getMapPoint(it.lat(), it.lon());
 
-            if (marker instanceof Circle c) {
-                double r = c.getRadius();
-                c.setLayoutX(p.getX());
-                c.setLayoutY(p.getY());
-                c.setTranslateX(-r);
-                c.setTranslateY(-r);
-            } else {
-                marker.setLayoutX(p.getX());
-                marker.setLayoutY(p.getY());
-            }
+            marker.setTranslateX(p.getX());
+            marker.setTranslateY(p.getY());
         }
     }
 }
