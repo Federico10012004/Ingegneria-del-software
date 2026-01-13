@@ -62,18 +62,15 @@ public abstract class UserFileSystemDao<T extends User> {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                // uso split con limite -1 per mantenere eventuali campi vuoti
                 String[] arr = line.split(SEP);
 
                 String csvEmail = arr[0];
 
                 if (csvEmail.equals(user.getEmail())) {
-                    // Prendo tutti i campi dall'oggetto User
                     List<String> newFields = new ArrayList<>(user.getAllFields());
 
-                    // Mantengo la password presente nel CSV (indice 1)
                     if (arr.length > 1 && newFields.size() > 1) {
-                        newFields.set(1, arr[1]);   // 0 = email, 1 = password
+                        newFields.set(1, arr[1]);
                     }
 
                     lines.add(String.join(SEP, newFields));
@@ -99,13 +96,12 @@ public abstract class UserFileSystemDao<T extends User> {
                 String[] arr = line.split(SEP);
 
                 if (arr.length == 0) {
-                    continue; // riga vuota di sicurezza
+                    continue;
                 }
 
                 String csvEmail = arr[0];
 
                 if (csvEmail.equals(email)) {
-                    // password è la seconda colonna (indice 1)
                     arr[1] = newPassword;
                 }
 

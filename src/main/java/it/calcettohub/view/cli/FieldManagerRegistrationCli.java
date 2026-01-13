@@ -14,7 +14,6 @@ public class FieldManagerRegistrationCli extends BaseRegistrationCli<RegisterFie
 
         disableSessionCheck();
 
-        // ESC → torna alla schermata precedente
         setEscHandler(() -> {
             clearScreen();
             PageManager.pop();

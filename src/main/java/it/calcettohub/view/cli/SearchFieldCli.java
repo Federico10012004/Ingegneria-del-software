@@ -3,6 +3,7 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.SearchFieldBean;
 import it.calcettohub.controller.FieldController;
 import it.calcettohub.exceptions.EscPressedException;
+import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.model.Field;
 import it.calcettohub.utils.PageManager;
 
@@ -42,6 +43,10 @@ public class SearchFieldCli extends CliContext {
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);
             } catch (EscPressedException _) {
+                return;
+            } catch (SessionExpiredException e) {
+                showExceptionMessage(e);
+                expiredSession();
                 return;
             }
         }

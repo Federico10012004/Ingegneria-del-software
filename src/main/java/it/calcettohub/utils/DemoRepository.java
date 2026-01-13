@@ -9,11 +9,6 @@ import it.calcettohub.model.valueobject.Notification;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Simula un database in memoria condiviso tra i DemoDao.
- * Tutto viene perso alla chiusura dell'app.
- */
-
 public class DemoRepository {
 
     private static DemoRepository instance;

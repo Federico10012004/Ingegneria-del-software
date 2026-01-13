@@ -9,10 +9,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Navigator centralizzato per la gestione delle schermate dell'app CalcettoHub.
- * Versione con caricamento lazy (on-demand).
- */
 public class Navigator {
 
     private Navigator() {}
@@ -28,9 +24,6 @@ public class Navigator {
         return mainStage;
     }
 
-    /**
-     * Mostra una scena. Se non è stata ancora caricata, la carica automaticamente (lazy loading).
-     */
     public static void show(String name) {
         try {
             Scene scene = scenes.get(name);
@@ -57,10 +50,6 @@ public class Navigator {
         }
     }
 
-    /**
-     * Restituisce il percorso FXML in base al nome logico della scena.
-     * Questo metodo centralizza la gestione dei percorsi.
-     */
     private static String getFXMLPath(String name) {
         return switch (name) {
             case "Login" -> "/fxml/Login.fxml";

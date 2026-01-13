@@ -3,6 +3,7 @@ package it.calcettohub.view.cli;
 import it.calcettohub.bean.BookingBean;
 import it.calcettohub.bean.FreeSlotsBean;
 import it.calcettohub.controller.BookingController;
+import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.exceptions.SlotNotAvailableException;
 import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.utils.PageManager;
@@ -43,6 +44,10 @@ public class FieldBookingCli extends CliContext {
                 return;
             } catch (IllegalArgumentException | SlotNotAvailableException e) {
                 showExceptionMessage(e);
+            } catch (SessionExpiredException e) {
+                showExceptionMessage(e);
+                expiredSession();
+                return;
             }
         }
     }

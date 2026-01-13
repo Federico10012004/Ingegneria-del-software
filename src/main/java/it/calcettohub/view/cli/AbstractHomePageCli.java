@@ -55,7 +55,7 @@ public abstract class AbstractHomePageCli extends CliContext {
                 showErrorMessage("Esc non disponibile in questa pagina.");
             } catch (SessionExpiredException e) {
                 showExceptionMessage(e);
-                PageManager.pop();
+                expiredSession();
                 return;
             } catch (IllegalArgumentException e) {
                 showExceptionMessage(e);

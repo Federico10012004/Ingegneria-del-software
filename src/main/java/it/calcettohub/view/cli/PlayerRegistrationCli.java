@@ -15,7 +15,6 @@ public class PlayerRegistrationCli extends BaseRegistrationCli<RegisterPlayerBea
 
         disableSessionCheck();
 
-        // ESC → torna alla schermata precedente
         setEscHandler(() -> {
             clearScreen();
             PageManager.pop();

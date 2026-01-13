@@ -24,7 +24,7 @@ public class AvailabilityUtils {
         List<DateTimeRange> slots = new ArrayList<>();
         LocalDateTime cursor = oh.start();
 
-        int safetyMax = 48; // utilizzato per lanciare un'eccezione prima di finire la memoria se qualcosa va storto
+        int safetyMax = 48;
         while (!cursor.plus(SLOT).isAfter(oh.end())) {
             LocalDateTime next = cursor.plus(SLOT);
             slots.add(new DateTimeRange(cursor, next));
