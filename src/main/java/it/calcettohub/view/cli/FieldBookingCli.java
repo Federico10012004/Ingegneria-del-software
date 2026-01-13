@@ -1,6 +1,7 @@
 package it.calcettohub.view.cli;
 
 import it.calcettohub.bean.BookingBean;
+import it.calcettohub.bean.FreeSlotsBean;
 import it.calcettohub.controller.BookingController;
 import it.calcettohub.exceptions.SlotNotAvailableException;
 import it.calcettohub.model.valueobject.TimeRange;
@@ -24,15 +25,19 @@ public class FieldBookingCli extends CliContext {
             try {
                 LocalDate date = requestDate("Inserisci la data per cui desideri effettuare la prenotazione (usa formato dd-MM-yyyy): ");
 
-                List<TimeRange> freeSlots = controller.getFreeSlots(fieldId, date);
+                FreeSlotsBean bean = new FreeSlotsBean();
+                validateBeanField(() -> bean.setFieldId(fieldId));
+                validateBeanField(() -> bean.setDate(date));
+
+                List<TimeRange> freeSlots = controller.getFreeSlots(bean);
 
                 TimeRange selectedSlot = selectFreeSlots(freeSlots);
 
-                BookingBean bean = new BookingBean();
-                validateBeanField(() -> bean.setFieldId(fieldId));
-                validateBeanField(() -> bean.setSlot(selectedSlot.onDate(date)));
+                BookingBean bookingBean = new BookingBean();
+                validateBeanField(() -> bookingBean.setFieldId(fieldId));
+                validateBeanField(() -> bookingBean.setSlot(selectedSlot.onDate(date)));
 
-                controller.fieldBooking(bean);
+                controller.fieldBooking(bookingBean);
                 print("Prenotazione effettuata con successo.");
                 PageManager.pop();
                 return;

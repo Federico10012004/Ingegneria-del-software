@@ -56,6 +56,10 @@ public class ValidationUtils {
 
         if (street.isEmpty() || civic.isEmpty()) return false;
 
+        return isValidStreet(street) && isValidCivic(civic);
+    }
+
+    private static boolean isValidStreet(String street) {
         boolean hasLetter = false;
 
         for (int i = 0; i < street.length(); i++) {
@@ -70,11 +74,7 @@ public class ValidationUtils {
             }
         }
 
-        if (!hasLetter) return false;
-
-
-
-        return isValidCivic(civic);
+        return hasLetter;
     }
 
     private static boolean isValidCivic(String civic) {

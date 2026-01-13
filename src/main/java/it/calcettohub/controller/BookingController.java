@@ -2,6 +2,7 @@ package it.calcettohub.controller;
 
 import it.calcettohub.bean.BookingBean;
 import it.calcettohub.bean.CancelBookingBean;
+import it.calcettohub.bean.FreeSlotsBean;
 import it.calcettohub.dao.BookingDao;
 import it.calcettohub.dao.FieldDao;
 import it.calcettohub.dao.NotificationDao;
@@ -30,7 +31,10 @@ public class BookingController {
     private final FieldDao fieldDao = DaoFactory.getInstance().getFieldDao();
     private final NotificationDao notificationDao = DaoFactory.getInstance().getNotificationDao();
 
-    public List<TimeRange> getFreeSlots(String fieldId, LocalDate date) {
+    public List<TimeRange> getFreeSlots(FreeSlotsBean bean) {
+        String fieldId = bean.getFieldId();
+        LocalDate date = bean.getDate();
+
         if (ValidationUtils.isPastBookingDate(date)) {
             throw new IllegalArgumentException("La data di prenotazione non può essere nel passato.");
         }

@@ -1,6 +1,7 @@
 package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.BookingBean;
+import it.calcettohub.bean.FreeSlotsBean;
 import it.calcettohub.controller.BookingController;
 import it.calcettohub.exceptions.SlotNotAvailableException;
 import it.calcettohub.model.valueobject.TimeRange;
@@ -10,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -54,14 +54,11 @@ public class FieldBookingGui extends BaseFormerGui {
     @FXML
     private void searchFreeSlots() {
         try {
-            LocalDate date = dateField.getValue();
-            if (date == null) {
-                setErrorMessage(errorLabel, "Data non inserita");
-                showErrorLabel(errorLabel);
-                return;
-            }
+            FreeSlotsBean bean = new FreeSlotsBean();
+            validateField(() -> bean.setFieldId(fieldId));
+            validateField(() -> bean.setDate(dateField.getValue()));
 
-            List<TimeRange> freeSlots = controller.getFreeSlots(fieldId, date);
+            List<TimeRange> freeSlots = controller.getFreeSlots(bean);
 
             showFreeSlots(freeSlots);
             setNodeVisibility(slotLabel, true);
