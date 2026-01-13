@@ -1,5 +1,6 @@
 package it.calcettohub.model;
 
+import it.calcettohub.model.valueobject.FieldData;
 import it.calcettohub.model.valueobject.TimeRange;
 
 import java.math.BigDecimal;
@@ -18,18 +19,8 @@ public class Field {
     private BigDecimal hourlyPrice;
     private String emailManager;
 
-    public Field (String fieldName, String address, String city,
-                  SurfaceType surface, Map<DayOfWeek, TimeRange> openingHours,
-                  boolean indoor, BigDecimal hourlyPrice, String emailManager) {
-        this.id = UUID.randomUUID().toString();
-        this.fieldName = fieldName;
-        this.address = address;
-        this.city = city;
-        this.surface = surface;
-        this.openingHours = new EnumMap<>(openingHours);
-        this.indoor = indoor;
-        this.hourlyPrice = hourlyPrice;
-        this.emailManager = emailManager;
+    public Field (FieldData data) {
+        this(UUID.randomUUID().toString(), data);
     }
 
     public Field (String id, String fieldName, String address, String city,
@@ -43,18 +34,16 @@ public class Field {
         this.hourlyPrice = hourlyPrice;
     }
 
-    public Field(String id, String fieldName, String address, String city,
-                 SurfaceType surface, Map<DayOfWeek, TimeRange> openingHours,
-                 boolean indoor, BigDecimal hourlyPrice, String emailManager) {
+    public Field(String id, FieldData data) {
         this.id = id;
-        this.fieldName = fieldName;
-        this.address = address;
-        this.city = city;
-        this.surface = surface;
-        this.openingHours = new EnumMap<>(openingHours);
-        this.indoor = indoor;
-        this.hourlyPrice = hourlyPrice;
-        this.emailManager = emailManager;
+        this.fieldName = data.fieldName();
+        this.address = data.address();
+        this.city = data.city();
+        this.surface = data.surface();
+        this.openingHours = new EnumMap<>(data.openingHours());
+        this.indoor = data.indoor();
+        this.hourlyPrice = data.hourlyPrice();
+        this.emailManager = data.emailManager();
     }
 
     public String getId() {
