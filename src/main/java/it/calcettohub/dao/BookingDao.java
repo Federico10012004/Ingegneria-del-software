@@ -10,8 +10,8 @@ import java.util.List;
 public interface BookingDao {
     List<TimeRange> findByFieldAndDate(String fieldId, LocalDate date);
     void add(Booking booking);
-    public void cancellation(String code);
-    public Booking findByCode(String code);
-    public List<BookingView> findPlayerBookings(String playerEmail);
-    public List<BookingView> findManagerBookings(String fieldManagerEmail);
+    void cancellation(String code);
+    Booking findByCode(String code);
+    List<BookingView> findPlayerBookings(String playerEmail);
+    List<BookingView> findManagerBookings(String fieldManagerEmail);
 }
