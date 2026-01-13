@@ -57,13 +57,22 @@ public class ValidationUtils {
         if (street.isEmpty() || civic.isEmpty()) return false;
 
         boolean hasLetter = false;
+
         for (int i = 0; i < street.length(); i++) {
             char c = street.charAt(i);
-            if (Character.isLetter(c)) { hasLetter = true; continue; }
-            if (c == ' ' || c == '.' || c == '\'' || c == '-') continue;
-            return false;
+
+            if (!(c == ' ' || c == '.' || c == '\'' || c == '-')) {
+                if (Character.isLetter(c)) {
+                    hasLetter = true;
+                } else {
+                    return false;
+                }
+            }
         }
+
         if (!hasLetter) return false;
+
+
 
         return isValidCivic(civic);
     }

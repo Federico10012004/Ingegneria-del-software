@@ -49,14 +49,7 @@ public class ManageBookingsCli extends CliContext {
                 int choice = requestIntInRange("Selezione: ", 1, max);
 
                 switch (choice) {
-                    case 1 -> {
-                        if (filteredBookings.isEmpty()) {
-                            print("Nessuna prenotazione trovata. Non è possibile effettuare una disdetta.");
-                            requestString("Premi INVIO per tornare indietro");
-                        } else {
-                            cancelBooking();
-                        }
-                    }
+                    case 1 -> cancelBooking();
                     case 2 -> searchByFieldName();
                     case 3 -> fieldFilter = "";
                     default -> throw new IllegalStateException("Scelata non valida" + choice);
