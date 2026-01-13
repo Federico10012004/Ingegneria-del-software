@@ -1,3 +1,5 @@
+package controllerTest;
+
 import it.calcettohub.bean.LoginBean;
 import it.calcettohub.controller.LoginController;
 import it.calcettohub.exceptions.EmailNotFoundException;

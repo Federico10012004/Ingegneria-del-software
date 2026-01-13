@@ -1,3 +1,5 @@
+package controllerTest;
+
 import it.calcettohub.bean.RegisterPlayerBean;
 import it.calcettohub.controller.RegistrationController;
 import it.calcettohub.dao.PlayerDao;
