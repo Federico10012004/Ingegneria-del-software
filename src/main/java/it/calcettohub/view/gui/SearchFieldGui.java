@@ -290,7 +290,7 @@ public class SearchFieldGui extends BaseFormerGui {
 
             double y = nodeBounds.getMinY();
             double v = y / (contentHeight - viewportHeight);
-            v = Math.max(0, Math.min(1, v));
+            v = Math.clamp(v, 0.0, 1.0);
 
             scrollPane.setVvalue(v);
         });

@@ -42,18 +42,7 @@ public class ManageBookingsCli extends CliContext {
             printEscInfo();
             System.out.println();
 
-            if (fieldFilter.isBlank()) {
-                showMenu(
-                        MENU_CANCEL_BOOKING,
-                        MENU_SEARCH_BY_FIELD
-                );
-            } else {
-                showMenu(
-                        MENU_CANCEL_BOOKING,
-                        MENU_SEARCH_BY_FIELD,
-                        MENU_CLEAR_FILTER
-                );
-            }
+            showActions();
 
             try {
                 int max = fieldFilter.isBlank() ? 2 : 3;
@@ -81,6 +70,21 @@ public class ManageBookingsCli extends CliContext {
                 expiredSession();
                 return;
             }
+        }
+    }
+
+    private void showActions() {
+        if (fieldFilter.isBlank()) {
+            showMenu(
+                    MENU_CANCEL_BOOKING,
+                    MENU_SEARCH_BY_FIELD
+            );
+        } else {
+            showMenu(
+                    MENU_CANCEL_BOOKING,
+                    MENU_SEARCH_BY_FIELD,
+                    MENU_CLEAR_FILTER
+            );
         }
     }
 
@@ -137,22 +141,27 @@ public class ManageBookingsCli extends CliContext {
         printTitle(MENU_CANCEL_BOOKING);
         showNumberedBookings();
 
-        while (true) {
-            try {
-                int choice = requestIntInRange("Seleziona prenotazione da disdire: ", 1, filteredBookings.size());
-                BookingView selected = filteredBookings.get(choice - 1);
+        if (filteredBookings.isEmpty()) {
+            print("Nessuna prenotazione trovata. Non è possibile effettuare una disdetta.");
+            requestString("Premi INVIO per tornare indietro");
+        } else {
+            while (true) {
+                try {
+                    int choice = requestIntInRange("Seleziona prenotazione da disdire: ", 1, filteredBookings.size());
+                    BookingView selected = filteredBookings.get(choice - 1);
 
-                CancelBookingBean bean = new CancelBookingBean();
-                validateBeanField(() -> bean.setBookingCode(selected.code()));
-                validateBeanField(() -> bean.setReason(requestString("Inserisci motivo della disdetta: ")));
+                    CancelBookingBean bean = new CancelBookingBean();
+                    validateBeanField(() -> bean.setBookingCode(selected.code()));
+                    validateBeanField(() -> bean.setReason(requestString("Inserisci motivo della disdetta: ")));
 
-                controller.cancelBooking(bean);
-                clearScreen();
-                print("Prenotazione disdetta con successo.");
+                    controller.cancelBooking(bean);
+                    clearScreen();
+                    print("Prenotazione disdetta con successo.");
 
-                return;
-            } catch (IllegalArgumentException | BookingNotCancelableException e) {
-                showExceptionMessage(e);
+                    return;
+                } catch (IllegalArgumentException | BookingNotCancelableException e) {
+                    showExceptionMessage(e);
+                }
             }
         }
     }

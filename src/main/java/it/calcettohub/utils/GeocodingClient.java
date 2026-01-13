@@ -3,6 +3,7 @@ package it.calcettohub.utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -46,7 +47,6 @@ public class GeocodingClient {
                     .uri(URI.create(url))
                     .header("User-Agent", "CalcettoHub/1.0 (university project)")
                     .header("Accept", "application/json")
-                    // .header("Referer", "https://your-app.example") // opzionale
                     .GET()
                     .build();
 
@@ -72,15 +72,19 @@ public class GeocodingClient {
             double lon = first.get("lon").asDouble();
 
             return Optional.of(new double[]{lat, lon});
-        } catch (InterruptedException ie) {
+        } catch (InterruptedException _) {
             Thread.currentThread().interrupt();
             return Optional.empty();
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            System.out.println("GEOCODE IO ERROR [" + q + "]: " + ioe.getMessage());
+            return Optional.empty();
+        } catch (IllegalArgumentException iae) {
+            System.out.println("GEOCODE BAD URL [" + q + "]: " + iae.getMessage());
             return Optional.empty();
         }
     }
 
-    private HttpResponse<String> sendWithThrottle(HttpRequest req) throws Exception {
+    private HttpResponse<String> sendWithThrottle(HttpRequest req) throws IOException, InterruptedException {
         throttle();
         return http.send(req, HttpResponse.BodyHandlers.ofString());
     }
