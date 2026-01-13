@@ -5,6 +5,7 @@ import it.calcettohub.bean.SearchFieldBean;
 import it.calcettohub.dao.FieldDao;
 import it.calcettohub.dao.abstractfactory.DaoFactory;
 import it.calcettohub.model.Field;
+import it.calcettohub.model.valueobject.FieldData;
 import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.model.SurfaceType;
 import it.calcettohub.model.User;
@@ -39,7 +40,7 @@ public class FieldController {
         boolean indoor = bean.isIndoor();
         BigDecimal price = bean.getHourlyPrice();
 
-        Field field = new Field(fieldName, address, city, surfaceType, openingHours, indoor, price, user.getEmail());
+        Field field = new Field(new FieldData(fieldName, address, city, surfaceType, openingHours, indoor, price, user.getEmail()));
 
         dao.add(field);
     }

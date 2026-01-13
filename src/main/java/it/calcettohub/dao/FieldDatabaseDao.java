@@ -6,6 +6,7 @@ import it.calcettohub.dao.columns.FieldColumns;
 import it.calcettohub.exceptions.ObjectNotFoundException;
 import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.model.Field;
+import it.calcettohub.model.valueobject.FieldData;
 import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.model.SurfaceType;
 import it.calcettohub.utils.DatabaseConnection;
@@ -185,7 +186,7 @@ public class FieldDatabaseDao implements FieldDao {
                 openingHours.put(dow, new TimeRange(open, close));
             } while (rs.next());
 
-            return new Field(id, fieldName, address, city, surface, openingHours, indoor, hourlyPrice, manager);
+            return new Field(id, new FieldData(fieldName, address, city, surface, openingHours, indoor, hourlyPrice, manager));
         } catch (SQLException e) {
             throw new PersistenceException("Errore nella ricerca del campo", e);
         }
