@@ -8,7 +8,9 @@ public class FreeSlotsBean {
     private String fieldId;
     private LocalDate date;
 
-    public FreeSlotsBean() {}
+    public FreeSlotsBean() {
+        // empty
+    }
 
     public String getFieldId() {
         return fieldId;
