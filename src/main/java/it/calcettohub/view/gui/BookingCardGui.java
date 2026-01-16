@@ -1,6 +1,6 @@
 package it.calcettohub.view.gui;
 
-import it.calcettohub.model.valueobject.BookingView;
+import it.calcettohub.bean.BookingViewBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,12 +13,12 @@ public class BookingCardGui {
     @FXML private Label statusLabel;
     @FXML private Button cancelButton;
 
-    public void setData(BookingView booking, Runnable onCancel) {
-        fieldNameLabel.setText(booking.fieldName());
-        dateLabel.setText(booking.slot().date().toString());
-        startTimeLabel.setText(booking.slot().start().toLocalTime().toString());
-        endTimeLabel.setText(booking.slot().end().toLocalTime().toString());
-        statusLabel.setText(booking.status().toString());
+    public void setData(BookingViewBean booking, Runnable onCancel) {
+        fieldNameLabel.setText(booking.getBvFieldName());
+        dateLabel.setText(booking.getBvDate().toString());
+        startTimeLabel.setText(booking.getBvStart().toString());
+        endTimeLabel.setText(booking.getBvEnd().toString());
+        statusLabel.setText(booking.getBvStatus());
 
         cancelButton.setOnAction(_ -> onCancel.run());
     }

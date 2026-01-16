@@ -2,10 +2,10 @@ package it.calcettohub.view.gui;
 
 import com.gluonhq.maps.MapPoint;
 import com.gluonhq.maps.MapView;
+import it.calcettohub.bean.FieldMapBean;
+import it.calcettohub.bean.GetFieldBean;
 import it.calcettohub.bean.SearchFieldBean;
 import it.calcettohub.controller.FieldController;
-import it.calcettohub.model.Field;
-import it.calcettohub.model.valueobject.FieldMapItem;
 import it.calcettohub.utils.AppContext;
 import it.calcettohub.utils.GeocodingClient;
 import javafx.application.Platform;
@@ -83,9 +83,9 @@ public class SearchFieldGui extends BaseFormerGui {
                         }
 
                         setMarkerHighlighted(newId, true);
-                        FieldMapItem it = fieldsLayer.getItem(newId);
-                        if (it != null && it.lat() != null && it.lon() != null) {
-                            mapView.setCenter(new MapPoint(it.lat(), it.lon()));
+                        FieldMapBean fmb = fieldsLayer.getItem(newId);
+                        if (fmb != null && fmb.getLat() != null && fmb.getLon() != null) {
+                            mapView.setCenter(new MapPoint(fmb.getLat(), fmb.getLon()));
                         }
                     }
         });
@@ -122,7 +122,7 @@ public class SearchFieldGui extends BaseFormerGui {
         }
 
         setNodeVisibility(errorLabel, false);
-        Task<List<Field>> task = getTask(bean);
+        Task<List<GetFieldBean>> task = getTask(bean);
         new Thread(task, "search-fields").start();
     }
 
@@ -136,15 +136,15 @@ public class SearchFieldGui extends BaseFormerGui {
         loading.setManaged(on);
     }
 
-    private Task<List<Field>> getTask(SearchFieldBean bean) {
-        Task<List<Field>> task = new Task<>() {
-            @Override protected List<Field> call() {
+    private Task<List<GetFieldBean>> getTask(SearchFieldBean bean) {
+        Task<List<GetFieldBean>> task = new Task<>() {
+            @Override protected List<GetFieldBean> call() {
                 return fieldController.searchField(bean);
             }
         };
 
         task.setOnSucceeded(_ -> {
-            List<Field> fields = task.getValue();
+            List<GetFieldBean> fields = task.getValue();
             renderCards(fields);
 
             if (fields.isEmpty()) {
@@ -154,7 +154,7 @@ public class SearchFieldGui extends BaseFormerGui {
                 return;
             }
 
-            Task<List<FieldMapItem>> geoTask = getGeocodeTask(fields);
+            Task<List<FieldMapBean>> geoTask = getGeocodeTask(fields);
             new Thread(geoTask, "geocode-fields").start();
         });
 
@@ -166,17 +166,17 @@ public class SearchFieldGui extends BaseFormerGui {
         return task;
     }
 
-    private Task<List<FieldMapItem>> getGeocodeTask(List<Field> fields) {
+    private Task<List<FieldMapBean>> getGeocodeTask(List<GetFieldBean> fields) {
         return new Task<>() {
-            @Override protected List<FieldMapItem> call() {
+            @Override protected List<FieldMapBean> call() {
                 return fields.stream()
                         .map(SearchFieldGui.this::toMapItem)   // geocoding qui
-                        .filter(mi -> mi.lat() != null && mi.lon() != null)
+                        .filter(mb -> mb.getLat() != null && mb.getLon() != null)
                         .toList();
             }
 
             @Override protected void succeeded() {
-                List<FieldMapItem> items = getValue();
+                List<FieldMapBean> items = getValue();
                 fieldsLayer.setItems(items);
 
                 int total = fields.size();
@@ -198,8 +198,8 @@ public class SearchFieldGui extends BaseFormerGui {
                 }
 
                 if (!items.isEmpty()) {
-                    FieldMapItem first = items.getFirst();
-                    mapView.setCenter(new MapPoint(first.lat(), first.lon()));
+                    FieldMapBean first = items.getFirst();
+                    mapView.setCenter(new MapPoint(first.getLat(), first.getLon()));
                     mapView.setZoom(13);
                 }
 
@@ -214,21 +214,21 @@ public class SearchFieldGui extends BaseFormerGui {
         };
     }
 
-    private FieldMapItem toMapItem(Field f) {
-        String query = buildQuery(f);
+    private FieldMapBean toMapItem(GetFieldBean fb) {
+        String query = buildQuery(fb);
 
         var opt = geocodingClient.geocode(query);
         if (opt.isEmpty()) {
-            return new FieldMapItem(f.getId(), f.getFieldName(), f.getAddress(), f.getCity(), null, null);
+            return new FieldMapBean(fb.getFieldId(), fb.getFieldName(), fb.getAddress(), fb.getCity(), null, null);
         }
 
         double[] latlon = opt.get();
-        return new FieldMapItem(f.getId(), f.getFieldName(), f.getAddress(), f.getCity(), latlon[0], latlon[1]);
+        return new FieldMapBean(fb.getFieldId(), fb.getFieldName(), fb.getAddress(), fb.getCity(), latlon[0], latlon[1]);
     }
 
-    private String buildQuery(Field f) {
-        String a = f.getAddress() == null ? "" : f.getAddress().trim();
-        String c = f.getCity() == null ? "" : f.getCity().trim();
+    private String buildQuery(GetFieldBean fb) {
+        String a = fb.getAddress() == null ? "" : fb.getAddress().trim();
+        String c = fb.getCity() == null ? "" : fb.getCity().trim();
 
         String q = (a + ", " + c).trim();
         if (q.startsWith(",")) q = q.substring(1).trim();
@@ -236,22 +236,22 @@ public class SearchFieldGui extends BaseFormerGui {
         return q;
     }
 
-    private void renderCards(List<Field> fields) {
+    private void renderCards(List<GetFieldBean> fields) {
         fieldsList.getChildren().clear();
         cardCtrlById.clear();
         selectedFieldId.set(null);
 
-        for (Field field : fields) {
+        for (GetFieldBean fieldBean : fields) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FieldSelectionCard.fxml"));
 
             try {
                 Node fieldCard = loader.load();
 
                 FieldSelectionCardGui cardController = loader.getController();
-                cardController.setData(field, () -> selectedFieldId.set(field.getId()));
+                cardController.setData(fieldBean, () -> selectedFieldId.set(fieldBean.getFieldId()));
 
                 fieldsList.getChildren().add(fieldCard);
-                cardCtrlById.put(field.getId(), cardController);
+                cardCtrlById.put(fieldBean.getFieldId(), cardController);
             } catch (IOException _) {
                 System.err.println("Errore nel caricamento del file fxml");
                 return;

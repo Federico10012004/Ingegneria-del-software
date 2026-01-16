@@ -1,12 +1,11 @@
 package it.calcettohub.view.gui;
 
+import it.calcettohub.bean.BookingViewBean;
 import it.calcettohub.bean.CancelBookingBean;
 import it.calcettohub.controller.BookingController;
 import it.calcettohub.exceptions.BookingNotCancelableException;
 import it.calcettohub.exceptions.PersistenceException;
 import it.calcettohub.exceptions.UnexpectedRoleException;
-import it.calcettohub.model.Role;
-import it.calcettohub.model.valueobject.BookingView;
 import it.calcettohub.utils.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,9 +36,9 @@ public class ManageBookingsGui extends BaseFormerGui {
     @FXML StackPane bookingView;
     @FXML ScrollPane scrollPane;
 
-    private List<BookingView> bookings;
+    private List<BookingViewBean> bookings;
     private final BookingController controller = new BookingController();
-    private BookingView bookingToCancel;
+    private BookingViewBean bookingToCancel;
 
     @FXML
     private void initialize() {
@@ -82,10 +81,10 @@ public class ManageBookingsGui extends BaseFormerGui {
         }
     }
 
-    private void bookingsView(List<BookingView> bookings) {
+    private void bookingsView(List<BookingViewBean> bookings) {
         bookingsContainer.getChildren().clear();
 
-        for (BookingView booking : bookings) {
+        for (BookingViewBean booking : bookings) {
             Node bookingCard = createBookingCard(booking);
             if (bookingCard != null) {
                 bookingsContainer.getChildren().add(bookingCard);
@@ -93,7 +92,7 @@ public class ManageBookingsGui extends BaseFormerGui {
         }
     }
 
-    private Node createBookingCard(BookingView booking) {
+    private Node createBookingCard(BookingViewBean booking) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BookingCard.fxml"));
 
         try {
@@ -109,7 +108,7 @@ public class ManageBookingsGui extends BaseFormerGui {
         }
     }
 
-    private void openCancelReason(BookingView booking) {
+    private void openCancelReason(BookingViewBean booking) {
         bookingToCancel = booking;
 
         reasonTextField.clear();
@@ -143,7 +142,7 @@ public class ManageBookingsGui extends BaseFormerGui {
         CancelBookingBean bean = new CancelBookingBean();
 
         try {
-            validateField(() -> bean.setBookingCode(bookingToCancel.code()));
+            validateField(() -> bean.setBookingCode(bookingToCancel.getBvCode()));
             validateField(() -> bean.setReason(reasonTextField.getText().trim()));
 
             controller.cancelBooking(bean);
@@ -174,8 +173,8 @@ public class ManageBookingsGui extends BaseFormerGui {
 
         String lowerQuery = query.toLowerCase();
 
-        List<BookingView> filtered = bookings.stream()
-                .filter(bv -> bv.fieldName().toLowerCase().startsWith(lowerQuery))
+        List<BookingViewBean> filtered = bookings.stream()
+                .filter(bv -> bv.getBvFieldName().toLowerCase().startsWith(lowerQuery))
                 .toList();
 
         bookingsView(filtered);
@@ -191,9 +190,7 @@ public class ManageBookingsGui extends BaseFormerGui {
 
     @FXML
     private void backToHome() {
-        Role role = SessionManager.getInstance().getLoggedUser().getRole();
-
-        switch(role) {
+        switch(SessionManager.getInstance().getLoggedUser().getRole()) {
             case PLAYER -> switchTo("Home Player");
             case FIELDMANAGER -> switchTo("Home Field Manager");
             default -> throw new UnexpectedRoleException("Ruolo inatteso");

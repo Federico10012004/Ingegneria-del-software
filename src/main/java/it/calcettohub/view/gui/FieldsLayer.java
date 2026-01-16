@@ -1,7 +1,7 @@
 package it.calcettohub.view.gui;
 
 import com.gluonhq.maps.MapLayer;
-import it.calcettohub.model.valueobject.FieldMapItem;
+import it.calcettohub.bean.FieldMapBean;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 public class FieldsLayer extends MapLayer {
 
-    private final Map<String, FieldMapItem> itemById = new HashMap<>();
+    private final Map<String, FieldMapBean> itemById = new HashMap<>();
     private final Map<String, Node> markerById = new HashMap<>();
     private final Consumer<String> onSelect;
 
@@ -32,21 +32,21 @@ public class FieldsLayer extends MapLayer {
         markDirty();
     }
 
-    public void setItems(List<FieldMapItem> items) {
+    public void setItems(List<FieldMapBean> items) {
         getChildren().clear();
         itemById.clear();
         markerById.clear();
 
-        for (FieldMapItem it : items) {
-            if (it.lat() == null || it.lon() == null) continue;
+        for (FieldMapBean fmb : items) {
+            if (fmb.getLat() == null || fmb.getLon() == null) continue;
 
-            itemById.put(it.id(), it);
+            itemById.put(fmb.getFieldId(), fmb);
 
             Circle marker = new Circle(7);
             marker.getStyleClass().add("marker");
-            marker.setOnMouseClicked(_ -> onSelect.accept(it.id()));
+            marker.setOnMouseClicked(_ -> onSelect.accept(fmb.getFieldId()));
 
-            markerById.put(it.id(), marker);
+            markerById.put(fmb.getFieldId(), marker);
             getChildren().add(marker);
         }
 
@@ -57,17 +57,17 @@ public class FieldsLayer extends MapLayer {
         return markerById.get(fieldId);
     }
 
-    public FieldMapItem getItem(String fieldId) {
+    public FieldMapBean getItem(String fieldId) {
         return itemById.get(fieldId);
     }
 
     @Override
     protected void layoutLayer() {
-        for (FieldMapItem it : itemById.values()) {
-            Node marker = markerById.get(it.id());
+        for (FieldMapBean fmb : itemById.values()) {
+            Node marker = markerById.get(fmb.getFieldId());
             if (marker == null) continue;
 
-            Point2D p = getMapPoint(it.lat(), it.lon());
+            Point2D p = getMapPoint(fmb.getLat(), fmb.getLon());
 
             marker.setTranslateX(p.getX());
             marker.setTranslateY(p.getY());

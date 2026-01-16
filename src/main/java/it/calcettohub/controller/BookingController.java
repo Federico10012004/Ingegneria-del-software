@@ -1,8 +1,6 @@
 package it.calcettohub.controller;
 
-import it.calcettohub.bean.BookingBean;
-import it.calcettohub.bean.CancelBookingBean;
-import it.calcettohub.bean.FreeSlotsBean;
+import it.calcettohub.bean.*;
 import it.calcettohub.dao.BookingDao;
 import it.calcettohub.dao.FieldDao;
 import it.calcettohub.dao.NotificationDao;
@@ -24,6 +22,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingController {
@@ -31,7 +30,7 @@ public class BookingController {
     private final FieldDao fieldDao = DaoFactory.getInstance().getFieldDao();
     private final NotificationDao notificationDao = DaoFactory.getInstance().getNotificationDao();
 
-    public List<TimeRange> getFreeSlots(FreeSlotsBean bean) {
+    public List<SlotBean> getFreeSlots(FreeSlotsBean bean) {
         String fieldId = bean.getFieldId();
         LocalDate date = bean.getDate();
 
@@ -62,7 +61,12 @@ public class BookingController {
             throw new SlotNotAvailableException("Nessuno slot disponibile per la data inserita.");
         }
 
-        return freeSlots;
+        List<SlotBean> slots = new ArrayList<>();
+        for (TimeRange tr : freeSlots) {
+            SlotBean slotBean = new SlotBean(tr.start(), tr.end());
+            slots.add(slotBean);
+        }
+        return slots;
     }
 
     private LocalDateTime nextSlotStart(LocalDate date, LocalTime openingStart, LocalDateTime now) {
@@ -78,8 +82,10 @@ public class BookingController {
 
     public void fieldBooking(BookingBean bean) {
         String fieldId = bean.getFieldId();
-        DateTimeRange slot = bean.getSlot();
-        LocalDate date = slot.date();
+        LocalDate date = bean.getDate();
+        LocalTime start = bean.getStart();
+        LocalTime end = bean.getEnd();
+        DateTimeRange slot = new DateTimeRange(date.atTime(start), date.atTime(end));
 
         Field field = fieldDao.findById(fieldId);
 
@@ -103,18 +109,43 @@ public class BookingController {
                 NotificationMessages.bookingCreatedMessage(field.getFieldName(), slot, playerEmail)));
     }
 
-    public List<BookingView> showBookings() {
+    public List<BookingViewBean> showBookings() {
         User user = SessionManager.getInstance().getLoggedUser();
+
+        List<BookingViewBean> results = new ArrayList<>();
 
         switch (user.getRole()) {
             case PLAYER -> {
-                return bookingDao.findPlayerBookings(user.getEmail());
+                List<BookingView> playerBookings = bookingDao.findPlayerBookings(user.getEmail());
+                for (BookingView bv : playerBookings) {
+                    BookingViewBean bvBean = toBean(bv);
+                    results.add(bvBean);
+                }
+
+                return results;
             }
             case FIELDMANAGER -> {
-                return bookingDao.findManagerBookings(user.getEmail());
+                List<BookingView> fieldManagerBookings = bookingDao.findManagerBookings(user.getEmail());
+                for (BookingView bv : fieldManagerBookings) {
+                    BookingViewBean bvBean = toBean(bv);
+                    results.add(bvBean);
+                }
+
+                return results;
             }
             default -> throw new UnexpectedRoleException("Ruolo inatteso.");
         }
+    }
+
+    private BookingViewBean toBean(BookingView bv) {
+        return new BookingViewBean(
+                bv.code(),
+                bv.fieldName(),
+                bv.slot().date(),
+                bv.slot().start().toLocalTime(),
+                bv.slot().end().toLocalTime(),
+                bv.status().toString()
+        );
     }
 
     public void cancelBooking(CancelBookingBean bean) {

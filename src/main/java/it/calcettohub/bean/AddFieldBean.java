@@ -1,6 +1,5 @@
 package it.calcettohub.bean;
 
-import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.model.SurfaceType;
 import it.calcettohub.utils.ValidationUtils;
 
@@ -10,16 +9,16 @@ import java.time.LocalTime;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class FieldBean {
+public class AddFieldBean {
     private String fieldName;
     private String address;
     private String city;
     private SurfaceType surface;
-    private Map<DayOfWeek, TimeRange> openingHours;
+    private Map<DayOfWeek, SlotBean> openingHours;
     private boolean indoor;
     private BigDecimal hourlyPrice;
 
-    public FieldBean() {
+    public AddFieldBean() {
         //empty
     }
 
@@ -63,30 +62,31 @@ public class FieldBean {
         return surface;
     }
 
-    public void setSurface(SurfaceType surface) {
-        if (ValidationUtils.isNotNull(surface)) {
-            this.surface = surface;
+    public void setSurface(String surface) {
+        SurfaceType surfaceType = SurfaceType.fromString(surface);
+        if (ValidationUtils.isNotNull(surfaceType)) {
+            this.surface = surfaceType;
         } else {
             throw new IllegalArgumentException("Tipo di superficie non valida");
         }
     }
 
-    public Map<DayOfWeek, TimeRange> getOpeningHours() {
+    public Map<DayOfWeek, SlotBean> getOpeningHours() {
         return openingHours;
     }
 
-    public void setOpeningHours(Map<DayOfWeek, TimeRange> openingHours) {
+    public void setOpeningHours(Map<DayOfWeek, SlotBean> openingHours) {
         if (openingHours == null || openingHours.isEmpty()) {
             throw new IllegalArgumentException("Inserisci almeno un giorno di apertura");
         }
         for (var entry : openingHours.entrySet()) {
-            TimeRange tr = entry.getValue();
-            if (tr == null) {
+            SlotBean slotBean = entry.getValue();
+            if (slotBean == null) {
                 throw new IllegalArgumentException("Orari di apertura/chiusura campo non inseriti.");
             }
 
-            LocalTime open = tr.start();
-            LocalTime close = tr.end();
+            LocalTime open = slotBean.getStart();
+            LocalTime close = slotBean.getEnd();
 
             if (open == null || close == null) {
                 throw new IllegalArgumentException("Orari di apertura/chiusura mancanti.");

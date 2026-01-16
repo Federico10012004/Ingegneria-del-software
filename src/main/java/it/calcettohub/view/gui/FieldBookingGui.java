@@ -2,9 +2,9 @@ package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.BookingBean;
 import it.calcettohub.bean.FreeSlotsBean;
+import it.calcettohub.bean.SlotBean;
 import it.calcettohub.controller.BookingController;
 import it.calcettohub.exceptions.SlotNotAvailableException;
-import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.utils.AppContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,7 +25,7 @@ public class FieldBookingGui extends BaseFormerGui {
     private final String fieldId = AppContext.getFieldId();
     private final BookingController controller = new BookingController();
     private final ToggleGroup slotGroup = new ToggleGroup();
-    private TimeRange selectedSlot;
+    private SlotBean selectedSlot;
     private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern("HH:mm");
 
     @FXML
@@ -46,7 +46,7 @@ public class FieldBookingGui extends BaseFormerGui {
         setNodeVisibility(bookingButton, false);
 
         slotGroup.selectedToggleProperty().addListener((_, _, val) -> {
-            selectedSlot = (val == null) ? null : (TimeRange) val.getUserData();
+            selectedSlot = (val == null) ? null : (SlotBean) val.getUserData();
             setNodeVisibility(bookingButton, selectedSlot != null);
         });
     }
@@ -58,7 +58,7 @@ public class FieldBookingGui extends BaseFormerGui {
             validateField(() -> bean.setFieldId(fieldId));
             validateField(() -> bean.setDate(dateField.getValue()));
 
-            List<TimeRange> freeSlots = controller.getFreeSlots(bean);
+            List<SlotBean> freeSlots = controller.getFreeSlots(bean);
 
             showFreeSlots(freeSlots);
             setNodeVisibility(slotLabel, true);
@@ -69,19 +69,19 @@ public class FieldBookingGui extends BaseFormerGui {
         }
     }
 
-    private void showFreeSlots(List<TimeRange> slots) {
+    private void showFreeSlots(List<SlotBean> slots) {
         slotsPane.getChildren().clear();
         slotGroup.getToggles().clear();
         selectedSlot = null;
         setNodeVisibility(bookingButton, false);
 
-        for (TimeRange slot : slots) {
-            String time = TIME_FMT.format(slot.start()) + " - " + TIME_FMT.format(slot.end());
+        for (SlotBean slotBean : slots) {
+            String time = TIME_FMT.format(slotBean.getStart()) + " - " + TIME_FMT.format(slotBean.getEnd());
 
             ToggleButton button = new ToggleButton(time);
             button.getStyleClass().addAll("slot-button");
             button.setToggleGroup(slotGroup);
-            button.setUserData(slot);
+            button.setUserData(slotBean);
 
             slotsPane.getChildren().add(button);
         }
@@ -92,7 +92,9 @@ public class FieldBookingGui extends BaseFormerGui {
         try {
             BookingBean bean = new BookingBean();
             validateField(() -> bean.setFieldId(fieldId));
-            validateField(() -> bean.setSlot(selectedSlot.onDate(dateField.getValue())));
+            validateField(() -> bean.setDate(dateField.getValue()));
+            validateField(() -> bean.setStart(selectedSlot.getStart()));
+            validateField(() -> bean.setEnd(selectedSlot.getEnd()));
 
             controller.fieldBooking(bean);
             showInfo("Prenotazione effettuata con successo");

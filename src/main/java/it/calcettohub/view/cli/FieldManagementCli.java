@@ -1,12 +1,11 @@
 package it.calcettohub.view.cli;
 
-import it.calcettohub.bean.FieldBean;
+import it.calcettohub.bean.AddFieldBean;
+import it.calcettohub.bean.GetFieldBean;
+import it.calcettohub.bean.SlotBean;
 import it.calcettohub.controller.FieldController;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
-import it.calcettohub.model.Field;
-import it.calcettohub.model.valueobject.TimeRange;
-import it.calcettohub.model.SurfaceType;
 import it.calcettohub.utils.PageManager;
 
 import java.math.BigDecimal;
@@ -22,7 +21,7 @@ import java.util.Map;
 
 public class FieldManagementCli extends CliContext {
     private final FieldController controller = new FieldController();
-    private List<Field> filteredFields;
+    private List<GetFieldBean> filteredFields;
     private String nameFilter = "";
 
     public void start() {
@@ -91,7 +90,7 @@ public class FieldManagementCli extends CliContext {
     }
 
     private void refreshFields() {
-        List<Field> allFields = controller.getFields();
+        List<GetFieldBean> allFields = controller.getFields();
         filteredFields = applyNameFilter(allFields, nameFilter);
 
         if (allFields.isEmpty()) {
@@ -104,13 +103,13 @@ public class FieldManagementCli extends CliContext {
         }
     }
 
-    private List<Field> applyNameFilter(List<Field> base, String query) {
+    private List<GetFieldBean> applyNameFilter(List<GetFieldBean> base, String query) {
         if (query == null || query.isBlank()) return base;
 
         String lower = query.trim().toLowerCase();
         return base.stream()
-                .filter(f -> f.getFieldName() != null &&
-                        f.getFieldName().toLowerCase().startsWith(lower))
+                .filter(b -> b.getFieldName() != null &&
+                        b.getFieldName().toLowerCase().startsWith(lower))
                 .toList();
     }
 
@@ -124,7 +123,7 @@ public class FieldManagementCli extends CliContext {
 
     private void showFields(boolean numbered) {
         for (int i = 0; i < filteredFields.size(); i++) {
-            Field f = filteredFields.get(i);
+            GetFieldBean f = filteredFields.get(i);
 
             if (numbered) {
                 print((i+1) + ") " + f.getFieldName());
@@ -134,7 +133,7 @@ public class FieldManagementCli extends CliContext {
 
             print(f.getAddress());
             print(f.getCity());
-            print(f.getSurfaceType().toString());
+            print(f.getSurface());
             print(f.isIndoor() ? "Indoor: si" : "Indoor: no");
             print(f.getHourlyPrice().toString());
             print("-----------------------");
@@ -142,7 +141,7 @@ public class FieldManagementCli extends CliContext {
     }
 
     private void addFields() {
-        FieldBean bean = new FieldBean();
+        AddFieldBean bean = new AddFieldBean();
 
         while (true) {
             printTitle("Inserisci dati campo");
@@ -151,7 +150,7 @@ public class FieldManagementCli extends CliContext {
                 validateBeanField(() -> bean.setFieldName(requestString("Nome del campo: ")));
                 validateBeanField(() -> bean.setAddress(requestString("Indirizzo campo: ")));
                 validateBeanField(() -> bean.setCity(requestString("Città/Paese: ")));
-                validateBeanField(() -> bean.setSurface(SurfaceType.fromString(requestString("Tipo di superficie: "))));
+                validateBeanField(() -> bean.setSurface(requestString("Tipo di superficie: ")));
                 validateBeanField(() -> bean.setIndoor(requestBoolean("Indoor (s/n): ")));
 
                 String raw = requestString("Inserisci prezzo orario (massimo due cifre decimali): ");
@@ -186,9 +185,9 @@ public class FieldManagementCli extends CliContext {
             while (true) {
                 try {
                     int choice = requestIntInRange("Seleziona campo da eliminare: ", 1, filteredFields.size());
-                    Field selected = filteredFields.get(choice - 1);
+                    GetFieldBean selected = filteredFields.get(choice - 1);
 
-                    controller.delete(selected.getId());
+                    controller.delete(selected.getFieldId());
 
                     clearScreen();
                     print("Campo eliminato con successo.");
@@ -207,8 +206,8 @@ public class FieldManagementCli extends CliContext {
         nameFilter = requestString("Inserisci nome (o prefisso) da cercare: ").trim();
     }
 
-    private Map<DayOfWeek, TimeRange> requestOpeningHours() {
-        EnumMap<DayOfWeek, TimeRange> openingHours = new EnumMap<>(DayOfWeek.class);
+    private Map<DayOfWeek, SlotBean> requestOpeningHours() {
+        EnumMap<DayOfWeek, SlotBean> openingHours = new EnumMap<>(DayOfWeek.class);
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
 
         print("Inserisci gli orari per ogni giorno (formato HH:mm). Premi INVIO per segnare il giorno come CHIUSO.");
@@ -217,7 +216,7 @@ public class FieldManagementCli extends CliContext {
             String dayItalian = day.getDisplayName(TextStyle.FULL, Locale.ITALIAN);
             dayItalian = dayItalian.substring(0, 1).toUpperCase(Locale.ITALIAN) + dayItalian.substring(1);
 
-            TimeRange openingTime = readOpeningTimeForDay(dayItalian, time);
+            SlotBean openingTime = readOpeningTimeForDay(dayItalian, time);
 
             if (openingTime != null) {
                 openingHours.put(day, openingTime);
@@ -226,7 +225,7 @@ public class FieldManagementCli extends CliContext {
         return openingHours;
     }
 
-    private TimeRange readOpeningTimeForDay(String day, DateTimeFormatter fmt) {
+    private SlotBean readOpeningTimeForDay(String day, DateTimeFormatter fmt) {
         while (true) {
             String openRaw = requestString(day + " - Apertura (HH:mm, invio=chiuso): ");
 
@@ -246,7 +245,7 @@ public class FieldManagementCli extends CliContext {
                 String closeRaw = requestString(day + " - Chiusura (HH:mm): ").trim();
                 try {
                     LocalTime close = LocalTime.parse(closeRaw, fmt);
-                    return new TimeRange(open, close);
+                    return new SlotBean(open, close);
                 } catch (DateTimeParseException _) {
                     showErrorMessage("Formato chiusura non valido. Usa HH:mm (es. 18:30).");
                 }

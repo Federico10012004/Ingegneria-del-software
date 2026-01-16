@@ -1,6 +1,6 @@
 package it.calcettohub.view.gui;
 
-import it.calcettohub.model.Field;
+import it.calcettohub.bean.GetFieldBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,13 +14,13 @@ public class FieldCardGui {
     @FXML private Label priceLabel;
     @FXML private Button deleteButton;
 
-    public void setData(Field field, Runnable onDelete) {
-        nameLabel.setText(field.getFieldName());
-        addressLabel.setText(field.getAddress());
-        cityLabel.setText(field.getCity());
-        surfaceLabel.setText(field.getSurfaceType().toString());
-        indoorLabel.setText(field.isIndoor() ? "Indoor: si" : "Indoor: no");
-        priceLabel.setText(field.getHourlyPrice().toString());
+    public void setData(GetFieldBean bean, Runnable onDelete) {
+        nameLabel.setText(bean.getFieldName());
+        addressLabel.setText(bean.getAddress());
+        cityLabel.setText(bean.getCity());
+        surfaceLabel.setText(bean.getSurface());
+        indoorLabel.setText(bean.isIndoor() ? "Indoor: si" : "Indoor: no");
+        priceLabel.setText(bean.getHourlyPrice().toString());
 
         deleteButton.setOnAction(_ -> onDelete.run());
     }

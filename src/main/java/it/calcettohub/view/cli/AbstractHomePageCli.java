@@ -1,9 +1,9 @@
 package it.calcettohub.view.cli;
 
+import it.calcettohub.bean.NotificationBean;
 import it.calcettohub.controller.NotificationController;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
-import it.calcettohub.model.valueobject.Notification;
 import it.calcettohub.utils.PageManager;
 
 import java.util.List;
@@ -66,9 +66,9 @@ public abstract class AbstractHomePageCli extends CliContext {
     private void showNotifications() {
         printTitle("Notifiche");
 
-        List<Notification> notifications = controller.getNotifications();
-        for (Notification not : notifications) {
-            print(not.message());
+        List<NotificationBean> notifications = controller.getNotifications();
+        for (NotificationBean notBean : notifications) {
+            print(notBean.getMessage());
             System.out.println();
         }
 

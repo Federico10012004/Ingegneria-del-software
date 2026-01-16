@@ -1,9 +1,9 @@
 package it.calcettohub.view.gui;
 
 import it.calcettohub.bean.AccountBean;
+import it.calcettohub.bean.NotificationBean;
 import it.calcettohub.controller.AccountController;
 import it.calcettohub.controller.NotificationController;
-import it.calcettohub.model.valueobject.Notification;
 import it.calcettohub.utils.PasswordUtils;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -122,7 +122,7 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
     protected int loadNotifications() {
         notificationBox.getChildren().clear();
 
-        List<Notification> notifications = notificationController.getNotifications();
+        List<NotificationBean> notifications = notificationController.getNotifications();
         if (notifications.isEmpty()) {
             notificationBox.setAlignment(Pos.CENTER);
 
@@ -139,8 +139,8 @@ public abstract class AbstractHomePageGui extends BaseFormerGui {
 
         notificationBox.setAlignment(Pos.TOP_LEFT);
 
-        for (Notification not : notifications) {
-            Label label = new Label(not.message());
+        for (NotificationBean notBean : notifications) {
+            Label label = new Label(notBean.getMessage());
             label.getStyleClass().add("notification-item");
             label.setWrapText(true);
 

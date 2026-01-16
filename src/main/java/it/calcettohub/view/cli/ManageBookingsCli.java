@@ -1,18 +1,18 @@
 package it.calcettohub.view.cli;
 
+import it.calcettohub.bean.BookingViewBean;
 import it.calcettohub.bean.CancelBookingBean;
 import it.calcettohub.controller.BookingController;
 import it.calcettohub.exceptions.BookingNotCancelableException;
 import it.calcettohub.exceptions.EscPressedException;
 import it.calcettohub.exceptions.SessionExpiredException;
-import it.calcettohub.model.valueobject.BookingView;
 import it.calcettohub.utils.PageManager;
 
 import java.util.List;
 
 public class ManageBookingsCli extends CliContext {
     private final BookingController controller = new BookingController();
-    private List<BookingView> filteredBookings;
+    private List<BookingViewBean> filteredBookings;
     private String fieldFilter = "";
     private static final String MENU_CANCEL_BOOKING = "Disdici prenotazione";
     private static final String MENU_SEARCH_BY_FIELD = "Cerca prenotazione per nome del campo";
@@ -82,7 +82,7 @@ public class ManageBookingsCli extends CliContext {
     }
 
     private void refreshBookings() {
-        List<BookingView> allBookings = controller.showBookings();
+        List<BookingViewBean> allBookings = controller.showBookings();
         filteredBookings = applyFieldFilter(allBookings, fieldFilter);
 
         if (allBookings.isEmpty()) {
@@ -95,12 +95,12 @@ public class ManageBookingsCli extends CliContext {
         }
     }
 
-    private List<BookingView> applyFieldFilter(List<BookingView> base, String q) {
+    private List<BookingViewBean> applyFieldFilter(List<BookingViewBean> base, String q) {
         if (q == null || q.isBlank()) return base;
         String lower = q.trim().toLowerCase();
 
         return base.stream()
-                .filter(b -> b.fieldName() != null && b.fieldName().toLowerCase().startsWith(lower))
+                .filter(b -> b.getBvFieldName() != null && b.getBvFieldName().toLowerCase().startsWith(lower))
                 .toList();
     }
 
@@ -114,18 +114,18 @@ public class ManageBookingsCli extends CliContext {
 
     private void showBookings(boolean numbered) {
         for (int i = 0; i < filteredBookings.size(); i++) {
-            BookingView b = filteredBookings.get(i);
+            BookingViewBean b = filteredBookings.get(i);
 
             if (numbered) {
-                print((i+1) + ")" + b.fieldName());
+                print((i+1) + ")" + b.getBvFieldName());
             } else {
-                print(b.fieldName());
+                print(b.getBvFieldName());
             }
 
-            print(b.slot().date().toString());
-            print(b.slot().start().toLocalTime().toString());
-            print(b.slot().end().toLocalTime().toString());
-            print(b.status().toString());
+            print(b.getBvDate().toString());
+            print(b.getBvStart().toString());
+            print(b.getBvEnd().toString());
+            print(b.getBvStatus());
             print("-----------------------");
         }
     }
@@ -141,10 +141,10 @@ public class ManageBookingsCli extends CliContext {
             while (true) {
                 try {
                     int choice = requestIntInRange("Seleziona prenotazione da disdire: ", 1, filteredBookings.size());
-                    BookingView selected = filteredBookings.get(choice - 1);
+                    BookingViewBean selected = filteredBookings.get(choice - 1);
 
                     CancelBookingBean bean = new CancelBookingBean();
-                    validateBeanField(() -> bean.setBookingCode(selected.code()));
+                    validateBeanField(() -> bean.setBookingCode(selected.getBvCode()));
                     validateBeanField(() -> bean.setReason(requestString("Inserisci motivo della disdetta: ")));
 
                     controller.cancelBooking(bean);

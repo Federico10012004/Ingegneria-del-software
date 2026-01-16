@@ -1,11 +1,10 @@
 package it.calcettohub.view.gui;
 
-import it.calcettohub.bean.FieldBean;
+import it.calcettohub.bean.AddFieldBean;
+import it.calcettohub.bean.GetFieldBean;
+import it.calcettohub.bean.SlotBean;
 import it.calcettohub.controller.FieldController;
 import it.calcettohub.exceptions.PersistenceException;
-import it.calcettohub.model.Field;
-import it.calcettohub.model.valueobject.TimeRange;
-import it.calcettohub.model.SurfaceType;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,9 +74,9 @@ public class FieldManagementGui extends BaseFormerGui {
     @FXML StackPane fieldAvailability;
     @FXML ScrollPane scrollPane;
 
-    private List<Field> fields;
+    private List<GetFieldBean> fields;
     private final FieldController controller = new FieldController();
-    private FieldBean bean;
+    private AddFieldBean bean;
 
     @FXML
     private void initialize() {
@@ -152,25 +151,25 @@ public class FieldManagementGui extends BaseFormerGui {
         }
     }
 
-    private void showFields(List<Field> fields) {
+    private void showFields(List<GetFieldBean> fields) {
         fieldsContainer.getChildren().clear();
 
-        for (Field field : fields) {
-            Node fieldCard = createFieldCard(field);
+        for (GetFieldBean fieldBean : fields) {
+            Node fieldCard = createFieldCard(fieldBean);
             if (fieldCard != null) {
                 fieldsContainer.getChildren().add(fieldCard);
             }
         }
     }
 
-    private Node createFieldCard(Field field) {
+    private Node createFieldCard(GetFieldBean fieldBean) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FieldCard.fxml"));
 
         try {
             Node fieldCardNode = loader.load();
 
             FieldCardGui fxmlController = loader.getController();
-            fxmlController.setData(field, () -> deleteField(field));
+            fxmlController.setData(fieldBean, () -> deleteField(fieldBean));
 
             return fieldCardNode;
         } catch (IOException _) {
@@ -179,14 +178,14 @@ public class FieldManagementGui extends BaseFormerGui {
         }
     }
 
-    private void deleteField(Field field) {
+    private void deleteField(GetFieldBean fieldBean) {
         boolean confirm = showConfirmation(
                 "Eliminazione campo",
                 "Vuoi davvero eliminare questo campo?");
 
         if (!confirm) return;
 
-        controller.delete(field.getId());
+        controller.delete(fieldBean.getFieldId());
 
         findField();
 
@@ -205,8 +204,8 @@ public class FieldManagementGui extends BaseFormerGui {
 
         String lowerQuery = query.toLowerCase();
 
-        List<Field> filtered = fields.stream()
-                .filter(f -> f.getFieldName().toLowerCase().startsWith(lowerQuery))
+        List<GetFieldBean> filtered = fields.stream()
+                .filter(b -> b.getFieldName().toLowerCase().startsWith(lowerQuery))
                 .toList();
 
         showFields(filtered);
@@ -232,7 +231,7 @@ public class FieldManagementGui extends BaseFormerGui {
 
     @FXML
     private void showAddField() {
-        bean = new FieldBean();
+        bean = new AddFieldBean();
 
         setNodeVisibility(fieldView, false);
         setNodeVisibility(fieldInformation, true);
@@ -246,7 +245,7 @@ public class FieldManagementGui extends BaseFormerGui {
             validateField(() -> bean.setFieldName(fieldName.getText().trim()));
             validateField(() -> bean.setAddress(fieldAddress.getText().trim()));
             validateField(() -> bean.setCity(fieldCity.getText().trim()));
-            validateField(() -> bean.setSurface(SurfaceType.fromString(fieldSurface.getText().trim())));
+            validateField(() -> bean.setSurface(fieldSurface.getText().trim()));
 
             String raw = fieldPrice.getText().trim().replace(",", ".");
             BigDecimal price = new BigDecimal(raw);
@@ -329,7 +328,7 @@ public class FieldManagementGui extends BaseFormerGui {
 
     @FXML
     private void addField() {
-        EnumMap<DayOfWeek, TimeRange> openingHours = new EnumMap<>(DayOfWeek.class);
+        EnumMap<DayOfWeek, SlotBean> openingHours = new EnumMap<>(DayOfWeek.class);
 
         addDayIfOpen(openingHours, DayOfWeek.MONDAY, mondayOpen, startMonday, endMonday);
         addDayIfOpen(openingHours, DayOfWeek.TUESDAY, tuesdayOpen, startTuesday, endTuesday);
@@ -354,13 +353,13 @@ public class FieldManagementGui extends BaseFormerGui {
         }
     }
 
-    private void addDayIfOpen(EnumMap<DayOfWeek, TimeRange> map, DayOfWeek day, ToggleButton openToggle, Spinner<LocalTime> start, Spinner<LocalTime> end) {
+    private void addDayIfOpen(EnumMap<DayOfWeek, SlotBean> map, DayOfWeek day, ToggleButton openToggle, Spinner<LocalTime> start, Spinner<LocalTime> end) {
         if (!openToggle.isSelected()) return;
 
         LocalTime open = start.getValue();
         LocalTime close = end.getValue();
 
-        map.put(day, new TimeRange(open, close));
+        map.put(day, new SlotBean(open, close));
     }
 
     @Override

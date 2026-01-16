@@ -2,10 +2,10 @@ package it.calcettohub.view.cli;
 
 import it.calcettohub.bean.BookingBean;
 import it.calcettohub.bean.FreeSlotsBean;
+import it.calcettohub.bean.SlotBean;
 import it.calcettohub.controller.BookingController;
 import it.calcettohub.exceptions.SessionExpiredException;
 import it.calcettohub.exceptions.SlotNotAvailableException;
-import it.calcettohub.model.valueobject.TimeRange;
 import it.calcettohub.utils.PageManager;
 
 import java.time.LocalDate;
@@ -30,13 +30,16 @@ public class FieldBookingCli extends CliContext {
                 validateBeanField(() -> bean.setFieldId(fieldId));
                 validateBeanField(() -> bean.setDate(date));
 
-                List<TimeRange> freeSlots = controller.getFreeSlots(bean);
+                List<SlotBean> freeSlots = controller.getFreeSlots(bean);
 
-                TimeRange selectedSlot = selectFreeSlots(freeSlots);
+                SlotBean selectedSlot = selectFreeSlots(freeSlots);
+
 
                 BookingBean bookingBean = new BookingBean();
                 validateBeanField(() -> bookingBean.setFieldId(fieldId));
-                validateBeanField(() -> bookingBean.setSlot(selectedSlot.onDate(date)));
+                validateBeanField(() -> bookingBean.setDate(date));
+                validateBeanField(() -> bookingBean.setStart(selectedSlot.getStart()));
+                validateBeanField(() -> bookingBean.setEnd(selectedSlot.getEnd()));
 
                 controller.fieldBooking(bookingBean);
                 print("Prenotazione effettuata con successo.");
@@ -52,10 +55,10 @@ public class FieldBookingCli extends CliContext {
         }
     }
 
-    private TimeRange selectFreeSlots(List<TimeRange> slots) {
+    private SlotBean selectFreeSlots(List<SlotBean> slots) {
         for (int i = 0; i < slots.size(); i++) {
-            TimeRange slot = slots.get(i);
-            print((i+1) + ") " + slot.start() + "-" + slot.end());
+            SlotBean slot = slots.get(i);
+            print((i+1) + ") " + slot.getStart() + "-" + slot.getEnd());
         }
 
         while (true) {
