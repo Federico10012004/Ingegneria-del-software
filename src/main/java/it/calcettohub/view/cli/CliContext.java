@@ -84,10 +84,6 @@ public abstract class CliContext {
         }
     }
 
-    protected int requestInt(String message) {
-        return requestIntInRange(message, null, null);
-    }
-
     protected void clearScreen() {
         System.out.print("\033[H\033[2J");
     }
